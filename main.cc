@@ -194,7 +194,7 @@ int main(int argc, char** argv)
       circ1.fit();
       circ2.fit();
 
-      TCanvas* c1 = new TCanvas("c1");
+      TCanvas* c1 = new TCanvas("c1","",200,100);
       c1->Divide(2,1);
       c1->cd(1); circ1.draw();
       c1->cd(2); circ2.draw();
