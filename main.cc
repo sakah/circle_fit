@@ -67,13 +67,14 @@ void func(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
    for (int ihit=0; ihit<g_nhits; ihit++) {
       double x1 = g_xhits[ihit] - x0;
       double y1 = g_yhits[ihit] - y0;
-      double theta = TMath::ATan2(x1, y1);
+      double theta = TMath::ATan2(y1, x1);
       double xexp = R * TMath::Cos(theta);
       double yexp = R * TMath::Sin(theta);
       double dx = (xexp-x1)/g_xsig;
       double dy = (yexp-y1)/g_ysig;
       chi2 += dx*dx + dy*dy;
    }
+   //printf("chi2 %f\n", chi2);
    f = chi2;
 };
 
@@ -154,6 +155,12 @@ struct Circle
 
       Int_t ierflag;
       Double_t arglist[10];
+      TString Tag[3];
+      Double_t var[3];
+      Double_t verr[3];
+      Double_t bnd1, bnd2;
+      Int_t ivarbl;
+
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
@@ -161,11 +168,6 @@ struct Circle
       arglist[0] = 1000; // do at least 1000 function calls
       arglist[1] = 0.1;  // tolerance = 0.1
       minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
-      TString Tag[3];
-      Double_t var[3];
-      Double_t verr[3];
-      Double_t bnd1, bnd2;
-      Int_t ivarbl;
       for (int i=0; i<3; i++) {
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
          printf("i %d %f +/- %f\n", i, var[i], verr[i]);
