@@ -180,7 +180,7 @@ int main(int argc, char** argv)
          int ilayer = inROOT.getIlayer(ihit);
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
-         //if (iturn!=0) continue; 
+         if (iturn!=0) continue; 
          printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
          inROOT.getPosMom(ihit, mcPos, mcMom);
