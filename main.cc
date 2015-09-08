@@ -165,7 +165,7 @@ struct Circle
       for (int ihit=0; ihit<nhits; ihit++) {
          int ilayer = hits_ilayer[ihit];
          int icell = hits_icell[ihit];
-         double zhit = z1 + ihit*(z2-z1);
+         double zhit = z1 + ihit*(z2-z1)/nhits;
          config_get_wire_pos(config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, zhit, "center", &w_x, &w_y);
          xhits[ihit] = w_x;
          yhits[ihit] = w_y;
@@ -337,7 +337,7 @@ double estimate_z2(double z1, double drad, double if_pz)
    double B = 1.0; // T
    if (drad<0) drad += 2.0*TMath::Pi();
    double L = if_pz/(3.0*B); // cm
-   printf("estimate_z2 if_pz %f (MeV/c) L %d cm\n", if_pz, L);
+   printf("estimate_z2 if_pz %f (MeV/c) L %f cm\n", if_pz, L);
    return z1 + L * drad;
 }
 
@@ -431,7 +431,7 @@ int main(int argc, char** argv)
       double mc_z = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      //printf("## iev %5d mc_z %f mc_pt %f mc_pz %f dr %f deg %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
+      fprintf(stdout, "## iev %5d mc_z %f mc_pt %f mc_pz %f dr %f deg %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
       fprintf(fpout, "%5d %f %f %f %f %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
 
       // Shift zpos according to tc.dr and set hits in circ3
