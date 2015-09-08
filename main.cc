@@ -546,11 +546,11 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit);
+      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit, scanz.chi2);
       fflush(fpout);
 
-      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f circ1.pt_fit %f mc_pz %f pz_fit %f\n", 
-            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit);
+      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f circ1.pt_fit %f mc_pz %f pz_fit %f scanz.chi2 %f\n", 
+            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit, scanz.chi2);
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
       c1->Divide(2,2);
