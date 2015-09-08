@@ -210,6 +210,13 @@ struct Circle
       }
 
       draw_fit_circle();
+      draw_center_point();
+   };
+   void draw_center_point()
+   {
+      TMarker* m = new TMarker(x0_fit, y0_fit, 8);
+      m->SetMarkerColor(line_color);
+      m->Draw();
    };
    void draw_canvas()
    {
