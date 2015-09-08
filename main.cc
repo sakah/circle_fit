@@ -96,12 +96,19 @@ struct Circle
    };
    void draw()
    {
+      draw_canvas();
       draw_radius();
 
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
          m->Draw();
       }
+   };
+   void draw_canvas()
+   {
+      TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
+      h2->SetStats(0);
+      h2->Draw();
    };
    void draw_radius()
    {
