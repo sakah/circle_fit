@@ -286,7 +286,7 @@ int main(int argc, char** argv)
 
       //circ1.fit();
       //circ2.fit();
-      circ1.x0_fit = 40;
+      circ1.x0_fit = 30;
       circ1.y0_fit = -10;
       circ1.R_fit = 30;
 
