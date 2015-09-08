@@ -203,8 +203,6 @@ struct Circle
    };
    void draw()
    {
-      draw_canvas();
-      draw_radius();
 
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
@@ -218,6 +216,8 @@ struct Circle
       TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
+
+      draw_radius();
    };
    void draw_radius()
    {
@@ -333,9 +333,9 @@ int main(int argc, char** argv)
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
       c1->Divide(2,2);
-      c1->cd(1); circ1.draw();
-      c1->cd(2); circ2.draw();
-      c1->cd(3); circ1.draw(); circ2.draw();
+      c1->cd(1); circ1.draw_canvas(); circ1.draw();
+      c1->cd(2); circ2.draw_canvas(); circ2.draw();
+      c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
       c1->Print(Form("pdf/%05d.pdf", iev));
    }
 
