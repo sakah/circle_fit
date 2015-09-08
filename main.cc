@@ -79,12 +79,15 @@ void func(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 
 struct Circle
 {
+   int nhits;
+   double xhits[1000];
+   double yhits[1000];
    double radius[20];
 
    TMinuit* minuit;
    Circle()
    {
-      g_nhits = 0;
+      nhits = 0;
 
       int n = 0;
       radius[n++] = 51.4000;
@@ -124,7 +127,7 @@ struct Circle
    double R_step;
    void clear()
    {
-      g_nhits = 0;
+      nhits = 0;
    };
    void calc_init()
    {
@@ -138,6 +141,12 @@ struct Circle
    };
    void fit()
    {
+      // copy to global values
+      g_nhits = nhits;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         g_xhits[ihit] = xhits[ihit];
+         g_yhits[ihit] = yhits[ihit];
+      }
       calc_init();
 
       Int_t ierflag;
@@ -161,8 +170,6 @@ struct Circle
       x0_fit = var[0];
       y0_fit = var[1];
       R_fit  = var[2];
-
-      draw_fit_circle();
    };
    void draw_fit_circle()
    {
@@ -175,19 +182,21 @@ struct Circle
    };
    void add_hit(double x, double y)
    {
-      g_xhits[g_nhits] = x;
-      g_yhits[g_nhits] = y;
-      g_nhits++;
+      xhits[nhits] = x;
+      yhits[nhits] = y;
+      nhits++;
    };
    void draw()
    {
       draw_canvas();
       draw_radius();
 
-      for (int ihit=0; ihit<g_nhits; ihit++) {
-         TMarker* m = new TMarker(g_xhits[ihit], g_yhits[ihit], 8);
+      for (int ihit=0; ihit<nhits; ihit++) {
+         TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
          m->Draw();
       }
+
+      draw_fit_circle();
    };
    void draw_canvas()
    {
@@ -256,9 +265,6 @@ int main(int argc, char** argv)
       if (numHits==0) continue;
 
       printf("iev %d numHits %d\n", iev, numHits );
-
-      circ1.clear();
-      circ2.clear();
 
       double zpos = -1;
       int icell1 = -1;
