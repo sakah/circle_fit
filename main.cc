@@ -238,8 +238,14 @@ struct Circle
       x0_fit = var[0]; //cm
       y0_fit = var[1]; //cm
       R_fit  = var[2]; // cm
+
       double B = 1.0; // T
-      pt_fit = 0.03*B*R_fit; // MeV/c
+      printf("R_fit %f\n", R_fit);
+      pt_fit = 3.0*B*R_fit; // MeV/c
+      // p (GeV) = 0.3 * B (T) * R (m)
+      // pm (MeV) * 1e-3 =  0.3 * B (T) * r (cm)*1e-2
+
+      printf("pt_fit %f\n", pt_fit);
 
       double dx1 = xhits[0] - x0_fit;
       double dy1 = yhits[0] - y0_fit;
@@ -261,7 +267,7 @@ struct Circle
    };
    void print_fit_result()
    {
-      printf("x0 %f y0 %f R %f deg1 %f deg2 %f\n", x0_fit, y0_fit, R_fit, deg1_fit, deg2_fit);
+      printf("x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f\n", x0_fit, y0_fit, R_fit, pt_fit, deg1_fit, deg2_fit);
    };
    void draw()
    {
@@ -330,7 +336,8 @@ double estimate_z2(double z1, double drad, double if_pz)
    // L = cm
    double B = 1.0; // T
    if (drad<0) drad += 2.0*TMath::Pi();
-   double L = if_pz/(0.03*B); // cm
+   double L = if_pz/(3.0*B); // cm
+   printf("estimate_z2 if_pz %f (MeV/c) L %d cm\n", if_pz, L);
    return z1 + L * drad;
 }
 
@@ -416,6 +423,7 @@ int main(int argc, char** argv)
       double if_pz = TMath::Sqrt(if_pa*if_pa - circ1.pt_fit*circ1.pt_fit);
       double z1_exp = estimate_z1(tc.dr);
       double z2_exp = estimate_z2(z1_exp, circ1.rad2_fit - circ1.rad1_fit, if_pz);
+      printf("--- iev %d z1_exp %f z2_exp %f\n", iev, z1_exp, z2_exp);
 
       TVector3 mcPos;
       TVector3 mcMom;
