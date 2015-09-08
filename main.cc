@@ -53,6 +53,8 @@
 #include "TEllipse.h"
 #include "TMinuit.h"
 
+//static double sqrt2(double a, double b)  { return TMath::Sqrt(a*a+b*b); }
+
 int g_nhits;
 double g_xhits[1000];
 double g_yhits[1000];
@@ -285,19 +287,15 @@ int main(int argc, char** argv)
    double w_y;
    double w_z;
 
-   TVector3 mcPos;
-   TVector3 mcMom;
-
-
-   TH2F* h1 = new TH2F("h1", "", 200, -100, 100, 200, -150, 150);
-
    struct Circle circ1;
    struct Circle circ2;
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
 
+   FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   for (int iev=2; iev<3; iev++) {
+   //for (int iev=0; iev<100; iev++) {
+   for (int iev=0; iev<100; iev++) {
 
       inROOT.getEntry(iev);
       bool directHit = inROOT.InDirectHitAtTriggerCounter();
@@ -306,7 +304,10 @@ int main(int argc, char** argv)
       int numHits = inROOT.getNumHits();
       if (numHits==0) continue;
 
-      printf("iev %d numHits %d\n", iev, numHits );
+      circ1.clear();
+      circ2.clear();
+
+      //printf("iev %d numHits %d\n", iev, numHits );
 
       double zpos = -1;
       int icell1 = -1;
@@ -316,9 +317,8 @@ int main(int argc, char** argv)
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
          if (iturn!=0) break; 
-         printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
+         //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
-         inROOT.getPosMom(ihit, mcPos, mcMom);
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
          inROOT.getWirePosAtHitPoint(ihit, w_x, w_y, w_z);
 
@@ -334,9 +334,6 @@ int main(int argc, char** argv)
       struct TwoCircle tc;
       tc.calc(circ1, circ2);
       tc.print();
-      //circ1.x0_fit = 20;
-      //circ1.y0_fit = -5;
-      //circ1.R_fit = 40;
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
       c1->Divide(2,2);
@@ -344,7 +341,17 @@ int main(int argc, char** argv)
       c1->cd(2); circ2.draw_canvas(); circ2.draw();
       c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
       c1->Print(Form("pdf/%05d.pdf", iev));
+
+      TVector3 mcPos;
+      TVector3 mcMom;
+      inROOT.getPosMom(0, mcPos, mcMom);
+      double mc_z = mcPos.Z();
+      double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
+      double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
+      //printf("## iev %5d mc_z %f mc_pt %f mc_pz %f dr %f deg %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
+      fprintf(fpout, "%5d %f %f %f %f %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
    }
+   fclose(fpout);
 
    return 0;
 }
