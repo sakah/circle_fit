@@ -533,7 +533,7 @@ int main(int argc, char** argv)
       double pz_guess = sqrt2minus(pa_guess, circ1.pt_fit);
       double drad = circ1.rad2_fit-circ1.rad1_fit;
       double z2_guess = estimate_z2(z1_fit, drad, pz_guess);
-      printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad, pz_guess, z2_guess);
+      //printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad, pz_guess, z2_guess);
 
       scanz.fit_scanz(&circ1, &circ2, z1_fit, z2_guess);
       scanz.print_result();
@@ -546,7 +546,7 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit, scanz.chi2);
+      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit, scanz.chi2);
       fflush(fpout);
 
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f circ1.pt_fit %f mc_pz %f pz_fit %f scanz.chi2 %f\n", 
@@ -558,7 +558,7 @@ int main(int argc, char** argv)
       c1->cd(2); circ2.draw_canvas(); circ2.draw();
       c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
       c1->cd(4); g_c3->draw_canvas(); g_c3->draw();
-      c1->Print(Form("pdf/%05d.pdf", iev));
+      //c1->Print(Form("pdf/%05d.pdf", iev));
 
    }
    fclose(fpout);
