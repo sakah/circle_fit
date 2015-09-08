@@ -371,7 +371,8 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   for (int iev=0; iev<2000; iev++) {
+   //for (int iev=0; iev<2000; iev++) {
+   for (int iev=2; iev<3; iev++) {
 
       inROOT.getEntry(iev);
       bool directHit = inROOT.InDirectHitAtTriggerCounter();
