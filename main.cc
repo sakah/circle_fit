@@ -86,6 +86,8 @@ struct Circle
    double xhits[1000];
    double yhits[1000];
    double radius[20];
+   int hits_ilayer[1000];
+   int hits_icell[1000];
 
    int line_color;
 
@@ -121,6 +123,54 @@ struct Circle
       g_xsig = 1.0;
       g_ysig = 1.0;
    };
+   void copy_hits(Circle& other)
+   {
+      nhits = other.nhits;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         xhits[ihit] = other.xhits[ihit];
+         yhits[ihit] = other.yhits[ihit];
+         hits_ilayer[ihit] = other.hits_ilayer[ihit];
+         hits_icell[ihit]  = other.hits_icell[ihit];
+      }
+   };
+   void add_hit(int ilayer, int icell, double x, double y)
+   {
+      hits_ilayer[nhits] = ilayer;
+      hits_icell[nhits] = icell;
+      xhits[nhits] = x;
+      yhits[nhits] = y;
+      nhits++;
+   };
+   void add_hits(Circle& c1, Circle& c2)
+   {
+      for (int ihit=0; ihit<c1.nhits; ihit++) {
+         hits_ilayer[nhits] = c1.hits_ilayer[ihit];
+         hits_icell[nhits] = c1.hits_icell[ihit];
+         xhits[nhits] =  c1.xhits[ihit];
+         yhits[nhits] = c1.yhits[ihit];
+         nhits++;
+      }
+      for (int ihit=0; ihit<c2.nhits; ihit++) {
+         hits_ilayer[nhits] = c2.hits_ilayer[ihit];
+         hits_icell[nhits] = c2.hits_icell[ihit];
+         xhits[nhits] =  c2.xhits[ihit];
+         yhits[nhits] = c2.yhits[ihit];
+         nhits++;
+      }
+   };
+   void update_xypos(struct config* config, double z1, double z2)
+   {
+      double w_x;
+      double w_y;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         int ilayer = hits_ilayer[ihit];
+         int icell = hits_icell[ihit];
+         double zhit = z1 + ihit*(z2-z1);
+         config_get_wire_pos(config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, zhit, "center", &w_x, &w_y);
+         xhits[ihit] = w_x;
+         yhits[ihit] = w_y;
+      }
+   };
    double x0_fit;
    double y0_fit;
    double R_fit;
@@ -130,6 +180,11 @@ struct Circle
    double x0_step;
    double y0_step;
    double R_step;
+   double rad1_fit;
+   double rad2_fit;
+   double deg1_fit;
+   double deg2_fit;
+   double pt_fit;
    void set_line_color(int col)
    {
       line_color = col;
@@ -180,9 +235,20 @@ struct Circle
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
          printf("i %d %f +/- %f\n", i, var[i], verr[i]);
       }
-      x0_fit = var[0];
-      y0_fit = var[1];
-      R_fit  = var[2];
+      x0_fit = var[0]; //cm
+      y0_fit = var[1]; //cm
+      R_fit  = var[2]; // cm
+      double B = 1.0; // T
+      pt_fit = 0.03*B*R_fit; // MeV/c
+
+      double dx1 = xhits[0] - x0_fit;
+      double dy1 = yhits[0] - y0_fit;
+      double dx2 = xhits[nhits-1] - x0_fit;
+      double dy2 = yhits[nhits-1] - y0_fit;
+      rad1_fit = TMath::ATan2(dy1,dx1);
+      rad2_fit = TMath::ATan2(dy2,dx2);
+      deg1_fit = rad1_fit/TMath::Pi()*180.0;
+      deg2_fit = rad2_fit/TMath::Pi()*180.0;
    };
    void draw_fit_circle()
    {
@@ -195,13 +261,7 @@ struct Circle
    };
    void print_fit_result()
    {
-      printf("x0 %f y0 %f R %f\n", x0_fit, y0_fit, R_fit);
-   };
-   void add_hit(double x, double y)
-   {
-      xhits[nhits] = x;
-      yhits[nhits] = y;
-      nhits++;
+      printf("x0 %f y0 %f R %f deg1 %f deg2 %f\n", x0_fit, y0_fit, R_fit, deg1_fit, deg2_fit);
    };
    void draw()
    {
@@ -258,6 +318,21 @@ struct TwoCircle
       printf("dr %f deg %f\n", dr, deg);
    };
 };
+double estimate_z1(double dr)
+{
+   // Following formula is estimated by 
+   // fitting z vs dr
+   return (-51.3563+7.74943*dr);
+}
+double estimate_z2(double z1, double drad, double if_pz)
+{
+   // pz = MeV/c
+   // L = cm
+   double B = 1.0; // T
+   if (drad<0) drad += 2.0*TMath::Pi();
+   double L = if_pz/(0.03*B); // cm
+   return z1 + L * drad;
+}
 
 int main(int argc, char** argv)
 {
@@ -287,10 +362,12 @@ int main(int argc, char** argv)
    double w_y;
    double w_z;
 
-   struct Circle circ1;
-   struct Circle circ2;
+   struct Circle circ1; // odd-layer
+   struct Circle circ2; // even-layer
+   struct Circle circ3; // both-layer
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
+   circ3.set_line_color(kMagenta);
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
@@ -321,8 +398,8 @@ int main(int argc, char** argv)
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
          inROOT.getWirePosAtHitPoint(ihit, w_x, w_y, w_z);
 
-         if (ilayer%2==1) circ1.add_hit(w_x1, w_y1);
-         if (ilayer%2==0) circ2.add_hit(w_x1, w_y1);
+         if (ilayer%2==1) circ1.add_hit(ilayer, icell,w_x1, w_y1);
+         if (ilayer%2==0) circ2.add_hit(ilayer, icell,w_x1, w_y1);
       }
 
       circ1.fit();
@@ -334,12 +411,10 @@ int main(int argc, char** argv)
       tc.calc(circ1, circ2);
       tc.print();
 
-      TCanvas* c1 = new TCanvas("c1","",2000,2000);
-      c1->Divide(2,2);
-      c1->cd(1); circ1.draw_canvas(); circ1.draw();
-      c1->cd(2); circ2.draw_canvas(); circ2.draw();
-      c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
-      c1->Print(Form("pdf/%05d.pdf", iev));
+      double if_pa = 104.0; // MeV/c
+      double if_pz = TMath::Sqrt(if_pa*if_pa - circ1.pt_fit*circ1.pt_fit);
+      double z1_exp = estimate_z1(tc.dr);
+      double z2_exp = estimate_z2(z1_exp, circ1.rad2_fit - circ1.rad1_fit, if_pz);
 
       TVector3 mcPos;
       TVector3 mcMom;
@@ -349,6 +424,27 @@ int main(int argc, char** argv)
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
       //printf("## iev %5d mc_z %f mc_pt %f mc_pz %f dr %f deg %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
       fprintf(fpout, "%5d %f %f %f %f %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
+
+      // Shift zpos according to tc.dr and set hits in circ3
+      struct Circle circ10;
+      struct Circle circ20;
+      circ10.copy_hits(circ1);
+      circ20.copy_hits(circ2);
+      circ10.update_xypos(inROOT.getConfig(), z1_exp, z2_exp);
+      circ20.update_xypos(inROOT.getConfig(), z1_exp, z2_exp);
+
+      struct Circle circ3;
+      circ3.add_hits(circ10, circ20);
+      circ3.fit();
+
+      TCanvas* c1 = new TCanvas("c1","",2000,2000);
+      c1->Divide(2,2);
+      c1->cd(1); circ1.draw_canvas(); circ1.draw();
+      c1->cd(2); circ2.draw_canvas(); circ2.draw();
+      c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
+      c1->cd(4); circ3.draw_canvas(); circ3.draw();
+      c1->Print(Form("pdf/%05d.pdf", iev));
+
    }
    fclose(fpout);
 
