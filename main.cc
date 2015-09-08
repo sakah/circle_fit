@@ -442,7 +442,7 @@ int main(int argc, char** argv)
       circ10.update_xypos(inROOT.getConfig(), z1_exp, z2_exp);
       circ20.update_xypos(inROOT.getConfig(), z1_exp, z2_exp);
 
-      struct Circle circ3;
+      circ3.clear();
       circ3.add_hits(circ10, circ20);
       circ3.fit();
 
