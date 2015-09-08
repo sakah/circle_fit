@@ -168,10 +168,16 @@ struct Circle
    {
       double w_x;
       double w_y;
+      double rad0 = rad1_fit;
       for (int ihit=0; ihit<nhits; ihit++) {
          int ilayer = hits_ilayer[ihit];
          int icell = hits_icell[ihit];
-         double zhit = z1 + ihit*(z2-z1)/nhits;
+         double dx = (xhits[ihit] - x0_fit)/R_fit;
+         double dy = (yhits[ihit] - y0_fit)/R_fit;
+         double rad = TMath::ATan2(dy, dx);
+         double drad = rad - rad0;
+         if (drad<0) drad += TMath::Pi()*2.0; // around 180deg line
+         double zhit = z1 + drad;
          config_get_wire_pos(config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, zhit, "center", &w_x, &w_y);
          xhits[ihit] = w_x;
          yhits[ihit] = w_y;
@@ -260,10 +266,10 @@ struct Circle
 
       printf("pt_fit %f\n", pt_fit);
 
-      double dx1 = xhits[0] - x0_fit;
-      double dy1 = yhits[0] - y0_fit;
-      double dx2 = xhits[nhits-1] - x0_fit;
-      double dy2 = yhits[nhits-1] - y0_fit;
+      double dx1 = (xhits[0] - x0_fit)/R_fit;
+      double dy1 = (yhits[0] - y0_fit)/R_fit;
+      double dx2 = (xhits[nhits-1] - x0_fit)/R_fit;
+      double dy2 = (yhits[nhits-1] - y0_fit)/R_fit;
       rad1_fit = TMath::ATan2(dy1,dx1);
       rad2_fit = TMath::ATan2(dy2,dx2);
       deg1_fit = rad1_fit/TMath::Pi()*180.0;
@@ -392,9 +398,9 @@ struct ScanZ
       Double_t bnd1, bnd2;
       Int_t ivarbl;
 
-      printf("HOGE1 z2_ini %f\n", z2_ini);
+      //printf("HOGE1 z2_ini %f\n", z2_ini);
       minuit->mnparm(0, "z2", z2_ini, z2_step, 0, 0, ierflag);
-      printf("HOGE2\n");
+      //printf("HOGE2\n");
       arglist[0] = 1; // use chi2
       minuit->mnexcm("SET ERR", arglist, 1, ierflag);
       arglist[0] = 100; // do at least 100 function calls
@@ -437,6 +443,8 @@ double estimate_z2(double z1, double drad, double if_pz)
 }
 double estimate_pz(double z1, double z2, double drad)
 {
+   // drad is always positive
+   // L is either positive or netive
    double L = (z2-z1)/drad; // cm
    double B = 1.0; // T
    double pz = 3.0*B*L; // MeV/c
@@ -482,11 +490,12 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
+   int iev1=4, iev2=5;
    //int iev1=14, iev2=15;
    //int iev1=2, iev2=3;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=50;
-   int iev1=0, iev2=2000;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
 
@@ -528,14 +537,17 @@ int main(int argc, char** argv)
       tc.calc(circ1, circ2);
       tc.print();
 
-      double z1_fit = estimate_z1(tc.dr);
+      //double z1_fit = estimate_z1(tc.dr);
+      double z1_fit = 20.0;
       double pa_guess = 104.0;
-      double pz_guess = sqrt2minus(pa_guess, circ1.pt_fit);
-      double drad = circ1.rad2_fit-circ1.rad1_fit;
+      double pz_guess = -sqrt2minus(pa_guess, circ1.pt_fit); // assume positive
+      //double pz_guess = -sqrt2minus(pa_guess, circ1.pt_fit); // assume positive
+      //double pz_guess = -13.0;
       // electron rotates anti-clockwise so drad is always positive
-      if (drad<0) drad = -drad;
+      double drad = circ1.rad2_fit-circ1.rad1_fit;
+      if (drad<0) drad += 2.0*TMath::Pi();
       double z2_guess = estimate_z2(z1_fit, drad, pz_guess);
-      //printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f (deg) pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad/TMath::Pi()*180.0, pz_guess, z2_guess);
+      printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f (deg) pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad/TMath::Pi()*180.0, pz_guess, z2_guess);
 
       scanz.fit_scanz(&circ1, &circ2, z1_fit, z2_guess);
       scanz.print_result();
