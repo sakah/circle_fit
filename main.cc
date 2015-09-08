@@ -338,10 +338,11 @@ struct TwoCircle
    };
 };
 
-struct config* g_config;
-Circle *g_c1;
-Circle *g_c2;
-double g_z1_fit;
+static struct config* g_config;
+static Circle *g_c1;
+static Circle *g_c2;
+static double g_z1_fit;
+static Circle* g_c3;
 void func_scanz(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
 
@@ -354,13 +355,13 @@ void func_scanz(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    c10.update_xypos(g_config, g_z1_fit, z2);
    c20.update_xypos(g_config, g_z1_fit, z2);
 
-   Circle c3;
-   c3.set_line_color(kMagenta);
-   c3.clear();
-   c3.add_hits(c10, c20);
-   c3.fit_circ();
+   if (g_c3==NULL) g_c3 = new Circle;
+   g_c3->set_line_color(kMagenta);
+   g_c3->clear();
+   g_c3->add_hits(c10, c20);
+   g_c3->fit_circ();
 
-   f = c3.chi2;
+   f = g_c3->chi2;
 };
 struct ScanZ
 {
@@ -474,20 +475,18 @@ int main(int argc, char** argv)
 
    struct Circle circ1; // odd-layer
    struct Circle circ2; // even-layer
-   struct Circle circ3; // both-layer
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
-   circ3.set_line_color(kMagenta);
 
    struct ScanZ scanz;
    scanz.init();
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   //int iev1=2, iev2=3;
+   int iev1=2, iev2=3;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=50;
-   int iev1=0, iev2=2000;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
 
@@ -558,7 +557,7 @@ int main(int argc, char** argv)
       c1->cd(1); circ1.draw_canvas(); circ1.draw();
       c1->cd(2); circ2.draw_canvas(); circ2.draw();
       c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
-      c1->cd(4); circ3.draw_canvas(); circ3.draw();
+      c1->cd(4); g_c3->draw_canvas(); g_c3->draw();
       c1->Print(Form("pdf/%05d.pdf", iev));
 
    }
