@@ -51,17 +51,40 @@
 #include "InputROOT.h"
 #include "TGraphErrors.h"
 #include "TEllipse.h"
+#include "TMinuit.h"
 
+int g_nhits;
+double g_xhits[1000];
+double g_yhits[1000];
+double g_xsig;
+double g_ysig;
+void func(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
+{
+   double x0 = x[0];
+   double y0 = x[1];
+   double R  = x[2];
+   double chi2 = 0;
+   for (int ihit=0; ihit<g_nhits; ihit++) {
+      double x1 = g_xhits[ihit] - x0;
+      double y1 = g_yhits[ihit] - y0;
+      double theta = TMath::ATan2(x1, y1);
+      double xexp = R * TMath::Cos(theta);
+      double yexp = R * TMath::Sin(theta);
+      double dx = (xexp-x1)/g_xsig;
+      double dy = (yexp-y1)/g_ysig;
+      chi2 += dx*dx + dy*dy;
+   }
+   f = chi2;
+};
 
 struct Circle
 {
-   int nhits;
-   double xhits[1000];
-   double yhits[1000];
    double radius[20];
+
+   TMinuit* minuit;
    Circle()
    {
-      nhits = 0;
+      g_nhits = 0;
 
       int n = 0;
       radius[n++] = 51.4000;
@@ -84,23 +107,85 @@ struct Circle
       radius[n++] = 78.6000;
       radius[n++] = 80.2000;
       radius[n++] = 81.8000;
+
+      minuit = new TMinuit(3);
+      minuit->SetFCN(func);
+      g_xsig = 1.0;
+      g_ysig = 1.0;
+   };
+   double x0_fit;
+   double y0_fit;
+   double R_fit;
+   double x0_ini;
+   double y0_ini;
+   double R_ini;
+   double x0_step;
+   double y0_step;
+   double R_step;
+   void clear()
+   {
+      g_nhits = 0;
+   };
+   void calc_init()
+   {
+      x0_ini = 0;
+      y0_ini = 0;
+      R_ini = 50;
+
+      x0_step = 1;
+      y0_step = 1;
+      R_step = 1;
    };
    void fit()
    {
+      calc_init();
+
+      Int_t ierflag;
+      Double_t arglist[10];
+      minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
+      minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
+      minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
+      minuit->mnexcm("SET ERR", arglist, 1, ierflag);
+      arglist[0] = 1000; // do at least 1000 function calls
+      arglist[1] = 0.1;  // tolerance = 0.1
+      minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
+      TString Tag[3];
+      Double_t var[3];
+      Double_t verr[3];
+      Double_t bnd1, bnd2;
+      Int_t ivarbl;
+      for (int i=0; i<3; i++) {
+         minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
+         printf("i %d %f +/- %f\n", i, var[i], verr[i]);
+         if (i==0) x0_fit = var[i];
+         if (i==1) y0_fit = var[i];
+         if (i==2) R_fit  = var[i];
+      }
+
+      draw_fit_circle();
+   };
+   void draw_fit_circle()
+   {
+      TEllipse* e = new TEllipse(x0_fit, y0_fit, R_fit);
+      e->SetFillStyle(0);
+      e->SetLineWidth(1);
+      e->SetLineStyle(1);
+      e->SetLineColor(2);
+      e->Draw();
    };
    void add_hit(double x, double y)
    {
-      xhits[nhits] = x;
-      yhits[nhits] = y;
-      nhits++;
+      g_xhits[g_nhits] = x;
+      g_yhits[g_nhits] = y;
+      g_nhits++;
    };
    void draw()
    {
       draw_canvas();
       draw_radius();
 
-      for (int ihit=0; ihit<nhits; ihit++) {
-         TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
+      for (int ihit=0; ihit<g_nhits; ihit++) {
+         TMarker* m = new TMarker(g_xhits[ihit], g_yhits[ihit], 8);
          m->Draw();
       }
    };
@@ -158,7 +243,7 @@ int main(int argc, char** argv)
    TH2F* h1 = new TH2F("h1", "", 200, -100, 100, 200, -150, 150);
 
    char title[12];
-   for (int iev=0; iev<100; iev++) {
+   for (int iev=2; iev<3; iev++) {
 
       inROOT.getEntry(iev);
       bool directHit = inROOT.InDirectHitAtTriggerCounter();
@@ -171,7 +256,6 @@ int main(int argc, char** argv)
 
       struct Circle circ1;
       struct Circle circ2;
-
 
       double zpos = -1;
       int icell1 = -1;
