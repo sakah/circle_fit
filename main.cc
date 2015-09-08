@@ -284,8 +284,11 @@ int main(int argc, char** argv)
          if (ilayer%2==0) circ2.add_hit(w_x1, w_y1);
       }
 
-      circ1.fit();
-      circ2.fit();
+      //circ1.fit();
+      //circ2.fit();
+      circ1.x0_fit = 40;
+      circ1.y0_fit = -20;
+      circ1.R_fit = 20;
 
       TCanvas* c1 = new TCanvas("c1","",2000,1000);
       c1->Divide(2,1);
