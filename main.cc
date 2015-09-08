@@ -157,10 +157,10 @@ struct Circle
       for (int i=0; i<3; i++) {
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
          printf("i %d %f +/- %f\n", i, var[i], verr[i]);
-         if (i==0) x0_fit = var[i];
-         if (i==1) y0_fit = var[i];
-         if (i==2) R_fit  = var[i];
       }
+      x0_fit = var[0];
+      y0_fit = var[1];
+      R_fit  = var[2];
 
       draw_fit_circle();
    };
@@ -242,6 +242,9 @@ int main(int argc, char** argv)
 
    TH2F* h1 = new TH2F("h1", "", 200, -100, 100, 200, -150, 150);
 
+   struct Circle circ1;
+   struct Circle circ2;
+
    char title[12];
    for (int iev=2; iev<3; iev++) {
 
@@ -254,8 +257,8 @@ int main(int argc, char** argv)
 
       printf("iev %d numHits %d\n", iev, numHits );
 
-      struct Circle circ1;
-      struct Circle circ2;
+      circ1.clear();
+      circ2.clear();
 
       double zpos = -1;
       int icell1 = -1;
@@ -264,7 +267,7 @@ int main(int argc, char** argv)
          int ilayer = inROOT.getIlayer(ihit);
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
-         if (iturn!=0) continue; 
+         if (iturn!=0) break; 
          printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
          inROOT.getPosMom(ihit, mcPos, mcMom);
