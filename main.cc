@@ -85,6 +85,8 @@ struct Circle
    double yhits[1000];
    double radius[20];
 
+   int line_color;
+
    TMinuit* minuit;
    Circle()
    {
@@ -126,6 +128,10 @@ struct Circle
    double x0_step;
    double y0_step;
    double R_step;
+   void set_line_color(int col)
+   {
+      line_color = col;
+   };
    void clear()
    {
       nhits = 0;
@@ -182,8 +188,12 @@ struct Circle
       e->SetFillStyle(0);
       e->SetLineWidth(1);
       e->SetLineStyle(1);
-      e->SetLineColor(2);
+      e->SetLineColor(line_color);
       e->Draw();
+   };
+   void print_fit_result()
+   {
+      printf("x0 %f y0 %f R %f\n", x0_fit, y0_fit, R_fit);
    };
    void add_hit(double x, double y)
    {
@@ -219,6 +229,24 @@ struct Circle
          e->SetLineStyle(1);
          e->Draw();
       }
+   };
+};
+
+struct TwoCircle
+{
+   double dr;
+   double deg;
+   void calc(Circle& c1, Circle& c2)
+   {
+      double dx = c2.x0_fit - c1.x0_fit;
+      double dy = c2.y0_fit - c1.y0_fit;
+      dr = TMath::Sqrt(dx*dx+dy*dy);
+      double theta = TMath::ATan2(dy, dx);
+      deg = theta/TMath::Pi()*180.0;
+   };
+   void print()
+   {
+      printf("dr %f deg %f\n", dr, deg);
    };
 };
 
@@ -258,6 +286,8 @@ int main(int argc, char** argv)
 
    struct Circle circ1;
    struct Circle circ2;
+   circ1.set_line_color(kRed);
+   circ2.set_line_color(kBlue);
 
    char title[12];
    for (int iev=2; iev<3; iev++) {
@@ -291,14 +321,21 @@ int main(int argc, char** argv)
 
       circ1.fit();
       circ2.fit();
+      circ1.print_fit_result();
+      circ2.print_fit_result();
+
+      struct TwoCircle tc;
+      tc.calc(circ1, circ2);
+      tc.print();
       //circ1.x0_fit = 20;
       //circ1.y0_fit = -5;
       //circ1.R_fit = 40;
 
-      TCanvas* c1 = new TCanvas("c1","",2000,1000);
-      c1->Divide(2,1);
+      TCanvas* c1 = new TCanvas("c1","",2000,2000);
+      c1->Divide(2,2);
       c1->cd(1); circ1.draw();
       c1->cd(2); circ2.draw();
+      c1->cd(3); circ1.draw(); circ2.draw();
       c1->Print(Form("pdf/%05d.pdf", iev));
    }
 
