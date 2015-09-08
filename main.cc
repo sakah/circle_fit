@@ -431,16 +431,15 @@ double estimate_z2(double z1, double drad, double if_pz)
    // pz = MeV/c
    // L = cm
    double B = 1.0; // T
-   if (drad<0) drad += 2.0*TMath::Pi();
    double L = if_pz/(3.0*B); // cm
-   //printf("estimate_z2 if_pz %f (MeV/c) L %f cm\n", if_pz, L);
+   printf("estimate_z2 if_pz %f (MeV/c) L %f cm\n", if_pz, L);
    return z1 + L * drad;
 }
 double estimate_pz(double z1, double z2, double drad)
 {
-   double L = (z2-z1)/drad;
+   double L = (z2-z1)/drad; // cm
    double B = 1.0; // T
-   double pz = 3.0*B*L;
+   double pz = 3.0*B*L; // MeV/c
    return pz;
 }
 
@@ -483,6 +482,7 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
+   //int iev1=14, iev2=15;
    //int iev1=2, iev2=3;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=50;
@@ -532,8 +532,10 @@ int main(int argc, char** argv)
       double pa_guess = 104.0;
       double pz_guess = sqrt2minus(pa_guess, circ1.pt_fit);
       double drad = circ1.rad2_fit-circ1.rad1_fit;
+      // electron rotates anti-clockwise so drad is always positive
+      if (drad<0) drad = -drad;
       double z2_guess = estimate_z2(z1_fit, drad, pz_guess);
-      //printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad, pz_guess, z2_guess);
+      //printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f (deg) pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad/TMath::Pi()*180.0, pz_guess, z2_guess);
 
       scanz.fit_scanz(&circ1, &circ2, z1_fit, z2_guess);
       scanz.print_result();
@@ -558,7 +560,7 @@ int main(int argc, char** argv)
       c1->cd(2); circ2.draw_canvas(); circ2.draw();
       c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
       c1->cd(4); g_c3->draw_canvas(); g_c3->draw();
-      //c1->Print(Form("pdf/%05d.pdf", iev));
+      c1->Print(Form("pdf/%05d.pdf", iev));
 
    }
    fclose(fpout);
