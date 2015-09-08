@@ -54,13 +54,18 @@
 #include "TMinuit.h"
 
 //static double sqrt2(double a, double b)  { return TMath::Sqrt(a*a+b*b); }
+static double sqrt2minus(double a, double b) 
+{ 
+   if (a<b) return 0.0;
+   return TMath::Sqrt(a*a-b*b); 
+}
 
 int g_nhits;
 double g_xhits[1000];
 double g_yhits[1000];
 double g_xsig;
 double g_ysig;
-void func(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
+void func_circ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
    double x0 = x[0];
    double y0 = x[1];
@@ -78,7 +83,7 @@ void func(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
    }
    //printf("chi2 %f\n", chi2);
    f = chi2;
-};
+}
 
 struct Circle
 {
@@ -92,6 +97,7 @@ struct Circle
    int line_color;
 
    TMinuit* minuit;
+   double chi2;
    Circle()
    {
       nhits = 0;
@@ -119,7 +125,7 @@ struct Circle
       radius[n++] = 81.8000;
 
       minuit = new TMinuit(3);
-      minuit->SetFCN(func);
+      minuit->SetFCN(func_circ);
       g_xsig = 1.0;
       g_ysig = 1.0;
    };
@@ -206,7 +212,7 @@ struct Circle
       y0_step = 1;
       R_step = 1;
    };
-   void fit()
+   void fit_circ()
    {
       // copy to global values
       g_nhits = nhits;
@@ -227,6 +233,7 @@ struct Circle
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
+      arglist[0] = 1; // use chi2
       minuit->mnexcm("SET ERR", arglist, 1, ierflag);
       arglist[0] = 1000; // do at least 1000 function calls
       arglist[1] = 0.1;  // tolerance = 0.1
@@ -235,6 +242,12 @@ struct Circle
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
          printf("i %d %f +/- %f\n", i, var[i], verr[i]);
       }
+      // Result
+      Double_t amin,edm,errdef;
+      Int_t nvpar,nparx,icstat;
+      minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
+      chi2 = amin;
+
       x0_fit = var[0]; //cm
       y0_fit = var[1]; //cm
       R_fit  = var[2]; // cm
@@ -324,6 +337,88 @@ struct TwoCircle
       printf("dr %f deg %f\n", dr, deg);
    };
 };
+
+struct config* g_config;
+Circle *g_c1;
+Circle *g_c2;
+double g_z1_fit;
+void func_scanz(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
+{
+
+   // Shift zpos according to tc.dr and set hits in circ3
+   Circle c10;
+   Circle c20;
+   c10.copy_hits(*g_c1);
+   c20.copy_hits(*g_c2);
+   double z2 = x[0];
+   c10.update_xypos(g_config, g_z1_fit, z2);
+   c20.update_xypos(g_config, g_z1_fit, z2);
+
+   Circle c3;
+   c3.set_line_color(kMagenta);
+   c3.clear();
+   c3.add_hits(c10, c20);
+   c3.fit_circ();
+
+   f = c3.chi2;
+};
+struct ScanZ
+{
+   double z2_step;
+   double z2_fit;
+
+   TMinuit* minuit;
+   double chi2;
+
+   void init()
+   {
+      minuit = new TMinuit(1);
+      minuit->SetFCN(func_scanz);
+      z2_step = 2.0;
+   };
+
+   void fit_scanz(Circle* c1, Circle* c2, double z1, double z2_ini)
+   {
+      g_c1 = c1;
+      g_c2 = c2;
+      g_z1_fit = z1;
+
+      Int_t ierflag;
+      Double_t arglist[10];
+      TString Tag[3];
+      Double_t var[3];
+      Double_t verr[3];
+      Double_t bnd1, bnd2;
+      Int_t ivarbl;
+
+      printf("HOGE1 z2_ini %f\n", z2_ini);
+      minuit->mnparm(0, "z2", z2_ini, z2_step, 0, 0, ierflag);
+      printf("HOGE2\n");
+      arglist[0] = 1; // use chi2
+      minuit->mnexcm("SET ERR", arglist, 1, ierflag);
+      arglist[0] = 100; // do at least 100 function calls
+      arglist[1] = 0.1;  // tolerance = 0.1
+      minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
+      for (int i=0; i<1; i++) {
+         minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
+         printf("i %d %f +/- %f\n", i, var[i], verr[i]);
+      }
+      // Result
+      Double_t amin,edm,errdef;
+      Int_t nvpar,nparx,icstat;
+      minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
+      chi2 = amin;
+
+      z2_fit = var[0]; //cm
+   };
+
+   void print_result()
+   {
+      printf("z2_fit %f chi2 %f\n", z2_fit, chi2);
+   };
+};
+
+
 double estimate_z1(double dr)
 {
    // Following formula is estimated by 
@@ -337,8 +432,15 @@ double estimate_z2(double z1, double drad, double if_pz)
    double B = 1.0; // T
    if (drad<0) drad += 2.0*TMath::Pi();
    double L = if_pz/(3.0*B); // cm
-   printf("estimate_z2 if_pz %f (MeV/c) L %f cm\n", if_pz, L);
+   //printf("estimate_z2 if_pz %f (MeV/c) L %f cm\n", if_pz, L);
    return z1 + L * drad;
+}
+double estimate_pz(double z1, double z2, double drad)
+{
+   double L = (z2-z1)/drad;
+   double B = 1.0; // T
+   double pz = 3.0*B*L;
+   return pz;
 }
 
 int main(int argc, char** argv)
@@ -356,6 +458,7 @@ int main(int argc, char** argv)
    double momSmear_percent = atof(argv[7]);
 
    InputROOT inROOT(input_root, wire_config_txt, sample_type, t2r_type, rdrift_err_cm, posSmear_cm, momSmear_percent);
+   g_config = inROOT.getConfig();
    //int total = inROOT.getEntries();
    //int total = 100;
 
@@ -376,10 +479,17 @@ int main(int argc, char** argv)
    circ2.set_line_color(kBlue);
    circ3.set_line_color(kMagenta);
 
+   struct ScanZ scanz;
+   scanz.init();
+
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   //for (int iev=0; iev<2000; iev++) {
-   for (int iev=2; iev<3; iev++) {
+   //int iev1=2, iev2=3;
+   //int iev1=0, iev2=3;
+   //int iev1=0, iev2=50;
+   int iev1=0, iev2=2000;
+   for (int iev=iev1; iev<iev2; iev++) { 
+      fprintf(stderr,"iev %d\n", iev);
 
       inROOT.getEntry(iev);
       bool directHit = inROOT.InDirectHitAtTriggerCounter();
@@ -410,8 +520,8 @@ int main(int argc, char** argv)
          if (ilayer%2==0) circ2.add_hit(ilayer, icell,w_x1, w_y1);
       }
 
-      circ1.fit();
-      circ2.fit();
+      circ1.fit_circ();
+      circ2.fit_circ();
       circ1.print_fit_result();
       circ2.print_fit_result();
 
@@ -419,32 +529,29 @@ int main(int argc, char** argv)
       tc.calc(circ1, circ2);
       tc.print();
 
-      double if_pa = 104.0; // MeV/c
-      double if_pz = TMath::Sqrt(if_pa*if_pa - circ1.pt_fit*circ1.pt_fit);
-      double z1_exp = estimate_z1(tc.dr);
-      double z2_exp = estimate_z2(z1_exp, circ1.rad2_fit - circ1.rad1_fit, if_pz);
-      printf("--- iev %d z1_exp %f z2_exp %f\n", iev, z1_exp, z2_exp);
+      double z1_fit = estimate_z1(tc.dr);
+      double pa_guess = 104.0;
+      double pz_guess = sqrt2minus(pa_guess, circ1.pt_fit);
+      double drad = circ1.rad2_fit-circ1.rad1_fit;
+      double z2_guess = estimate_z2(z1_fit, drad, pz_guess);
+      printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad, pz_guess, z2_guess);
+
+      scanz.fit_scanz(&circ1, &circ2, z1_fit, z2_guess);
+      scanz.print_result();
+
+      double pz_fit = estimate_pz(z1_fit, scanz.z2_fit, drad);
 
       TVector3 mcPos;
       TVector3 mcMom;
       inROOT.getPosMom(0, mcPos, mcMom);
-      double mc_z = mcPos.Z();
+      double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(stdout, "## iev %5d mc_z %f mc_pt %f mc_pz %f dr %f deg %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
-      fprintf(fpout, "%5d %f %f %f %f %f\n", iev, mc_z, mc_pt, mc_pz, tc.dr, tc.deg);
+      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit);
+      fflush(fpout);
 
-      // Shift zpos according to tc.dr and set hits in circ3
-      struct Circle circ10;
-      struct Circle circ20;
-      circ10.copy_hits(circ1);
-      circ20.copy_hits(circ2);
-      circ10.update_xypos(inROOT.getConfig(), z1_exp, z2_exp);
-      circ20.update_xypos(inROOT.getConfig(), z1_exp, z2_exp);
-
-      circ3.clear();
-      circ3.add_hits(circ10, circ20);
-      circ3.fit();
+      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f circ1.pt_fit %f mc_pz %f pz_fit %f\n", 
+            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit);
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
       c1->Divide(2,2);
