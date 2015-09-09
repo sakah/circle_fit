@@ -482,6 +482,7 @@ struct Helix
          g_zhits[ihit] = 0.0; // zhits will be set in func_helix using xypos
       }
 
+#if 0
       Int_t ierflag;
       Double_t arglist[10];
       TString Tag[3];
@@ -523,6 +524,7 @@ struct Helix
       }
       printf("R_fit %f pt_fit %f\n", R_fit, get_pt_fit());
       printf("L_fit %f pz_fit %f\n", L_fit, get_pz_fit());
+#endif
    };
    void print_fit_result(char* prefix)
    {
