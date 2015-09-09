@@ -1043,6 +1043,10 @@ struct Hough
       h2ab->Reset();
 
       for (int i=0; i<num_hits; i++) {
+         printf("#### i %d uhits %f vhits %f\n", i, uhits[i], vhits[i]);
+         h2uv->Fill(uhits[i], vhits[i]);
+      }
+      for (int i=0; i<num_hits; i++) {
          for (int ia=0; ia<anum; ia++) {
 
             double a = ia*astep + amin;
@@ -1050,7 +1054,6 @@ struct Hough
 
             //printf("i %d a %lf b %lf\n", i, a, b);
             h2ab->Fill(a, b, 1);
-            h2uv->Fill(uhits[i], vhits[i]);
          }
       }
       int ia_min;
