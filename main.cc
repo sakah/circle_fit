@@ -1055,7 +1055,7 @@ int main(int argc, char** argv)
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
-      TCanvas* c1 = new TCanvas("c1","",3000,2000);
+      TCanvas* c1 = new TCanvas("c1","",3000,3000);
       c1->Divide(3,3);
       c1->cd(1); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
       c1->cd(2); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
