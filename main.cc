@@ -1050,6 +1050,7 @@ struct Hough
 
             //printf("i %d a %lf b %lf\n", i, a, b);
             h2ab->Fill(a, b, 1);
+            h2uv->Fill(uhits[i], vhits[i]);
          }
       }
       int ia_min;
