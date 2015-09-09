@@ -1419,8 +1419,8 @@ int main(int argc, char** argv)
       c1->cd(j++); hough2.draw_hist_diff();
       c1->cd(j++); 
       c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
-      c1->cd(j++); circ3.draw_xy_canvas(); circ2.draw_xy_hits_fits();
-      c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
+      c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
+      c1->cd(j++); circ3.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
       c1->cd(j++); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
       c1->cd(j++); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
       c1->cd(j++); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
