@@ -118,6 +118,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
+      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy);
       chi2 += dx*dx + dy*dy;
 
       // update hit position for next fit
@@ -480,9 +481,10 @@ struct Helix
          g_xhits[ihit] = xhits[ihit];
          g_yhits[ihit] = yhits[ihit];
          g_zhits[ihit] = 0.0; // zhits will be set in func_helix using xypos
+         g_hits_ilayer[ihit] = hits_ilayer[ihit];
+         g_hits_icell[ihit] = hits_icell[ihit];
       }
 
-#if 0
       Int_t ierflag;
       Double_t arglist[10];
       TString Tag[3];
@@ -524,7 +526,6 @@ struct Helix
       }
       printf("R_fit %f pt_fit %f\n", R_fit, get_pt_fit());
       printf("L_fit %f pz_fit %f\n", L_fit, get_pz_fit());
-#endif
    };
    void print_fit_result(char* prefix)
    {
