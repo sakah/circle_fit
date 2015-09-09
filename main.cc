@@ -110,7 +110,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double rad = TMath::ATan2(ddy,ddx); 
       if (rad<0) rad += 2.0*TMath::Pi();  // [0, 2pi]
       if (rad<rad0) rad += 2.0*TMath::Pi(); // rad0 should be smallest
-      //printf("ddx %f ddy %f rad0 %f rad %f (deg)\n", ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
+      printf("R %f ddx %f ddy %f rad0 %f rad %f (deg)\n", R, ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
       w_z = (rad - rad0)*L;
 
       int ilayer = g_hits_ilayer[ihit];
@@ -225,7 +225,9 @@ struct Circle
    { 
       double dx = (xhits[ihit] - x0_fit)/R_fit;
       double dy = (yhits[ihit] - y0_fit)/R_fit;
-      return TMath::ATan2(dy,dx);
+      double rad =  TMath::ATan2(dy,dx);
+      if (rad<0) rad+=2.0*TMath::Pi();
+      return rad;
    };
    double get_rad1_fit() { return get_rad_fit(0); };
    double get_rad2_fit() { return get_rad_fit(nhits-1); };
@@ -277,9 +279,9 @@ struct Circle
       Double_t bnd1, bnd2;
       Int_t ivarbl;
 
-      minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
-      minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
-      minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
+      minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag); // cm
+      minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag); // cm
+      minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag); // cm
       arglist[0] = 1; // use chi2
       minuit->mnexcm("SET ERR", arglist, 1, ierflag);
       arglist[0] = 1000; // do at least 1000 function calls
@@ -498,7 +500,7 @@ struct Helix
 
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
-      minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
+      minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag);
       minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 2.0*TMath::Pi(), ierflag);
       minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
       arglist[0] = 1; // use chi2
@@ -727,11 +729,12 @@ int main(int argc, char** argv)
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
    //int iev1=8, iev2=9;
+   //int iev1=10, iev2=11;
    //int iev1=11, iev2=12;
    //int iev1=14, iev2=15;
    //int iev1=0, iev2=3;
-   //int iev1=0, iev2=50;
-   int iev1=0, iev2=2000;
+   int iev1=0, iev2=30;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
 
@@ -783,10 +786,15 @@ int main(int argc, char** argv)
          int sign=1;
          if (isign==1) sign = -1;
          double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+         if (pz_guess==0) pz_guess = 0.1; // set anyway
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
-         if (rad0_guess<0) rad0_guess += 2.0*TMath::Pi();
+         //printf("1) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
+         while (rad0_guess<0) {
+            rad0_guess += 2.0*TMath::Pi();
+         }
+         //printf("2) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
          //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
