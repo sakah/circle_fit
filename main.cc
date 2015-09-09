@@ -756,6 +756,7 @@ struct Helix
          e->SetFillStyle(0);
          e->SetLineWidth(1);
          e->SetLineStyle(1);
+         e->SetLineColor(kGray);
          e->Draw();
       }
    };
