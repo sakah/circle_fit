@@ -108,6 +108,9 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx);
+      if (rad<0) rad += 2.0*TMath::Pi();
+      printf("ddx %f ddy %f\n", ddx, ddy);
+      printf("rad0 %f rad %f (deg)\n", rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
       w_z = (rad - rad0)*L;
 
       int ilayer = g_hits_ilayer[ihit];
@@ -118,7 +121,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
-      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy);
+      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
       chi2 += dx*dx + dy*dy;
 
       // update hit position for next fit
@@ -496,7 +499,7 @@ struct Helix
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
-      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step,  0, 0, ierflag);
+      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step,  -TMath::Pi(), TMath::Pi(), ierflag);
       minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
       arglist[0] = 1; // use chi2
       minuit->mnexcm("SET ERR", arglist, 1, ierflag);
