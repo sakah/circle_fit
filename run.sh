@@ -10,4 +10,5 @@ t2r_type="MCR"
 rdrift_err_cm="0.02"
 posSmear_cm="0.1"
 momSmear_percent="0.001"
-./main $inroot $wire_config $sample_type $t2r_type $rdrift_err_cm $posSmear_cm $momSmear_percent
+noise_occupancy="0.1"
+./main $inroot $wire_config $sample_type $t2r_type $rdrift_err_cm $posSmear_cm $momSmear_percent $noise_occupancy

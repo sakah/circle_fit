@@ -52,6 +52,29 @@
 #include "TGraphErrors.h"
 #include "TEllipse.h"
 #include "TMinuit.h"
+#include "TRandom.h"
+
+int num_cells[20] =  {
+   396/2,
+   396/2,
+   408/2,
+   420/2,
+   432/2,
+   444/2,
+   456/2,
+   468/2,
+   480/2,
+   492/2,
+   504/2,
+   516/2,
+   528/2,
+   540/2,
+   552/2,
+   564/2,
+   576/2,
+   588/2,
+   600/2,
+   612/2};
 
 //static double sqrt2(double a, double b)  { return TMath::Sqrt(a*a+b*b); }
 static double sqrt2minus(double a, double b) 
@@ -67,6 +90,7 @@ static double rad2deg(double rad)
 void set_marker_color(TMarker* m, int iturn)
 {
    int col;
+   if (iturn==-1) col = kCyan; //noise
    if (iturn==0) col = kBlack;
    if (iturn==1) col = kRed;
    if (iturn==2) col = kBlue;
@@ -813,10 +837,20 @@ double estimate_pz(double z1, double z2, double drad)
    return pz;
 }
 
+double g_R_sig[20][400];
+void clear_buffer()
+{
+   for (int ilayer=0; ilayer<20; ilayer++) {
+      for (int icell=0; icell<num_cells[ilayer]; icell++) {
+         g_R_sig[ilayer][icell] = 1e10;
+      }
+   }
+}
+
 int main(int argc, char** argv)
 {
-   if (argc != 8) {
-      fprintf(stderr,"Usage %s <input.root> <wire_config.txt> <sample_type> <t2r_type> <rdrift_err_cm> <posSmear_cm> <momSmear_percent>\n", argv[0]);
+   if (argc != 9) {
+      fprintf(stderr,"Usage %s <input.root> <wire_config.txt> <sample_type> <t2r_type> <rdrift_err_cm> <posSmear_cm> <momSmear_percent> <noise_occupancy>\n", argv[0]);
       return -1;
    }
    char* input_root = argv[1];
@@ -826,6 +860,7 @@ int main(int argc, char** argv)
    double rdrift_err_cm = atof(argv[5]);
    double posSmear_cm = atof(argv[6]);
    double momSmear_percent = atof(argv[7]);
+   double noise_occupancy = atof(argv[8]);
 
    InputROOT inROOT(input_root, wire_config_txt, sample_type, t2r_type, rdrift_err_cm, posSmear_cm, momSmear_percent);
    g_config = inROOT.getConfig();
@@ -852,7 +887,7 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   //int iev1=2, iev2=3;
+   int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
@@ -865,9 +900,10 @@ int main(int argc, char** argv)
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=30;
-   int iev1=0, iev2=2000;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
+      clear_buffer();
 
       inROOT.getEntry(iev);
       bool directHit = inROOT.InDirectHitAtTriggerCounter();
@@ -888,6 +924,7 @@ int main(int argc, char** argv)
          int ilayer = inROOT.getIlayer(ihit);
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
+         g_R_sig[ilayer][icell] = inROOT.getDriftDistance(iev, ihit);
          //if (iturn!=0) break; 
          //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
@@ -896,6 +933,21 @@ int main(int argc, char** argv)
 
          if (ilayer%2==1) circ1.add_hit(ilayer, icell, iturn, w_x1, w_y1);
          if (ilayer%2==0) circ2.add_hit(ilayer, icell, iturn, w_x1, w_y1);
+      }
+      // Add noise. If R_noise is larger than R_sig, then use R_sig.
+      for (int ilayer=0; ilayer<20; ilayer++) {
+         for (int icell=0; icell<num_cells[ilayer]; icell++) {
+            config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, 0.0, "up", &w_x, &w_y);
+            double prob = gRandom->Uniform();
+            double R_noise = gRandom->Uniform(0, 1.6);
+            double R_sig = g_R_sig[ilayer][icell];
+            if (prob<noise_occupancy) {
+               if (R_noise < R_sig) {
+                  if (ilayer%2==1) circ1.add_hit(ilayer, icell, -1, w_x1, w_y1);
+                  if (ilayer%2==0) circ2.add_hit(ilayer, icell, -1, w_x1, w_y1);
+               }
+            }
+         }
       }
 
       circ1.set_fit_inipar();
