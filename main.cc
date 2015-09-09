@@ -106,6 +106,8 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    double L  = x[4];
    double chi2 = 0;
 
+   double rad0_org = rad0;
+
    double w_x;
    double w_y;
    double w_z;
@@ -131,33 +133,55 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
       if (rad>=ang270 && rad<ang360) region_hit[3] = 1;
    }
+   // check rad0 also
+   if (rad0>=ang0   && rad0<ang90)  region_hit[0] = 1;
+   if (rad0>=ang90  && rad0<ang180) region_hit[1] = 1;
+   if (rad0>=ang180 && rad0<ang270) region_hit[2] = 1;
+   if (rad0>=ang270 && rad0<ang360) region_hit[3] = 1;
+
+   printf("rad0 %f region_hit %d %d %d %d\n", 
+         rad2deg(rad0),
+         region_hit[0],
+         region_hit[1],
+         region_hit[2],
+         region_hit[3]);
+
+   double offset_ang[4];
+   for (int i=0; i<4; i++) offset_ang[i] = 0;
 
    double min_rad;
-   if (chk_hitpattern(region_hit, 1,1,1,1)) min_rad = ang0;
+   if      (chk_hitpattern(region_hit, 1,1,1,1)) { min_rad = ang0; }
 
-   else if (chk_hitpattern(region_hit, 1,1,1,0)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 1,1,0,1)) min_rad = ang270;
-   else if (chk_hitpattern(region_hit, 1,0,1,1)) min_rad = ang180;
-   else if (chk_hitpattern(region_hit, 0,1,1,1)) min_rad = ang0;
+   else if (chk_hitpattern(region_hit, 1,1,1,0)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 1,1,0,1)) { offset_ang[0] = ang360; offset_ang[1] = ang360; min_rad = ang270; }
+   else if (chk_hitpattern(region_hit, 1,0,1,1)) { offset_ang[0] = ang360; min_rad = ang180; }
+   else if (chk_hitpattern(region_hit, 0,1,1,1)) { min_rad = ang0; }
 
-   else if (chk_hitpattern(region_hit, 1,1,0,0)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 1,0,1,0)) min_rad = -1; // must not happen
-   else if (chk_hitpattern(region_hit, 0,1,1,0)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 1,0,1,0)) min_rad = -1; // must not happen
-   else if (chk_hitpattern(region_hit, 0,0,1,1)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 1,0,0,1)) min_rad = ang270;
+   else if (chk_hitpattern(region_hit, 1,1,0,0)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 1,0,1,0)) { min_rad = -1; } // must not happen
+   else if (chk_hitpattern(region_hit, 0,1,1,0)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 1,0,1,0)) { min_rad = -1; } // must not happen
+   else if (chk_hitpattern(region_hit, 0,0,1,1)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 1,0,0,1)) { offset_ang[0] = ang360; min_rad = ang270; }
 
-   else if (chk_hitpattern(region_hit, 1,0,0,0)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 0,1,0,0)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 0,0,1,0)) min_rad = ang0;
-   else if (chk_hitpattern(region_hit, 0,0,0,1)) min_rad = ang0;
+   else if (chk_hitpattern(region_hit, 1,0,0,0)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 0,1,0,0)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 0,0,1,0)) { min_rad = ang0; }
+   else if (chk_hitpattern(region_hit, 0,0,0,1)) { min_rad = ang0; }
 
    if (min_rad==-1) {
       fprintf(stderr,"strange hit pattern. terminate.\n");
       exit(1);
    }
+   printf("min_rad %f (deg)\n", rad2deg(min_rad));
+   // Add offset_ang and
    // Re-set angle based on min_rad
+   if (rad0>=ang0   && rad0<ang90)  rad0 += offset_ang[0];
+   if (rad0>=ang90  && rad0<ang180) rad0 += offset_ang[1];
+   if (rad0>=ang180 && rad0<ang270) rad0 += offset_ang[2];
+   if (rad0>=ang270 && rad0<ang360) rad0 += offset_ang[3];
    rad0 -= min_rad;
+
    for (int ihit=0; ihit<g_nhits; ihit++) {
       // calculate w_x/w_y using previous result
       double xhit = g_xhits[ihit];
@@ -166,6 +190,11 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx); 
       if (rad<0) rad+=ang360;
+
+      if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
+      if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
+      if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
+      if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
       rad -= min_rad;
 
       double drad = rad - rad0;
@@ -177,8 +206,8 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       int icell = g_hits_icell[ihit];
       config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, w_z, "center", &w_x, &w_y);
 
-      double xexp = x0 + R * TMath::Cos(rad0 + min_rad + w_z/L);
-      double yexp = y0 + R * TMath::Sin(rad0 + min_rad + w_z/L);
+      double xexp = x0 + R * TMath::Cos(rad0_org + w_z/L);
+      double yexp = y0 + R * TMath::Sin(rad0_org + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
@@ -850,7 +879,7 @@ int main(int argc, char** argv)
          if (isign==1) sign = -1;
          double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
          if (pz_guess==0) pz_guess = sign*0.1; // set anyway
-         //pz_guess=sign*31.0;
+         //pz_guess=sign*8.0;
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
@@ -858,8 +887,11 @@ int main(int argc, char** argv)
          while (rad0_guess<0) {
             rad0_guess += 2.0*TMath::Pi();
          }
-         //printf("2) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
-         //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
+         if (rad0_guess>2.0*TMath::Pi()) {
+            rad0_guess -= 2.0*TMath::Pi();
+         }
+         printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
+         printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
          helix[isign].add_hits(circ1);
