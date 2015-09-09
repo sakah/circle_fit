@@ -1032,8 +1032,8 @@ struct Hough
       double amin = -10;
       double amax = 10;
       double bstep = 0.001;
-      double bmin = -0.05;
-      double bmax = 0.05;
+      double bmin = -3.0;
+      double bmax = 3.0;
       int anum = (amax-amin)/astep;
       int bnum = (bmax-bmin)/bstep;
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
