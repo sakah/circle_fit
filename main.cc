@@ -325,7 +325,7 @@ struct Circle
             break;
          }
       }
-      printf("remove_hit: idx %d nhits %d\n", remove_idx, nhits);
+      //printf("remove_hit: idx %d nhits %d\n", remove_idx, nhits);
       if (remove_idx==-1) return; // not found
       int n=0;
       for (int ihit=0; ihit<nhits; ihit++) {
@@ -335,7 +335,7 @@ struct Circle
          hits_iturn[n] =  hits_iturn[ihit];
          xhits[n] =       xhits[ihit];
          yhits[n] =       yhits[ihit];
-         printf("n %d hits_ilaeyr %d hits_icell %d\n", n, hits_ilayer[n], hits_icell[n]);
+         //printf("n %d hits_ilaeyr %d hits_icell %d\n", n, hits_ilayer[n], hits_icell[n]);
          n++;
       }
       nhits--;
@@ -505,7 +505,7 @@ struct Circle
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
-         printf("HOGE:: ihit %d hits_iturn %d xhits %f yhits %f\n", ihit, hits_iturn[ihit], xhits[ihit], yhits[ihit]);
+         //printf("HOGE:: ihit %d hits_iturn %d xhits %f yhits %f\n", ihit, hits_iturn[ihit], xhits[ihit], yhits[ihit]);
          set_marker_color(m, hits_iturn[ihit]);
          m->Draw();
       }
@@ -934,13 +934,13 @@ void sort_raw_hits_by_icell()
          data[ihit].buf3 = g_raw_hits_iturn[ilayer][ihit];
          num_data++;
       }
-      for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
-         printf("Before: ilayer %d ihit %d idx %d icell %d\n", ilayer, ihit, data[ihit].idx, data[ihit].data);
-      }
+      //for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+      //   printf("Before: ilayer %d ihit %d idx %d icell %d\n", ilayer, ihit, data[ihit].idx, data[ihit].data);
+      //}
       qsort(data, num_data, sizeof(data[0]), sort_int_data);
-      for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
-         printf("After: ilayer %d ihit %d idx %d icell %d\n", ilayer, ihit, data[ihit].idx, data[ihit].data);
-      }
+      //for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+      //   printf("After: ilayer %d ihit %d idx %d icell %d\n", ilayer, ihit, data[ihit].idx, data[ihit].data);
+      //}
 
       for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
          g_raw_hits_icell[ilayer][ihit] = data[ihit].data;
@@ -1006,7 +1006,7 @@ struct Hough
    double diff[10000];
    Hough()
    {
-      h2uv = new TH2F("h2uv", "", 100, -0.1, 0.1, 100, -0.1, 0.1);
+      h2uv = new TH2F("h2uv", "U-V space;u;v", 100, -0.1, 0.1, 100, -0.1, 0.1);
       h2ab = NULL;
       gr = NULL;
       hdiff = new TH1F("hdiff","", 100, -0.01, 0.01);
@@ -1040,12 +1040,12 @@ struct Hough
       int bnum = (bmax-bmin)/bstep;
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
       if (h2ab==NULL) {
-         h2ab = new TH2F("h2ab","",anum, amin, amax, bnum, bmin, bmax);
+         h2ab = new TH2F("h2ab","A-B Space;a;b",anum, amin, amax, bnum, bmin, bmax);
       }
       h2ab->Reset();
 
       for (int i=0; i<num_hits; i++) {
-         printf("#### i %d uhits %f vhits %f\n", i, uhits[i], vhits[i]);
+         //printf("#### i %d uhits %f vhits %f\n", i, uhits[i], vhits[i]);
          h2uv->Fill(uhits[i], vhits[i]);
       }
       for (int i=0; i<num_hits; i++) {
@@ -1159,7 +1159,7 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   int iev1=2, iev2=3;
+   //int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
@@ -1172,6 +1172,7 @@ int main(int argc, char** argv)
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=30;
+   int iev1=0, iev2=100;
    //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
