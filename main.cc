@@ -481,10 +481,11 @@ struct Circle
       TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
+
+      draw_radius();
    };
    void draw_xy_hits_fits()
    {
-      draw_radius();
       draw_xy_hits();
       draw_xy_fit();
    };
@@ -734,7 +735,6 @@ struct Helix
    };
    void draw_xy_hits_fits()
    {
-      draw_radius();
       draw_xy_hits();
       draw_xy_fit();
    };
