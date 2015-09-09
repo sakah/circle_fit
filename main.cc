@@ -1073,7 +1073,7 @@ struct Hough
          diff[ihit] = v - vhits[ihit];
          hdiff->Fill(diff[ihit]);
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
-         if (TMath::Abs(diff[ihit]) < 0.01) {
+         if (TMath::Abs(diff[ihit]) < 0.005) {
             circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
             num_inside++;
          }

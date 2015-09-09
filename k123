@@ -1,42 +1,42 @@
-type G wid 1 cid 0 raidus_at_endplate 51.400000 (cm) length 147.604600 (cm) cell_size 198 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.232700 (cm) first_sense_hole_pos 11178
-type F wid 2 cid 1 raidus_at_endplate 52.200000 (cm) length 147.886700 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.164200 (cm) first_sense_hole_pos 11178
-type S wid 3 cid 1 raidus_at_endplate 53.000000 (cm) length 148.168800 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.166700 (cm) first_sense_hole_pos 11178
-type F wid 4 cid 2 raidus_at_endplate 53.800000 (cm) length 148.450900 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.229500 (cm) first_sense_hole_pos 11178
-type S wid 5 cid 2 raidus_at_endplate 54.600000 (cm) length 148.733100 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.232900 (cm) first_sense_hole_pos 11178
-type F wid 6 cid 3 raidus_at_endplate 55.400000 (cm) length 149.015200 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.223000 (cm) first_sense_hole_pos 11178
-type S wid 7 cid 3 raidus_at_endplate 56.200000 (cm) length 149.297300 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226200 (cm) first_sense_hole_pos 11178
-type F wid 8 cid 4 raidus_at_endplate 57.000000 (cm) length 149.579400 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.216900 (cm) first_sense_hole_pos 11178
-type S wid 9 cid 4 raidus_at_endplate 57.800000 (cm) length 149.861600 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.219900 (cm) first_sense_hole_pos 11178
-type F wid 10 cid 5 raidus_at_endplate 58.600000 (cm) length 150.143700 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11178
-type S wid 11 cid 5 raidus_at_endplate 59.400000 (cm) length 150.425800 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.214000 (cm) first_sense_hole_pos 11178
-type F wid 12 cid 6 raidus_at_endplate 60.200000 (cm) length 150.707900 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.205600 (cm) first_sense_hole_pos 11178
-type S wid 13 cid 6 raidus_at_endplate 61.000000 (cm) length 150.990000 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.208300 (cm) first_sense_hole_pos 11178
-type F wid 14 cid 7 raidus_at_endplate 61.800000 (cm) length 151.272200 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.200400 (cm) first_sense_hole_pos 11178
-type S wid 15 cid 7 raidus_at_endplate 62.600000 (cm) length 151.554300 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.203000 (cm) first_sense_hole_pos 11178
-type F wid 16 cid 8 raidus_at_endplate 63.400000 (cm) length 151.836400 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.195400 (cm) first_sense_hole_pos 11178
-type S wid 17 cid 8 raidus_at_endplate 64.200000 (cm) length 152.118500 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.197900 (cm) first_sense_hole_pos 11178
-type F wid 18 cid 9 raidus_at_endplate 65.000000 (cm) length 152.400700 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.190700 (cm) first_sense_hole_pos 11178
-type S wid 19 cid 9 raidus_at_endplate 65.800000 (cm) length 152.682800 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.193100 (cm) first_sense_hole_pos 11178
-type F wid 20 cid 10 raidus_at_endplate 66.600000 (cm) length 152.964900 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.186200 (cm) first_sense_hole_pos 11178
-type S wid 21 cid 10 raidus_at_endplate 67.400000 (cm) length 153.247000 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.188500 (cm) first_sense_hole_pos 11178
-type F wid 22 cid 11 raidus_at_endplate 68.200000 (cm) length 153.529200 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.181900 (cm) first_sense_hole_pos 11178
-type S wid 23 cid 11 raidus_at_endplate 69.000000 (cm) length 153.811300 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.184100 (cm) first_sense_hole_pos 11178
-type F wid 24 cid 12 raidus_at_endplate 69.800000 (cm) length 154.093400 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.177800 (cm) first_sense_hole_pos 11178
-type S wid 25 cid 12 raidus_at_endplate 70.600000 (cm) length 154.375500 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.179900 (cm) first_sense_hole_pos 11178
-type F wid 26 cid 13 raidus_at_endplate 71.400000 (cm) length 154.657600 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.173900 (cm) first_sense_hole_pos 11178
-type S wid 27 cid 13 raidus_at_endplate 72.200000 (cm) length 154.939800 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.175900 (cm) first_sense_hole_pos 11178
-type F wid 28 cid 14 raidus_at_endplate 73.000000 (cm) length 155.221900 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.170200 (cm) first_sense_hole_pos 11178
-type S wid 29 cid 14 raidus_at_endplate 73.800000 (cm) length 155.504000 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.172000 (cm) first_sense_hole_pos 11178
-type F wid 30 cid 15 raidus_at_endplate 74.600000 (cm) length 155.786100 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226700 (cm) first_sense_hole_pos 11178
-type S wid 31 cid 15 raidus_at_endplate 75.400000 (cm) length 156.068300 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.229100 (cm) first_sense_hole_pos 11178
-type F wid 32 cid 16 raidus_at_endplate 76.200000 (cm) length 156.350400 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.222000 (cm) first_sense_hole_pos 11178
-type S wid 33 cid 16 raidus_at_endplate 77.000000 (cm) length 156.632500 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.224400 (cm) first_sense_hole_pos 11178
-type F wid 34 cid 17 raidus_at_endplate 77.800000 (cm) length 156.914600 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.217500 (cm) first_sense_hole_pos 11178
-type S wid 35 cid 17 raidus_at_endplate 78.600000 (cm) length 157.196800 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.219800 (cm) first_sense_hole_pos 11178
-type F wid 36 cid 18 raidus_at_endplate 79.400000 (cm) length 157.478900 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.213200 (cm) first_sense_hole_pos 11178
-type S wid 37 cid 18 raidus_at_endplate 80.200000 (cm) length 157.761000 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.215400 (cm) first_sense_hole_pos 11178
-type F wid 38 cid 19 raidus_at_endplate 81.000000 (cm) length 158.043100 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.209100 (cm) first_sense_hole_pos 11178
-type G wid 39 cid 19 raidus_at_endplate 81.800000 (cm) length 158.325200 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11178
+type G wid 1 cid 0 raidus_at_endplate 51.400000 (cm) length 147.604600 (cm) cell_size 198 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.232700 (cm) first_sense_hole_pos 11096
+type F wid 2 cid 1 raidus_at_endplate 52.200000 (cm) length 147.886700 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.164200 (cm) first_sense_hole_pos 11096
+type S wid 3 cid 1 raidus_at_endplate 53.000000 (cm) length 148.168800 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.166700 (cm) first_sense_hole_pos 11096
+type F wid 4 cid 2 raidus_at_endplate 53.800000 (cm) length 148.450900 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.229500 (cm) first_sense_hole_pos 11096
+type S wid 5 cid 2 raidus_at_endplate 54.600000 (cm) length 148.733100 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.232900 (cm) first_sense_hole_pos 11096
+type F wid 6 cid 3 raidus_at_endplate 55.400000 (cm) length 149.015200 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.223000 (cm) first_sense_hole_pos 11096
+type S wid 7 cid 3 raidus_at_endplate 56.200000 (cm) length 149.297300 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226200 (cm) first_sense_hole_pos 11096
+type F wid 8 cid 4 raidus_at_endplate 57.000000 (cm) length 149.579400 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.216900 (cm) first_sense_hole_pos 11096
+type S wid 9 cid 4 raidus_at_endplate 57.800000 (cm) length 149.861600 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.219900 (cm) first_sense_hole_pos 11096
+type F wid 10 cid 5 raidus_at_endplate 58.600000 (cm) length 150.143700 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11096
+type S wid 11 cid 5 raidus_at_endplate 59.400000 (cm) length 150.425800 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.214000 (cm) first_sense_hole_pos 11096
+type F wid 12 cid 6 raidus_at_endplate 60.200000 (cm) length 150.707900 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.205600 (cm) first_sense_hole_pos 11096
+type S wid 13 cid 6 raidus_at_endplate 61.000000 (cm) length 150.990000 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.208300 (cm) first_sense_hole_pos 11096
+type F wid 14 cid 7 raidus_at_endplate 61.800000 (cm) length 151.272200 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.200400 (cm) first_sense_hole_pos 11096
+type S wid 15 cid 7 raidus_at_endplate 62.600000 (cm) length 151.554300 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.203000 (cm) first_sense_hole_pos 11096
+type F wid 16 cid 8 raidus_at_endplate 63.400000 (cm) length 151.836400 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.195400 (cm) first_sense_hole_pos 11096
+type S wid 17 cid 8 raidus_at_endplate 64.200000 (cm) length 152.118500 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.197900 (cm) first_sense_hole_pos 11096
+type F wid 18 cid 9 raidus_at_endplate 65.000000 (cm) length 152.400700 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.190700 (cm) first_sense_hole_pos 11096
+type S wid 19 cid 9 raidus_at_endplate 65.800000 (cm) length 152.682800 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.193100 (cm) first_sense_hole_pos 11096
+type F wid 20 cid 10 raidus_at_endplate 66.600000 (cm) length 152.964900 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.186200 (cm) first_sense_hole_pos 11096
+type S wid 21 cid 10 raidus_at_endplate 67.400000 (cm) length 153.247000 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.188500 (cm) first_sense_hole_pos 11096
+type F wid 22 cid 11 raidus_at_endplate 68.200000 (cm) length 153.529200 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.181900 (cm) first_sense_hole_pos 11096
+type S wid 23 cid 11 raidus_at_endplate 69.000000 (cm) length 153.811300 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.184100 (cm) first_sense_hole_pos 11096
+type F wid 24 cid 12 raidus_at_endplate 69.800000 (cm) length 154.093400 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.177800 (cm) first_sense_hole_pos 11096
+type S wid 25 cid 12 raidus_at_endplate 70.600000 (cm) length 154.375500 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.179900 (cm) first_sense_hole_pos 11096
+type F wid 26 cid 13 raidus_at_endplate 71.400000 (cm) length 154.657600 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.173900 (cm) first_sense_hole_pos 11096
+type S wid 27 cid 13 raidus_at_endplate 72.200000 (cm) length 154.939800 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.175900 (cm) first_sense_hole_pos 11096
+type F wid 28 cid 14 raidus_at_endplate 73.000000 (cm) length 155.221900 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.170200 (cm) first_sense_hole_pos 11096
+type S wid 29 cid 14 raidus_at_endplate 73.800000 (cm) length 155.504000 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.172000 (cm) first_sense_hole_pos 11096
+type F wid 30 cid 15 raidus_at_endplate 74.600000 (cm) length 155.786100 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226700 (cm) first_sense_hole_pos 11096
+type S wid 31 cid 15 raidus_at_endplate 75.400000 (cm) length 156.068300 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.229100 (cm) first_sense_hole_pos 11096
+type F wid 32 cid 16 raidus_at_endplate 76.200000 (cm) length 156.350400 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.222000 (cm) first_sense_hole_pos 11096
+type S wid 33 cid 16 raidus_at_endplate 77.000000 (cm) length 156.632500 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.224400 (cm) first_sense_hole_pos 11096
+type F wid 34 cid 17 raidus_at_endplate 77.800000 (cm) length 156.914600 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.217500 (cm) first_sense_hole_pos 11096
+type S wid 35 cid 17 raidus_at_endplate 78.600000 (cm) length 157.196800 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.219800 (cm) first_sense_hole_pos 11096
+type F wid 36 cid 18 raidus_at_endplate 79.400000 (cm) length 157.478900 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.213200 (cm) first_sense_hole_pos 11096
+type S wid 37 cid 18 raidus_at_endplate 80.200000 (cm) length 157.761000 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.215400 (cm) first_sense_hole_pos 11096
+type F wid 38 cid 19 raidus_at_endplate 81.000000 (cm) length 158.043100 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.209100 (cm) first_sense_hole_pos 11096
+type G wid 39 cid 19 raidus_at_endplate 81.800000 (cm) length 158.325200 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11096
 config_init: read 39 layers (20 sense layers)
 layer_size        39
 inner_wall_radius 50.600000
@@ -1624,7 +1624,7 @@ Circ2Clus: iev 2 x0 -3.841706 y0 -3.447266 R 62.820494 pt 188.461481 (MeV/c) deg
 #### i 64 uhits 0.010673 vhits 0.021997
 #### i 65 uhits -0.017899 vhits -0.016656
 #### i 66 uhits -0.017553 vhits -0.017020
-Hough:: iev 2 found_a 5.850000 found_b -0.178500 (num_hits 0 num_inside 37)
+Hough:: iev 2 found_a 5.850000 found_b -0.178500 (num_hits 0 num_inside 32)
 #### i 0 uhits -0.016164 vhits 0.035394
 #### i 1 uhits -0.017279 vhits 0.034864
 #### i 2 uhits 0.036564 vhits -0.013308
@@ -1702,7 +1702,7 @@ Hough:: iev 2 found_a 5.850000 found_b -0.178500 (num_hits 0 num_inside 37)
 #### i 74 uhits -0.015077 vhits -0.019864
 #### i 75 uhits 0.016295 vhits -0.018878
 #### i 76 uhits 0.016687 vhits -0.018532
-Hough:: iev 2 found_a 1.550000 found_b -0.062500 (num_hits 0 num_inside 34)
+Hough:: iev 2 found_a 1.550000 found_b -0.062500 (num_hits 0 num_inside 26)
 dr 0.000000 deg 0.000000
 set_fit_inipar: x0 20.000000 y0 -5.000000 R 40.000000 rad0 87963.318832 (deg) L 0.033333
  PARAMETER DEFINITIONS:
@@ -1728,101 +1728,79 @@ set_fit_inipar: x0 20.000000 y0 -5.000000 R 40.000000 rad0 87963.318832 (deg) L 
  MINUIT WARNING IN MIGrad    
  ============== VARIABLE4 BROUGHT BACK INSIDE LIMITS.
  START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-04
- FCN=1033.28 FROM MIGRAD    STATUS=INITIATE       56 CALLS          57 TOTAL
+ FCN=637.336 FROM MIGRAD    STATUS=INITIATE       59 CALLS          60 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
   EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.10308e+01   1.00000e+00   0.00000e+00  -8.68058e-01
-   2  y0          -5.00000e+00   1.00000e+00   0.00000e+00  -1.79528e+01
-   3  R            4.00000e+01   1.00000e+00   0.00000e+00   4.29731e+02
-   4  rad0         6.28318e+00   1.00000e+00   5.26593e-04  -3.95286e-05
-   5  L            3.33333e-02   1.00000e+00   0.00000e+00  -1.21431e-01
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 4 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 5 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 5.01734 added to diagonal of error matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 5 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 81.2657 added to diagonal of error matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 1.00183 added to diagonal of error matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 4 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 1.43796 added to diagonal of error matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 1.0001 added to diagonal of error matrix
- MIGRAD FAILS TO FIND IMPROVEMENT
- EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
-        -1.1992e+01  1.9940e-02  1.4577e+00  1.9889e+00  1.3525e+01
- MINUIT WARNING IN HESSE   
- ============== MATRIX FORCED POS-DEF BY ADDING 12.005054 TO DIAGONAL.
- FCN=1000.86 FROM HESSE     STATUS=NOT POSDEF     63 CALLS         872 TOTAL
-                     EDM=1.05266    STRATEGY= 1      ERR MATRIX NOT POS-DEF
-  EXT PARAMETER                APPROXIMATE        STEP         FIRST   
-  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.45030e+01   4.84875e-02   8.03090e-02   3.13738e+01
-   2  y0          -5.73385e+00   7.22680e-04   2.73411e-06  -1.73978e-01
-   3  R            3.69028e+01   4.90989e-02   2.48149e-03   1.02392e+01
-   4  rad0         6.27057e+00   7.18493e-01   9.21940e-02  -5.22867e-02
-   5  L            1.93095e+01   6.72814e+00   7.96913e-01  -1.19256e-01
+   1  x0           2.11014e+01   1.00000e+00   0.00000e+00  -3.66442e-01
+   2  y0          -5.00000e+00   1.00000e+00   0.00000e+00  -3.55660e+01
+   3  R            4.00000e+01   1.00000e+00   0.00000e+00   5.27886e+02
+   4  rad0         6.28318e+00   1.00000e+00   1.40294e-05  -1.99471e-04
+   5  L            3.33333e-02   1.00000e+00   0.00000e+00  -8.79810e-01
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 1 in Error Matrix
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 2 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 4 in Error Matrix
+ ============== Negative diagonal element 5 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 18.0396 added to diagonal of error matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 5 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== 27.6833 added to diagonal of error matrix
- CALL LIMIT EXCEEDED IN MIGRAD.
- MIGRAD TERMINATED WITHOUT CONVERGENCE.
- FCN=1000.16 FROM MIGRAD    STATUS=CALL LIMIT   1011 CALLS        1012 TOTAL
-                     EDM=0.0660486    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+ ============== 285.96 added to diagonal of error matrix
+ MIGRAD FAILS TO FIND IMPROVEMENT
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.0147e-01  1.8213e-01  9.4824e-01  1.6364e+00  2.5347e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.304007 TO DIAGONAL.
+ FCN=584.831 FROM HESSE     STATUS=NOT POSDEF     71 CALLS         583 TOTAL
+                     EDM=435.884    STRATEGY= 1      ERR MATRIX NOT POS-DEF
   EXT PARAMETER                APPROXIMATE        STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.49725e+01   3.16480e-01   3.09471e-02   7.85344e-02
-   2  y0          -5.73470e+00   1.17938e-02  -1.45233e-04   4.13400e+00
-   3  R            3.65494e+01   2.58157e-01  -9.84359e-04  -1.67241e+00
-   4  rad0         6.28240e+00   5.71545e-02  -4.75659e-03   1.15634e-01
-   5  L            1.93596e+01   8.78844e-01   1.91866e-02  -1.48738e-01
+   1  x0           2.18048e+01   3.82818e-01   6.22149e-02   5.60457e+01
+   2  y0          -4.27150e+00   2.23093e+00   8.34502e-02  -5.92197e+00
+   3  R            3.96111e+01   1.58618e+00   2.07968e-03   9.75210e+00
+   4  rad0         6.27784e+00   5.20690e-01   4.55477e-02  -6.45289e+00
+   5  L            3.80658e+01   1.94877e+01   1.07977e+00  -2.96342e-01
+ MIGRAD FAILS TO FIND IMPROVEMENT
+ MIGRAD TERMINATED WITHOUT CONVERGENCE.
+ FCN=583.868 FROM MIGRAD    STATUS=FAILED        692 CALLS         693 TOTAL
+                     EDM=0.0288083    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+  EXT PARAMETER                APPROXIMATE        STEP         FIRST   
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
+   1  x0           2.18048e+01   2.06124e-03   0.00000e+00  -6.81858e+00
+   2  y0          -3.97749e+00   3.57791e-01  -0.00000e+00   5.73909e-02
+   3  R            3.97333e+01   2.09703e-01  -0.00000e+00   3.13580e+00
+   4  rad0         6.28276e+00   2.22854e-02   0.00000e+00  -2.18324e+00
+   5  L            3.78702e+01   6.00294e-01  -0.00000e+00  -3.94214e-01
  EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  5    ERR DEF=1
-  1.002e-01 -5.051e-04 -7.479e-02 -1.170e-03  7.190e-02 
- -5.051e-04  1.391e-04  8.080e-04  1.398e-05 -8.836e-04 
- -7.479e-02  8.080e-04  6.665e-02  9.470e-04 -5.355e-02 
- -1.170e-03  1.398e-05  9.470e-04 -1.810e-04 -5.344e-04 
-  7.190e-02 -8.836e-04 -5.355e-02 -5.344e-04  7.724e-01 
+  4.249e-06 -1.259e-04 -6.392e-05  3.684e-06 -3.812e-04 
+ -1.259e-04  1.280e-01  5.864e-02 -6.703e-04  6.950e-02 
+ -6.392e-05  5.864e-02  4.398e-02 -3.011e-04  3.178e-02 
+  3.684e-06 -6.703e-04 -3.011e-04  3.807e-05 -3.726e-03 
+ -3.812e-04  6.950e-02  3.178e-02 -3.726e-03  3.604e-01 
 ERR MATRIX NOT POS-DEF
  PARAMETER  CORRELATION COEFFICIENTS  
        NO.  GLOBAL      1      2      3      4      5
-        1  0.00000   1.000 -0.135 -0.915 -0.275  0.258
-        2  0.00000  -0.135  1.000  0.265  0.088 -0.085
-        3  0.00000  -0.915  0.265  1.000  0.273 -0.236
-        4  0.00000  -0.275  0.088  0.273 -1.000 -0.045
-        5  0.00000   0.258 -0.085 -0.236 -0.045  1.000
+        1  0.27311   1.000 -0.171 -0.148  0.290 -0.308
+        2  0.79105  -0.171  1.000  0.782 -0.304  0.324
+        3  0.78093  -0.148  0.782  1.000 -0.233  0.252
+        4  1.00653   0.290 -0.304 -0.233  1.000 -1.006
+        5  1.00637  -0.308  0.324  0.252 -1.006  1.000
  ERR MATRIX NOT POS-DEF
-i 0 24.972464 +/- 0.316480
-i 1 -5.734702 +/- 0.011794
-i 2 36.549449 +/- 0.258157
-i 3 6.282396 +/- 0.057154
-i 4 19.359634 +/- 0.878844
-R_fit 36.549449 pt_fit 109.648346
-L_fit 19.359634 pz_fit 58.078901
-Helix( 0): iev 2 x0 24.972464 y0 -5.734702 R 36.549449 pt 109.648346 (MeV/c) rad0 6.282396 L 19.359634 pz 58.078901 chi2 1000.159994
+i 0 21.804821 +/- 0.002061
+i 1 -3.977487 +/- 0.357791
+i 2 39.733290 +/- 0.209703
+i 3 6.282759 +/- 0.022285
+i 4 37.870154 +/- 0.600294
+R_fit 39.733290 pt_fit 119.199871
+L_fit 37.870154 pz_fit 113.610461
+Helix( 0): iev 2 x0 21.804821 y0 -3.977487 R 39.733290 pt 119.199871 (MeV/c) rad0 6.282759 L 37.870154 pz 113.610461 chi2 583.868234
 set_fit_inipar: x0 20.000000 y0 -5.000000 R 40.000000 rad0 333.364348 (deg) L -0.033333
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
@@ -1841,82 +1819,80 @@ set_fit_inipar: x0 20.000000 y0 -5.000000 R 40.000000 rad0 333.364348 (deg) L -0
  **********
  FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
  START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-04
- FCN=1033.24 FROM MIGRAD    STATUS=INITIATE      109 CALLS         110 TOTAL
+ FCN=637.269 FROM MIGRAD    STATUS=INITIATE      106 CALLS         107 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
   EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.10411e+01   1.00000e+00   1.01709e-02  -1.51200e-02
-   2  y0          -5.00000e+00   1.00000e+00   0.00000e+00  -1.84232e+01
-   3  R            4.00000e+01   1.00000e+00   0.00000e+00   4.55776e+02
-   4  rad0         1.90790e+00   1.00000e+00   0.00000e+00   2.58645e-02
-   5  L           -3.33333e-02   1.00000e+00   0.00000e+00   1.05021e+00
+   1  x0           2.11070e+01   1.00000e+00   5.56582e-03  -3.89612e-03
+   2  y0          -5.00000e+00   1.00000e+00   0.00000e+00  -3.57867e+01
+   3  R            4.00000e+01   1.00000e+00   0.00000e+00   5.39041e+02
+   4  rad0         2.49405e+00   1.00000e+00   0.00000e+00   1.00853e-01
+   5  L           -3.33333e-02   1.00000e+00   0.00000e+00   2.84907e+00
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 1 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== 1.00004 added to diagonal of error matrix
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 4 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 2.38839 added to diagonal of error matrix
+ ============== 1 added to diagonal of error matrix
  EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
-        -5.2151e-01  9.9816e-01  1.0000e+00  1.0000e+00  2.5233e+00
+        -1.9945e+00  3.0406e-02  8.1105e-01  1.3155e+00  4.8376e+00
  MINUIT WARNING IN MIGRAD  
- ============== MATRIX FORCED POS-DEF BY ADDING 0.524037 TO DIAGONAL.
- EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
-        -2.5423e-02  7.3769e-01  9.0164e-01  1.1575e+00  2.2286e+00
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.999371 TO DIAGONAL.
  MINUIT WARNING IN MIGRAD  
- ============== MATRIX FORCED POS-DEF BY ADDING 0.027652 TO DIAGONAL.
+ ============== Negative diagonal element 3 in Error Matrix
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 4 in Error Matrix
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 5 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== 1.87189 added to diagonal of error matrix
+ ============== 3.54907 added to diagonal of error matrix
  EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
-        -4.1040e-01  6.8110e-03  1.1708e-01  1.4621e+00  3.8244e+00
+        -1.7019e+00  1.3289e-01  3.3874e-01  1.1320e+00  5.0982e+00
  MINUIT WARNING IN MIGRAD  
- ============== MATRIX FORCED POS-DEF BY ADDING 0.414227 TO DIAGONAL.
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.706990 TO DIAGONAL.
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 1 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 3 in Error Matrix
+ ============== Negative diagonal element 4 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== 1.12057 added to diagonal of error matrix
+ ============== 1.44136 added to diagonal of error matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 5 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.13577 added to diagonal of error matrix
  CALL LIMIT EXCEEDED IN MIGRAD.
  MIGRAD TERMINATED WITHOUT CONVERGENCE.
- FCN=1006.75 FROM MIGRAD    STATUS=CALL LIMIT   1008 CALLS        1009 TOTAL
-                     EDM=45.2111    STRATEGY= 1  ERROR MATRIX UNCERTAINTY  60.8 per cent
+ FCN=594.167 FROM MIGRAD    STATUS=CALL LIMIT   1008 CALLS        1009 TOTAL
+                     EDM=94.9057    STRATEGY= 1  ERROR MATRIX UNCERTAINTY  10.4 per cent
   EXT PARAMETER                APPROXIMATE        STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.39177e+01   7.03962e-01   7.95396e-05  -1.64810e+00
-   2  y0          -5.24527e+00   1.08724e+00   6.32128e-05  -1.67427e+00
-   3  R            3.76062e+01   6.51321e-01  -6.82400e-07   3.00115e+00
-   4  rad0         3.66460e+00   4.65206e+00  -2.58001e-04   6.28957e+00
-   5  L           -3.63431e+00   7.85247e-01  -2.97403e-05   1.04650e+00
+   1  x0           2.29681e+01   6.41419e-03   2.36435e-06  -4.26233e+00
+   2  y0          -4.03559e+00   4.29436e-01   6.21030e-04   2.36956e+00
+   3  R            3.87789e+01   2.56537e-01   1.24062e-05  -7.22327e+00
+   4  rad0         9.85160e-01   5.56475e+00   2.59896e-03  -5.65595e+00
+   5  L           -1.38128e+00   1.05189e+00  -1.51147e-03   8.38562e+00
  EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  5    ERR DEF=1
-  4.956e-01  5.047e-02 -3.092e-01 -1.485e+00  2.381e-01 
-  5.047e-02  1.182e+00  4.710e-01 -2.033e-01  8.655e-02 
- -3.092e-01  4.710e-01  4.243e-01  7.696e-01 -1.591e-01 
- -1.485e+00 -2.033e-01  7.696e-01  1.133e+01  1.067e+00 
-  2.381e-01  8.655e-02 -1.591e-01  1.067e+00  6.166e-01 
+  4.114e-05  1.017e-03  4.657e-04  1.005e-02 -2.504e-03 
+  1.017e-03  1.844e-01  9.690e-02  1.727e+00 -4.436e-01 
+  4.657e-04  9.690e-02  6.581e-02  8.438e-01 -2.147e-01 
+  1.005e-02  1.727e+00  8.438e-01  1.662e+01 -4.280e+00 
+ -2.504e-03 -4.436e-01 -2.147e-01 -4.280e+00  1.106e+00 
 ERR MATRIX APPROXIMATE
  PARAMETER  CORRELATION COEFFICIENTS  
        NO.  GLOBAL      1      2      3      4      5
-        1  0.98671   1.000  0.066 -0.674 -0.627  0.431
-        2  0.96967   0.066  1.000  0.665 -0.056  0.101
-        3  0.98335  -0.674  0.665  1.000  0.351 -0.311
-        4  0.97752  -0.627 -0.056  0.351  1.000  0.404
-        5  0.97018   0.431  0.101 -0.311  0.404  1.000
+        1  0.45042   1.000  0.369  0.283  0.384 -0.371
+        2  0.99646   0.369  1.000  0.880  0.986 -0.982
+        3  0.95405   0.283  0.880  1.000  0.807 -0.796
+        4  0.99882   0.384  0.986  0.807  1.000 -0.998
+        5  0.99833  -0.371 -0.982 -0.796 -0.998  1.000
  ERR MATRIX APPROXIMATE
-i 0 23.917708 +/- 0.703962
-i 1 -5.245266 +/- 1.087237
-i 2 37.606185 +/- 0.651321
-i 3 3.664598 +/- 4.652059
-i 4 -3.634315 +/- 0.785247
-R_fit 37.606185 pt_fit 112.818555
-L_fit -3.634315 pz_fit -10.902944
-Helix( 1): iev 2 x0 23.917708 y0 -5.245266 R 37.606185 pt 112.818555 (MeV/c) rad0 3.664598 L -3.634315 pz -10.902944 chi2 1006.750089
-## iev     2 tc.dr 0.000000 tc.deg 0.000000 mc_z -11.948519 z1_fit -51.356300 mc_pt 100.535475 helix.pt_fit 109.648346 mc_pz -18.137869 helix.pz_fit 58.078901 helix.chi2 1000.159994
+i 0 22.968099 +/- 0.006414
+i 1 -4.035590 +/- 0.429436
+i 2 38.778943 +/- 0.256537
+i 3 0.985160 +/- 5.564748
+i 4 -1.381285 +/- 1.051888
+R_fit 38.778943 pt_fit 116.336830
+L_fit -1.381285 pz_fit -4.143854
+Helix( 1): iev 2 x0 22.968099 y0 -4.035590 R 38.778943 pt 116.336830 (MeV/c) rad0 0.985160 L -1.381285 pz -4.143854 chi2 594.167076
+## iev     2 tc.dr 0.000000 tc.deg 0.000000 mc_z -11.948519 z1_fit -51.356300 mc_pt 100.535475 helix.pt_fit 119.199871 mc_pz -18.137869 helix.pz_fit 113.610461 helix.chi2 583.868234
 HOGE:: ihit 0 hits_iturn 0 xhits 37.772805 yhits -37.178155
 HOGE:: ihit 1 hits_iturn 0 xhits 38.933374 yhits -35.960984
 HOGE:: ihit 2 hits_iturn 0 xhits 48.252473 yhits -34.641866
@@ -2903,144 +2879,118 @@ HOGE:: ihit 74 hits_iturn -1 xhits -48.488849 yhits -63.881699
 HOGE:: ihit 75 hits_iturn -1 xhits 52.404332 yhits -60.711003
 HOGE:: ihit 76 hits_iturn -1 xhits 53.664275 yhits -59.600215
 HOGE:: ihit 0 hits_iturn 0 xhits 46.717019 yhits 25.030384
-HOGE:: ihit 1 hits_iturn -1 xhits 45.899337 yhits 26.500017
-HOGE:: ihit 2 hits_iturn 1 xhits 35.338772 yhits -39.499003
-HOGE:: ihit 3 hits_iturn 1 xhits 36.574202 yhits -38.357890
-HOGE:: ihit 4 hits_iturn 0 xhits 37.772805 yhits -37.178155
-HOGE:: ihit 5 hits_iturn 0 xhits 38.933374 yhits -35.960984
-HOGE:: ihit 6 hits_iturn 0 xhits 52.002102 yhits 21.312471
-HOGE:: ihit 7 hits_iturn 0 xhits 51.341255 yhits 22.858599
-HOGE:: ihit 8 hits_iturn 1 xhits 42.322616 yhits -36.976156
-HOGE:: ihit 9 hits_iturn 1 xhits 43.409833 yhits -35.693506
-HOGE:: ihit 10 hits_iturn -1 xhits 44.458192 yhits -34.378906
-HOGE:: ihit 11 hits_iturn 0 xhits 57.036752 yhits 16.588215
-HOGE:: ihit 12 hits_iturn 0 xhits 56.544482 yhits 18.195647
-HOGE:: ihit 13 hits_iturn -1 xhits 47.252823 yhits -35.993482
-HOGE:: ihit 14 hits_iturn 0 xhits 48.252473 yhits -34.641866
-HOGE:: ihit 15 hits_iturn 0 xhits 49.213473 yhits -33.262502
-HOGE:: ihit 16 hits_iturn 0 xhits 50.135054 yhits -31.856496
-HOGE:: ihit 17 hits_iturn 0 xhits 61.918587 yhits 9.211331
-HOGE:: ihit 18 hits_iturn 0 xhits 61.648961 yhits 10.870400
-HOGE:: ihit 19 hits_iturn 0 xhits 61.334890 yhits 12.521632
-HOGE:: ihit 20 hits_iturn 0 xhits 55.034002 yhits -29.833180
-HOGE:: ihit 21 hits_iturn 0 xhits 55.815125 yhits -28.344874
-HOGE:: ihit 22 hits_iturn 0 xhits 56.556008 yhits -26.836132
-HOGE:: ihit 23 hits_iturn 0 xhits 65.794634 yhits 0.840309
-HOGE:: ihit 24 hits_iturn 0 xhits 62.474841 yhits -20.652707
-HOGE:: ihit 25 hits_iturn 0 xhits 62.981905 yhits -19.050449
-HOGE:: ihit 26 hits_iturn 0 xhits 63.447885 yhits -17.435764
-HOGE:: ihit 27 hits_iturn 0 xhits 63.872476 yhits -15.809705
-HOGE:: ihit 28 hits_iturn 0 xhits 64.255402 yhits -14.173333
-HOGE:: ihit 29 hits_iturn 0 xhits 64.596411 yhits -12.527716
-HOGE:: ihit 30 hits_iturn 0 xhits 64.895283 yhits -10.873926
-HOGE:: ihit 31 hits_iturn 0 xhits 65.151821 yhits -9.213043
-HOGE:: ihit 32 hits_iturn 0 xhits 65.365860 yhits -7.546150
-HOGE:: ihit 33 hits_iturn 0 xhits 65.537258 yhits -5.874334
-HOGE:: ihit 34 hits_iturn 0 xhits 65.665905 yhits -4.198687
-HOGE:: ihit 35 hits_iturn 0 xhits 65.751715 yhits -2.520300
-HOGE:: ihit 36 hits_iturn 0 xhits 65.794635 yhits -0.840270
-HOGE:: ihit 0 hits_iturn -1 xhits 48.300201 yhits -17.579835
-HOGE:: ihit 1 hits_iturn -1 xhits 48.833655 yhits -16.038519
-HOGE:: ihit 2 hits_iturn 0 xhits 33.570928 yhits -43.059875
-HOGE:: ihit 3 hits_iturn 0 xhits 34.881037 yhits -42.005634
-HOGE:: ihit 4 hits_iturn 1 xhits 36.158060 yhits -40.911548
-HOGE:: ihit 5 hits_iturn 1 xhits 37.400784 yhits -39.778654
-HOGE:: ihit 6 hits_iturn 1 xhits 38.608032 yhits -38.608029
-HOGE:: ihit 7 hits_iturn -1 xhits 52.739551 yhits -14.131518
-HOGE:: ihit 8 hits_iturn 1 xhits 53.149718 yhits -12.500698
-HOGE:: ihit 9 hits_iturn 1 xhits 53.509470 yhits -10.858021
-HOGE:: ihit 10 hits_iturn 0 xhits 40.272012 yhits -41.460886
-HOGE:: ihit 11 hits_iturn 0 xhits 41.460853 yhits -40.272046
-HOGE:: ihit 12 hits_iturn 1 xhits 43.732319 yhits -37.793178
-HOGE:: ihit 13 hits_iturn 1 xhits 44.813022 yhits -36.505247
-HOGE:: ihit 14 hits_iturn 1 xhits 45.855809 yhits -35.186429
-HOGE:: ihit 15 hits_iturn 1 xhits 46.859797 yhits -33.837841
-HOGE:: ihit 16 hits_iturn 1 xhits 47.824137 yhits -32.460621
-HOGE:: ihit 17 hits_iturn 1 xhits 48.748013 yhits -31.055937
-HOGE:: ihit 18 hits_iturn 1 xhits 49.630643 yhits -29.624977
-HOGE:: ihit 19 hits_iturn 1 xhits 50.471281 yhits -28.168951
-HOGE:: ihit 20 hits_iturn 1 xhits 51.269215 yhits -26.689091
-HOGE:: ihit 21 hits_iturn 1 xhits 52.023770 yhits -25.186649
-HOGE:: ihit 22 hits_iturn 1 xhits 52.734308 yhits -23.662897
-HOGE:: ihit 23 hits_iturn 1 xhits 53.400228 yhits -22.119124
-HOGE:: ihit 24 hits_iturn 1 xhits 54.020965 yhits -20.556636
-HOGE:: ihit 25 hits_iturn 1 xhits 54.595996 yhits -18.976755
-HOGE:: ihit 26 hits_iturn 0 xhits 47.086916 yhits -38.779149
-HOGE:: ihit 27 hits_iturn 0 xhits 48.137571 yhits -37.466975
-HOGE:: ihit 28 hits_iturn 0 xhits 54.739499 yhits -33.544408
-HOGE:: ihit 29 hits_iturn 0 xhits 55.598831 yhits -32.100000
-HOGE:: ihit 30 hits_iturn 0 xhits 56.420059 yhits -30.633592
-HOGE:: ihit 31 hits_iturn 0 xhits 57.202619 yhits -29.146190
-HOGE:: ihit 32 hits_iturn -1 xhits 51.631395 yhits -43.323885
-HOGE:: ihit 33 hits_iturn -1 xhits 52.695442 yhits -42.023213
+HOGE:: ihit 1 hits_iturn 1 xhits 35.338772 yhits -39.499003
+HOGE:: ihit 2 hits_iturn 1 xhits 36.574202 yhits -38.357890
+HOGE:: ihit 3 hits_iturn 0 xhits 52.002102 yhits 21.312471
+HOGE:: ihit 4 hits_iturn 0 xhits 51.341255 yhits 22.858599
+HOGE:: ihit 5 hits_iturn 1 xhits 42.322616 yhits -36.976156
+HOGE:: ihit 6 hits_iturn 1 xhits 43.409833 yhits -35.693506
+HOGE:: ihit 7 hits_iturn 0 xhits 57.036752 yhits 16.588215
+HOGE:: ihit 8 hits_iturn 0 xhits 56.544482 yhits 18.195647
+HOGE:: ihit 9 hits_iturn -1 xhits 47.252823 yhits -35.993482
+HOGE:: ihit 10 hits_iturn 0 xhits 48.252473 yhits -34.641866
+HOGE:: ihit 11 hits_iturn 0 xhits 49.213473 yhits -33.262502
+HOGE:: ihit 12 hits_iturn 0 xhits 61.918587 yhits 9.211331
+HOGE:: ihit 13 hits_iturn 0 xhits 61.648961 yhits 10.870400
+HOGE:: ihit 14 hits_iturn 0 xhits 61.334890 yhits 12.521632
+HOGE:: ihit 15 hits_iturn 0 xhits 55.034002 yhits -29.833180
+HOGE:: ihit 16 hits_iturn 0 xhits 55.815125 yhits -28.344874
+HOGE:: ihit 17 hits_iturn 0 xhits 56.556008 yhits -26.836132
+HOGE:: ihit 18 hits_iturn 0 xhits 65.794634 yhits 0.840309
+HOGE:: ihit 19 hits_iturn 0 xhits 62.474841 yhits -20.652707
+HOGE:: ihit 20 hits_iturn 0 xhits 62.981905 yhits -19.050449
+HOGE:: ihit 21 hits_iturn 0 xhits 63.447885 yhits -17.435764
+HOGE:: ihit 22 hits_iturn 0 xhits 63.872476 yhits -15.809705
+HOGE:: ihit 23 hits_iturn 0 xhits 64.255402 yhits -14.173333
+HOGE:: ihit 24 hits_iturn 0 xhits 64.596411 yhits -12.527716
+HOGE:: ihit 25 hits_iturn 0 xhits 64.895283 yhits -10.873926
+HOGE:: ihit 26 hits_iturn 0 xhits 65.151821 yhits -9.213043
+HOGE:: ihit 27 hits_iturn 0 xhits 65.365860 yhits -7.546150
+HOGE:: ihit 28 hits_iturn 0 xhits 65.537258 yhits -5.874334
+HOGE:: ihit 29 hits_iturn 0 xhits 65.665905 yhits -4.198687
+HOGE:: ihit 30 hits_iturn 0 xhits 65.751715 yhits -2.520300
+HOGE:: ihit 31 hits_iturn 0 xhits 65.794635 yhits -0.840270
+HOGE:: ihit 0 hits_iturn 0 xhits 33.570928 yhits -43.059875
+HOGE:: ihit 1 hits_iturn 0 xhits 34.881037 yhits -42.005634
+HOGE:: ihit 2 hits_iturn 1 xhits 36.158060 yhits -40.911548
+HOGE:: ihit 3 hits_iturn 1 xhits 37.400784 yhits -39.778654
+HOGE:: ihit 4 hits_iturn 1 xhits 38.608032 yhits -38.608029
+HOGE:: ihit 5 hits_iturn -1 xhits 52.739551 yhits -14.131518
+HOGE:: ihit 6 hits_iturn 1 xhits 53.149718 yhits -12.500698
+HOGE:: ihit 7 hits_iturn 1 xhits 53.509470 yhits -10.858021
+HOGE:: ihit 8 hits_iturn 0 xhits 40.272012 yhits -41.460886
+HOGE:: ihit 9 hits_iturn 0 xhits 41.460853 yhits -40.272046
+HOGE:: ihit 10 hits_iturn 1 xhits 43.732319 yhits -37.793178
+HOGE:: ihit 11 hits_iturn 1 xhits 44.813022 yhits -36.505247
+HOGE:: ihit 12 hits_iturn 1 xhits 45.855809 yhits -35.186429
+HOGE:: ihit 13 hits_iturn 1 xhits 46.859797 yhits -33.837841
+HOGE:: ihit 14 hits_iturn 1 xhits 47.824137 yhits -32.460621
+HOGE:: ihit 15 hits_iturn 1 xhits 48.748013 yhits -31.055937
+HOGE:: ihit 16 hits_iturn 1 xhits 49.630643 yhits -29.624977
+HOGE:: ihit 17 hits_iturn 1 xhits 50.471281 yhits -28.168951
+HOGE:: ihit 18 hits_iturn 1 xhits 51.269215 yhits -26.689091
+HOGE:: ihit 19 hits_iturn 1 xhits 52.023770 yhits -25.186649
+HOGE:: ihit 20 hits_iturn 1 xhits 52.734308 yhits -23.662897
+HOGE:: ihit 21 hits_iturn 1 xhits 53.400228 yhits -22.119124
+HOGE:: ihit 22 hits_iturn 1 xhits 54.020965 yhits -20.556636
+HOGE:: ihit 23 hits_iturn 1 xhits 54.595996 yhits -18.976755
+HOGE:: ihit 24 hits_iturn 0 xhits 47.086916 yhits -38.779149
+HOGE:: ihit 25 hits_iturn 0 xhits 48.137571 yhits -37.466975
 HOGE:: ihit 0 hits_iturn 0 xhits 46.717019 yhits 25.030384
-HOGE:: ihit 1 hits_iturn -1 xhits 45.899337 yhits 26.500017
-HOGE:: ihit 2 hits_iturn 1 xhits 35.338772 yhits -39.499003
-HOGE:: ihit 3 hits_iturn 1 xhits 36.574202 yhits -38.357890
-HOGE:: ihit 4 hits_iturn 0 xhits 37.772805 yhits -37.178155
-HOGE:: ihit 5 hits_iturn 0 xhits 38.933374 yhits -35.960984
-HOGE:: ihit 6 hits_iturn 0 xhits 52.002102 yhits 21.312471
-HOGE:: ihit 7 hits_iturn 0 xhits 51.341255 yhits 22.858599
-HOGE:: ihit 8 hits_iturn 1 xhits 42.322616 yhits -36.976156
-HOGE:: ihit 9 hits_iturn 1 xhits 43.409833 yhits -35.693506
-HOGE:: ihit 10 hits_iturn -1 xhits 44.458192 yhits -34.378906
-HOGE:: ihit 11 hits_iturn 0 xhits 57.036752 yhits 16.588215
-HOGE:: ihit 12 hits_iturn 0 xhits 56.544482 yhits 18.195647
-HOGE:: ihit 13 hits_iturn -1 xhits 47.252823 yhits -35.993482
-HOGE:: ihit 14 hits_iturn 0 xhits 48.252473 yhits -34.641866
-HOGE:: ihit 15 hits_iturn 0 xhits 49.213473 yhits -33.262502
-HOGE:: ihit 16 hits_iturn 0 xhits 50.135054 yhits -31.856496
-HOGE:: ihit 17 hits_iturn 0 xhits 61.918587 yhits 9.211331
-HOGE:: ihit 18 hits_iturn 0 xhits 61.648961 yhits 10.870400
-HOGE:: ihit 19 hits_iturn 0 xhits 61.334890 yhits 12.521632
-HOGE:: ihit 20 hits_iturn 0 xhits 55.034002 yhits -29.833180
-HOGE:: ihit 21 hits_iturn 0 xhits 55.815125 yhits -28.344874
-HOGE:: ihit 22 hits_iturn 0 xhits 56.556008 yhits -26.836132
-HOGE:: ihit 23 hits_iturn 0 xhits 65.794634 yhits 0.840309
-HOGE:: ihit 24 hits_iturn 0 xhits 62.474841 yhits -20.652707
-HOGE:: ihit 25 hits_iturn 0 xhits 62.981905 yhits -19.050449
-HOGE:: ihit 26 hits_iturn 0 xhits 63.447885 yhits -17.435764
-HOGE:: ihit 27 hits_iturn 0 xhits 63.872476 yhits -15.809705
-HOGE:: ihit 28 hits_iturn 0 xhits 64.255402 yhits -14.173333
-HOGE:: ihit 29 hits_iturn 0 xhits 64.596411 yhits -12.527716
-HOGE:: ihit 30 hits_iturn 0 xhits 64.895283 yhits -10.873926
-HOGE:: ihit 31 hits_iturn 0 xhits 65.151821 yhits -9.213043
-HOGE:: ihit 32 hits_iturn 0 xhits 65.365860 yhits -7.546150
-HOGE:: ihit 33 hits_iturn 0 xhits 65.537258 yhits -5.874334
-HOGE:: ihit 34 hits_iturn 0 xhits 65.665905 yhits -4.198687
-HOGE:: ihit 35 hits_iturn 0 xhits 65.751715 yhits -2.520300
-HOGE:: ihit 36 hits_iturn 0 xhits 65.794635 yhits -0.840270
-HOGE:: ihit 0 hits_iturn -1 xhits 48.300201 yhits -17.579835
-HOGE:: ihit 1 hits_iturn -1 xhits 48.833655 yhits -16.038519
-HOGE:: ihit 2 hits_iturn 0 xhits 33.570928 yhits -43.059875
-HOGE:: ihit 3 hits_iturn 0 xhits 34.881037 yhits -42.005634
-HOGE:: ihit 4 hits_iturn 1 xhits 36.158060 yhits -40.911548
-HOGE:: ihit 5 hits_iturn 1 xhits 37.400784 yhits -39.778654
-HOGE:: ihit 6 hits_iturn 1 xhits 38.608032 yhits -38.608029
-HOGE:: ihit 7 hits_iturn -1 xhits 52.739551 yhits -14.131518
-HOGE:: ihit 8 hits_iturn 1 xhits 53.149718 yhits -12.500698
-HOGE:: ihit 9 hits_iturn 1 xhits 53.509470 yhits -10.858021
-HOGE:: ihit 10 hits_iturn 0 xhits 40.272012 yhits -41.460886
-HOGE:: ihit 11 hits_iturn 0 xhits 41.460853 yhits -40.272046
-HOGE:: ihit 12 hits_iturn 1 xhits 43.732319 yhits -37.793178
-HOGE:: ihit 13 hits_iturn 1 xhits 44.813022 yhits -36.505247
-HOGE:: ihit 14 hits_iturn 1 xhits 45.855809 yhits -35.186429
-HOGE:: ihit 15 hits_iturn 1 xhits 46.859797 yhits -33.837841
-HOGE:: ihit 16 hits_iturn 1 xhits 47.824137 yhits -32.460621
-HOGE:: ihit 17 hits_iturn 1 xhits 48.748013 yhits -31.055937
-HOGE:: ihit 18 hits_iturn 1 xhits 49.630643 yhits -29.624977
-HOGE:: ihit 19 hits_iturn 1 xhits 50.471281 yhits -28.168951
-HOGE:: ihit 20 hits_iturn 1 xhits 51.269215 yhits -26.689091
-HOGE:: ihit 21 hits_iturn 1 xhits 52.023770 yhits -25.186649
-HOGE:: ihit 22 hits_iturn 1 xhits 52.734308 yhits -23.662897
-HOGE:: ihit 23 hits_iturn 1 xhits 53.400228 yhits -22.119124
-HOGE:: ihit 24 hits_iturn 1 xhits 54.020965 yhits -20.556636
-HOGE:: ihit 25 hits_iturn 1 xhits 54.595996 yhits -18.976755
-HOGE:: ihit 26 hits_iturn 0 xhits 47.086916 yhits -38.779149
-HOGE:: ihit 27 hits_iturn 0 xhits 48.137571 yhits -37.466975
-HOGE:: ihit 28 hits_iturn 0 xhits 54.739499 yhits -33.544408
-HOGE:: ihit 29 hits_iturn 0 xhits 55.598831 yhits -32.100000
-HOGE:: ihit 30 hits_iturn 0 xhits 56.420059 yhits -30.633592
-HOGE:: ihit 31 hits_iturn 0 xhits 57.202619 yhits -29.146190
-HOGE:: ihit 32 hits_iturn -1 xhits 51.631395 yhits -43.323885
-HOGE:: ihit 33 hits_iturn -1 xhits 52.695442 yhits -42.023213
+HOGE:: ihit 1 hits_iturn 1 xhits 35.338772 yhits -39.499003
+HOGE:: ihit 2 hits_iturn 1 xhits 36.574202 yhits -38.357890
+HOGE:: ihit 3 hits_iturn 0 xhits 52.002102 yhits 21.312471
+HOGE:: ihit 4 hits_iturn 0 xhits 51.341255 yhits 22.858599
+HOGE:: ihit 5 hits_iturn 1 xhits 42.322616 yhits -36.976156
+HOGE:: ihit 6 hits_iturn 1 xhits 43.409833 yhits -35.693506
+HOGE:: ihit 7 hits_iturn 0 xhits 57.036752 yhits 16.588215
+HOGE:: ihit 8 hits_iturn 0 xhits 56.544482 yhits 18.195647
+HOGE:: ihit 9 hits_iturn -1 xhits 47.252823 yhits -35.993482
+HOGE:: ihit 10 hits_iturn 0 xhits 48.252473 yhits -34.641866
+HOGE:: ihit 11 hits_iturn 0 xhits 49.213473 yhits -33.262502
+HOGE:: ihit 12 hits_iturn 0 xhits 61.918587 yhits 9.211331
+HOGE:: ihit 13 hits_iturn 0 xhits 61.648961 yhits 10.870400
+HOGE:: ihit 14 hits_iturn 0 xhits 61.334890 yhits 12.521632
+HOGE:: ihit 15 hits_iturn 0 xhits 55.034002 yhits -29.833180
+HOGE:: ihit 16 hits_iturn 0 xhits 55.815125 yhits -28.344874
+HOGE:: ihit 17 hits_iturn 0 xhits 56.556008 yhits -26.836132
+HOGE:: ihit 18 hits_iturn 0 xhits 65.794634 yhits 0.840309
+HOGE:: ihit 19 hits_iturn 0 xhits 62.474841 yhits -20.652707
+HOGE:: ihit 20 hits_iturn 0 xhits 62.981905 yhits -19.050449
+HOGE:: ihit 21 hits_iturn 0 xhits 63.447885 yhits -17.435764
+HOGE:: ihit 22 hits_iturn 0 xhits 63.872476 yhits -15.809705
+HOGE:: ihit 23 hits_iturn 0 xhits 64.255402 yhits -14.173333
+HOGE:: ihit 24 hits_iturn 0 xhits 64.596411 yhits -12.527716
+HOGE:: ihit 25 hits_iturn 0 xhits 64.895283 yhits -10.873926
+HOGE:: ihit 26 hits_iturn 0 xhits 65.151821 yhits -9.213043
+HOGE:: ihit 27 hits_iturn 0 xhits 65.365860 yhits -7.546150
+HOGE:: ihit 28 hits_iturn 0 xhits 65.537258 yhits -5.874334
+HOGE:: ihit 29 hits_iturn 0 xhits 65.665905 yhits -4.198687
+HOGE:: ihit 30 hits_iturn 0 xhits 65.751715 yhits -2.520300
+HOGE:: ihit 31 hits_iturn 0 xhits 65.794635 yhits -0.840270
+HOGE:: ihit 0 hits_iturn 0 xhits 33.570928 yhits -43.059875
+HOGE:: ihit 1 hits_iturn 0 xhits 34.881037 yhits -42.005634
+HOGE:: ihit 2 hits_iturn 1 xhits 36.158060 yhits -40.911548
+HOGE:: ihit 3 hits_iturn 1 xhits 37.400784 yhits -39.778654
+HOGE:: ihit 4 hits_iturn 1 xhits 38.608032 yhits -38.608029
+HOGE:: ihit 5 hits_iturn -1 xhits 52.739551 yhits -14.131518
+HOGE:: ihit 6 hits_iturn 1 xhits 53.149718 yhits -12.500698
+HOGE:: ihit 7 hits_iturn 1 xhits 53.509470 yhits -10.858021
+HOGE:: ihit 8 hits_iturn 0 xhits 40.272012 yhits -41.460886
+HOGE:: ihit 9 hits_iturn 0 xhits 41.460853 yhits -40.272046
+HOGE:: ihit 10 hits_iturn 1 xhits 43.732319 yhits -37.793178
+HOGE:: ihit 11 hits_iturn 1 xhits 44.813022 yhits -36.505247
+HOGE:: ihit 12 hits_iturn 1 xhits 45.855809 yhits -35.186429
+HOGE:: ihit 13 hits_iturn 1 xhits 46.859797 yhits -33.837841
+HOGE:: ihit 14 hits_iturn 1 xhits 47.824137 yhits -32.460621
+HOGE:: ihit 15 hits_iturn 1 xhits 48.748013 yhits -31.055937
+HOGE:: ihit 16 hits_iturn 1 xhits 49.630643 yhits -29.624977
+HOGE:: ihit 17 hits_iturn 1 xhits 50.471281 yhits -28.168951
+HOGE:: ihit 18 hits_iturn 1 xhits 51.269215 yhits -26.689091
+HOGE:: ihit 19 hits_iturn 1 xhits 52.023770 yhits -25.186649
+HOGE:: ihit 20 hits_iturn 1 xhits 52.734308 yhits -23.662897
+HOGE:: ihit 21 hits_iturn 1 xhits 53.400228 yhits -22.119124
+HOGE:: ihit 22 hits_iturn 1 xhits 54.020965 yhits -20.556636
+HOGE:: ihit 23 hits_iturn 1 xhits 54.595996 yhits -18.976755
+HOGE:: ihit 24 hits_iturn 0 xhits 47.086916 yhits -38.779149
+HOGE:: ihit 25 hits_iturn 0 xhits 48.137571 yhits -37.466975
