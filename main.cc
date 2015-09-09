@@ -213,8 +213,8 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       int icell = g_hits_icell[ihit];
       config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, w_z, "center", &w_x, &w_y);
 
-      double xexp = x0 + R * TMath::Cos(rad0 + w_z/L);
-      double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
+      double xexp = x0 + R * TMath::Cos(rad0_org + w_z/L);
+      double yexp = y0 + R * TMath::Sin(rad0_org + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
