@@ -118,7 +118,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
-      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy);
+      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy);
       chi2 += dx*dx + dy*dy;
 
       // update hit position for next fit
@@ -487,9 +487,9 @@ struct Helix
 
       Int_t ierflag;
       Double_t arglist[10];
-      TString Tag[3];
-      Double_t var[3];
-      Double_t verr[3];
+      TString Tag[5];
+      Double_t var[5];
+      Double_t verr[5];
       Double_t bnd1, bnd2;
       Int_t ivarbl;
 
@@ -507,17 +507,17 @@ struct Helix
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
          printf("i %d %f +/- %f\n", i, var[i], verr[i]);
       }
-      // Result
-      Double_t amin,edm,errdef;
-      Int_t nvpar,nparx,icstat;
-      minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
-      chi2 = amin;
-
       x0_fit = var[0]; //cm
       y0_fit = var[1]; //cm
       R_fit  = var[2]; // cm
       rad0_fit  = var[3]; // rad
       L_fit  = var[4]; // cm
+
+      // Result
+      Double_t amin,edm,errdef;
+      Int_t nvpar,nparx,icstat;
+      minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
+      chi2 = amin;
 
       for (int ihit=0; ihit<nhits; ihit++) {
          xhits[ihit] = g_xhits[ihit];
