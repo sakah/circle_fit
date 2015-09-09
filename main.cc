@@ -132,15 +132,15 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       if (rad>=ang90  && rad<ang180) region_hit[1] = 1;
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
       if (rad>=ang270 && rad<ang360) region_hit[3] = 1;
-      printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
+      //printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
    }
-   fprintf(stdout,"1) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
+   //fprintf(stdout,"1) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
    // check rad0 also
    if (rad0>=ang0   && rad0<ang90)  region_hit[0] = 1;
    if (rad0>=ang90  && rad0<ang180) region_hit[1] = 1;
    if (rad0>=ang180 && rad0<ang270) region_hit[2] = 1;
    if (rad0>=ang270 && rad0<ang360) region_hit[3] = 1;
-   fprintf(stdout,"2) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
+   //fprintf(stdout,"2) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
 
    /*
    printf("rad0 %f region_hit %d %d %d %d\n", 
