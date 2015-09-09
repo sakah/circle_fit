@@ -1303,6 +1303,14 @@ int main(int argc, char** argv)
       hough2.calc_diff(conf2.num_hits, conf2.uhits, conf2.vhits, conf2.ilayers, conf2.icells, conf2.iturns, conf2.xhits, conf2.yhits, circ2);
       hough2.print_result(iev);
 
+
+      circ1.set_fit_inipar();
+      circ2.set_fit_inipar();
+      circ1.fit_circ();
+      circ2.fit_circ();
+      circ1.print_fit_result(Form("Circ1: iev %d", iev));
+      circ2.print_fit_result(Form("Circ2: iev %d", iev));
+
       struct TwoCircle tc;
       tc.calc(circ1, circ2);
       tc.print();
