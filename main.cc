@@ -316,6 +316,30 @@ struct Circle
       g_xsig = 1.0;
       g_ysig = 1.0;
    };
+   void remove_hit(int ilayer, int icell)
+   {
+      int remove_idx = -1;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         if (hits_ilayer[ihit] == ilayer && hits_icell[ihit] == icell) {
+            remove_idx = ihit;
+            break;
+         }
+      }
+      printf("remove_hit: idx %d nhits %d\n", remove_idx, nhits);
+      if (remove_idx==-1) return; // not found
+      int n=0;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         if (ihit == remove_idx) continue;
+         hits_ilayer[n] = hits_ilayer[ihit];
+         hits_icell[n] =  hits_icell[ihit];
+         hits_iturn[n] =  hits_iturn[ihit];
+         xhits[n] =       xhits[ihit];
+         yhits[n] =       yhits[ihit];
+         printf("n %d hits_ilaeyr %d hits_icell %d\n", n, hits_ilayer[n], hits_icell[n]);
+         n++;
+      }
+      nhits--;
+   };
    void copy_hits(Circle& other)
    {
       nhits = other.nhits;
@@ -840,6 +864,7 @@ double estimate_pz(double z1, double z2, double drad)
 
 int g_num_raw_hits[20];
 int g_raw_hits_icell[20][400];
+int g_raw_hits_iturn[20][400];
 double g_raw_hits_xpos[20][400];
 double g_raw_hits_ypos[20][400];
 double g_R_sig[20][400];
@@ -852,13 +877,76 @@ void clear_buffer()
       }
    }
 }
-void add_raw_hits(int ilayer, int icell, double x, double y)
+void add_raw_hits(int ilayer, int icell, int iturn, double x, double y)
 {
    int n = g_num_raw_hits[ilayer];
    g_raw_hits_icell[ilayer][n] = icell;
+   g_raw_hits_iturn[ilayer][n] = iturn;
    g_raw_hits_xpos[ilayer][n] = x;
    g_raw_hits_ypos[ilayer][n] = y;
    g_num_raw_hits[ilayer]++;
+}
+void remove_raw_hits(int ilayer, int icell)
+{
+   int num = g_num_raw_hits[ilayer];
+   int n=0;
+   for (int i=0; i<num; i++) {
+      int this_icell = g_raw_hits_icell[ilayer][i];
+      if (this_icell == icell) continue;
+      g_raw_hits_icell[ilayer][n] = g_raw_hits_icell[ilayer][i];
+      g_raw_hits_iturn[ilayer][n] = g_raw_hits_iturn[ilayer][i];
+      g_raw_hits_xpos[ilayer][n]  = g_raw_hits_xpos[ilayer][i];
+      g_raw_hits_ypos[ilayer][n]  = g_raw_hits_ypos[ilayer][i];
+      n++;
+   }
+   g_num_raw_hits[ilayer]--;
+}
+struct Sort_int_data
+{
+   int idx;
+   int data;
+   double buf1;
+   double buf2;
+   int buf3;
+};
+int sort_int_data(const void* a, const void* b)
+{
+   Sort_int_data* d1 = (Sort_int_data*)a;
+   Sort_int_data* d2 = (Sort_int_data*)b;
+   int v1 = d1->data;
+   int v2 = d2->data;
+   //printf("sort_int_data: v1 %d v2 %d\n", v1, v2);
+   return v1 - v2;
+}
+void sort_raw_hits_by_icell()
+{
+   int num_data=0;
+   Sort_int_data data[1000];
+   for (int ilayer=0; ilayer<20; ilayer++) {
+      num_data=0;
+      for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+         data[ihit].idx = ihit;
+         data[ihit].data = g_raw_hits_icell[ilayer][ihit];
+         data[ihit].buf1 = g_raw_hits_xpos[ilayer][ihit];
+         data[ihit].buf2 = g_raw_hits_ypos[ilayer][ihit];
+         data[ihit].buf3 = g_raw_hits_iturn[ilayer][ihit];
+         num_data++;
+      }
+      for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+         printf("Before: ilayer %d ihit %d idx %d icell %d\n", ilayer, ihit, data[ihit].idx, data[ihit].data);
+      }
+      qsort(data, num_data, sizeof(data[0]), sort_int_data);
+      for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+         printf("After: ilayer %d ihit %d idx %d icell %d\n", ilayer, ihit, data[ihit].idx, data[ihit].data);
+      }
+
+      for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+         g_raw_hits_icell[ilayer][ihit] = data[ihit].data;
+         g_raw_hits_xpos[ilayer][ihit]  = data[ihit].buf1;
+         g_raw_hits_ypos[ilayer][ihit]  = data[ihit].buf2;
+         g_raw_hits_iturn[ilayer][ihit] = data[ihit].buf3;
+      }
+   }
 }
 
 int main(int argc, char** argv)
@@ -966,9 +1054,10 @@ int main(int argc, char** argv)
          if (ilayer%2==1) circ1Raw.add_hit(ilayer, icell, iturn, w_x1, w_y1);
          if (ilayer%2==0) circ2Raw.add_hit(ilayer, icell, iturn, w_x1, w_y1);
 
-         add_raw_hits(ilayer, icell, w_x1, w_y1);
+         add_raw_hits(ilayer, icell, iturn, w_x1, w_y1);
 
       }
+      bool debug = false;
       // Add noise. If R_noise is larger than R_sig, then use R_sig.
       for (int ilayer=0; ilayer<20; ilayer++) {
          for (int icell=0; icell<num_cells[ilayer]; icell++) {
@@ -978,10 +1067,17 @@ int main(int argc, char** argv)
             double R_sig = g_R_sig[ilayer][icell];
             if (prob<noise_occupancy) {
                if (R_noise < R_sig) {
+                  // replace with noise hit
+                  if (R_sig < 100) {
+                     if (debug) printf("should replace with noise hit, ilayer %d icell %d\n", ilayer, icell);
+                     if (ilayer%2==1) circ1Raw.remove_hit(ilayer, icell);
+                     if (ilayer%2==0) circ2Raw.remove_hit(ilayer, icell);
+                     remove_raw_hits(ilayer, icell);
+                  }
                   if (ilayer%2==1) circ1Raw.add_hit(ilayer, icell, -1, w_x1, w_y1);
                   if (ilayer%2==0) circ2Raw.add_hit(ilayer, icell, -1, w_x1, w_y1);
 
-                  add_raw_hits(ilayer, icell, w_x1, w_y1);
+                  add_raw_hits(ilayer, icell, -1, w_x1, w_y1);
                }
             }
          }
@@ -991,20 +1087,44 @@ int main(int argc, char** argv)
       circ2.set_fit_inipar();
       circ1.fit_circ();
       circ2.fit_circ();
-      circ1.print_fit_result(Form("Circ1: iev %d", iev));
-      circ2.print_fit_result(Form("Circ2: iev %d", iev));
-
+      circ1.print_fit_result(Form("Circ1Raw: iev %d", iev));
+      circ2.print_fit_result(Form("Circ2Raw: iev %d", iev));
 
       // Remove single hit cells
+      sort_raw_hits_by_icell();
       for (int ilayer=0; ilayer<20; ilayer++) {
+         // If left and right cells are not next, middle cell is isolated, so remove this.
          for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
-            int icell = g_raw_hits_icell[ilayer][ihit];
-            double x = g_raw_hits_xpos[ilayer][ihit];
-            double y = g_raw_hits_ypos[ilayer][ihit];
-            if (ilayer%2==1) circ1Clus.add_hit(ilayer, icell, -1, x, y);
-            if (ilayer%2==0) circ2Clus.add_hit(ilayer, icell, -1, x, y);
+            int ihitL = ihit-1;
+            int ihitM = ihit;
+            int ihitR = ihit+1;
+            if (ihitL<0) ihitL = g_num_raw_hits[ilayer] - 1;
+            if (ihitR>=num_cells[ilayer]) ihitR  = 0;
+            int icellL = g_raw_hits_icell[ilayer][ihitL];
+            int icellM = g_raw_hits_icell[ilayer][ihitM];
+            int icellR = g_raw_hits_icell[ilayer][ihitR];
+            int iturn = g_raw_hits_iturn[ilayer][ihitM];
+            double x = g_raw_hits_xpos[ilayer][ihitM];
+            double y = g_raw_hits_ypos[ilayer][ihitM];
+            if (debug) printf("$$$$$ ilayer %d ihit %d icellM %d iturn %d", ilayer, ihit, icellM, iturn);
+            int icellL2 = icellL+1; if (icellL2>=num_cells[ilayer]) icellL2 -= num_cells[ilayer];
+            int icellR2 = icellR-1; if (icellL2<0) icellR = 0;
+            if (icellL2 != icellM && icellM != icellR2) {
+               if (debug) printf("--> excluded\n");
+            } else {
+               if (debug) printf("--> included\n");
+               if (ilayer%2==1) circ1Clus.add_hit(ilayer, icellM, iturn, x, y);
+               if (ilayer%2==0) circ2Clus.add_hit(ilayer, icellM, iturn, x, y);
+            }
          }
       }
+
+      circ1Clus.set_fit_inipar();
+      circ2Clus.set_fit_inipar();
+      circ1Clus.fit_circ();
+      circ2Clus.fit_circ();
+      circ1Clus.print_fit_result(Form("Circ1Clus: iev %d", iev));
+      circ2Clus.print_fit_result(Form("Circ2Clus: iev %d", iev));
 
       struct TwoCircle tc;
       tc.calc(circ1, circ2);
