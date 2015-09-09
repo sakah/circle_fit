@@ -838,14 +838,27 @@ double estimate_pz(double z1, double z2, double drad)
    return pz;
 }
 
+int g_num_raw_hits[20];
+int g_raw_hits_icell[20][400];
+double g_raw_hits_xpos[20][400];
+double g_raw_hits_ypos[20][400];
 double g_R_sig[20][400];
 void clear_buffer()
 {
    for (int ilayer=0; ilayer<20; ilayer++) {
+      g_num_raw_hits[ilayer] =0;
       for (int icell=0; icell<num_cells[ilayer]; icell++) {
          g_R_sig[ilayer][icell] = 1e10;
       }
    }
+}
+void add_raw_hits(int ilayer, int icell, double x, double y)
+{
+   int n = g_num_raw_hits[ilayer];
+   g_raw_hits_icell[ilayer][n] = icell;
+   g_raw_hits_xpos[ilayer][n] = x;
+   g_raw_hits_ypos[ilayer][n] = y;
+   g_num_raw_hits[ilayer]++;
 }
 
 int main(int argc, char** argv)
@@ -878,10 +891,24 @@ int main(int argc, char** argv)
    double w_y;
    double w_z;
 
+   // Raw hits
+   struct Circle circ1Raw; // odd-layer
+   struct Circle circ2Raw; // even-layer
+   circ1Raw.set_line_color(kRed);
+   circ2Raw.set_line_color(kBlue);
+
+   // After removing single hit cells
+   struct Circle circ1Clus; // odd-layer
+   struct Circle circ2Clus; // even-layer
+   circ1Clus.set_line_color(kRed);
+   circ2Clus.set_line_color(kBlue);
+
+   // After filtering by conf_hough transformation
    struct Circle circ1; // odd-layer
    struct Circle circ2; // even-layer
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
+
    struct Helix helix[2];
    helix[0].set_line_color(kMagenta); // positive ini_pz
    helix[1].set_line_color(kMagenta); // negative ini_pz
@@ -913,6 +940,10 @@ int main(int argc, char** argv)
       int numHits = inROOT.getNumHits();
       if (numHits==0) continue;
 
+      circ1Raw.clear();
+      circ2Raw.clear();
+      circ1Clus.clear();
+      circ2Clus.clear();
       circ1.clear();
       circ2.clear();
 
@@ -932,8 +963,11 @@ int main(int argc, char** argv)
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
          inROOT.getWirePosAtHitPoint(ihit, w_x, w_y, w_z);
 
-         if (ilayer%2==1) circ1.add_hit(ilayer, icell, iturn, w_x1, w_y1);
-         if (ilayer%2==0) circ2.add_hit(ilayer, icell, iturn, w_x1, w_y1);
+         if (ilayer%2==1) circ1Raw.add_hit(ilayer, icell, iturn, w_x1, w_y1);
+         if (ilayer%2==0) circ2Raw.add_hit(ilayer, icell, iturn, w_x1, w_y1);
+
+         add_raw_hits(ilayer, icell, w_x1, w_y1);
+
       }
       // Add noise. If R_noise is larger than R_sig, then use R_sig.
       for (int ilayer=0; ilayer<20; ilayer++) {
@@ -944,8 +978,10 @@ int main(int argc, char** argv)
             double R_sig = g_R_sig[ilayer][icell];
             if (prob<noise_occupancy) {
                if (R_noise < R_sig) {
-                  if (ilayer%2==1) circ1.add_hit(ilayer, icell, -1, w_x1, w_y1);
-                  if (ilayer%2==0) circ2.add_hit(ilayer, icell, -1, w_x1, w_y1);
+                  if (ilayer%2==1) circ1Raw.add_hit(ilayer, icell, -1, w_x1, w_y1);
+                  if (ilayer%2==0) circ2Raw.add_hit(ilayer, icell, -1, w_x1, w_y1);
+
+                  add_raw_hits(ilayer, icell, w_x1, w_y1);
                }
             }
          }
@@ -957,6 +993,18 @@ int main(int argc, char** argv)
       circ2.fit_circ();
       circ1.print_fit_result(Form("Circ1: iev %d", iev));
       circ2.print_fit_result(Form("Circ2: iev %d", iev));
+
+
+      // Remove single hit cells
+      for (int ilayer=0; ilayer<20; ilayer++) {
+         for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+            int icell = g_raw_hits_icell[ilayer][ihit];
+            double x = g_raw_hits_xpos[ilayer][ihit];
+            double y = g_raw_hits_ypos[ilayer][ihit];
+            if (ilayer%2==1) circ1Clus.add_hit(ilayer, icell, -1, x, y);
+            if (ilayer%2==0) circ2Clus.add_hit(ilayer, icell, -1, x, y);
+         }
+      }
 
       struct TwoCircle tc;
       tc.calc(circ1, circ2);
@@ -1008,13 +1056,16 @@ int main(int argc, char** argv)
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
       TCanvas* c1 = new TCanvas("c1","",3000,2000);
-      c1->Divide(3,2);
-      c1->cd(1); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
-      c1->cd(2); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
-      c1->cd(3); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
-      c1->cd(4); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
-      c1->cd(5); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
-      c1->cd(6); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
+      c1->Divide(3,3);
+      c1->cd(1); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
+      c1->cd(2); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
+      c1->cd(3); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
+      c1->cd(4); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits();
+      c1->cd(5); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
+      c1->cd(6); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
+      c1->cd(7); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
+      c1->cd(8); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
+      c1->cd(9); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
       c1->Print(Form("pdf/%05d.pdf", iev));
 
    }
