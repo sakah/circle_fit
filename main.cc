@@ -111,6 +111,9 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double drad = rad - rad0;
       //if (rad<0) rad += 2.0*TMath::Pi();  // [0, 2pi]
       //if (rad<rad0) rad += 2.0*TMath::Pi(); // rad0 should be smallest
+      //if (drad<0) drad += 2.0*TMath::Pi();
+      if (drad<-TMath::Pi()) drad += 2.0*TMath::Pi();
+      if (drad> TMath::Pi()) drad -= 2.0*TMath::Pi();
       w_z = drad*L;
       printf("R %f ddx %f ddy %f rad0 %f rad %f (deg) drad %f w_z %f\n", R, ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180, drad, w_z);
 
@@ -122,7 +125,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
-//      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
+      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
       chi2 += dx*dx + dy*dy;
 
       // update hit position for next fit
@@ -732,9 +735,10 @@ int main(int argc, char** argv)
    //int iev1=8, iev2=9;
    //int iev1=10, iev2=11;
    //int iev1=11, iev2=12;
+   int iev1=13, iev2=14;
    //int iev1=14, iev2=15;
    //int iev1=0, iev2=3;
-   int iev1=0, iev2=30;
+   //int iev1=0, iev2=30;
    //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
@@ -787,8 +791,8 @@ int main(int argc, char** argv)
          int sign=1;
          if (isign==1) sign = -1;
          double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
-         if (pz_guess==0) pz_guess = 0.1; // set anyway
-         //pz_guess=6.0;
+         if (pz_guess==0) pz_guess = sign*0.1; // set anyway
+         //pz_guess=sign*28.0;
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
