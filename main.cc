@@ -132,6 +132,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       if (rad>=ang90  && rad<ang180) region_hit[1] = 1;
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
       if (rad>=ang270 && rad<ang360) region_hit[3] = 1;
+      printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
    }
    // check rad0 also
    if (rad0>=ang0   && rad0<ang90)  region_hit[0] = 1;
@@ -199,8 +200,8 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
 
       double drad = rad - rad0;
       w_z = drad*L;
-      printf("2) ihit %d ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
-            ihit, g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
+      //printf("2) ihit %d ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
+      //      ihit, g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
 
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
@@ -211,7 +212,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
-      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0, chi2);
+      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0, chi2);
 
       // update hit position for next fit
       g_xhits[ihit] = w_x;
@@ -874,12 +875,12 @@ int main(int argc, char** argv)
       double pa_guess = 104.0;
 
       // pz_guess should be tested both positive and negative case
-      for (int isign=0; isign<2; isign++) {
+      for (int isign=1; isign<2; isign++) {
          int sign=1;
          if (isign==1) sign = -1;
          double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
          if (pz_guess==0) pz_guess = sign*0.1; // set anyway
-         //pz_guess=sign*8.0;
+         pz_guess=sign*8.0;
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
