@@ -110,7 +110,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double rad = TMath::ATan2(ddy,ddx); 
       if (rad<0) rad += 2.0*TMath::Pi();  // [0, 2pi]
       if (rad<rad0) rad += 2.0*TMath::Pi(); // rad0 should be smallest
-      printf("ddx %f ddy %f rad0 %f rad %f (deg)\n", ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
+      //printf("ddx %f ddy %f rad0 %f rad %f (deg)\n", ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
       w_z = (rad - rad0)*L;
 
       int ilayer = g_hits_ilayer[ihit];
@@ -723,8 +723,9 @@ int main(int argc, char** argv)
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
    //int iev1=2, iev2=3;
-   int iev1=3, iev2=4;
+   //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
+   int iev1=7, iev2=8;
    //int iev1=11, iev2=12;
    //int iev1=14, iev2=15;
    //int iev1=0, iev2=3;
