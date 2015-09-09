@@ -59,6 +59,10 @@ static double sqrt2minus(double a, double b)
    if (a<b) return 0.0;
    return TMath::Sqrt(a*a-b*b); 
 }
+static double rad2deg(double rad)
+{
+   return rad/TMath::Pi()*180.0;
+}
 
 static struct config* g_config;
 int g_nhits;
@@ -109,20 +113,29 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx); 
-      if (ihit==0) {
-         if (rad<min_rad) {
-            min_rad = rad;
-         }
-         rad0 -= min_rad;
-         if (rad0<0) rad0+=2.0*TMath::Pi();
-      }
+      if (rad<0) rad+=2.0*TMath::Pi();
+      printf("min_rad %f ilayer %d ihit %d rad %f\n", rad2deg(min_rad), g_hits_ilayer[ihit], ihit, rad2deg(rad));
+      if (rad < min_rad) min_rad = rad;
+   }
+   rad0 -= min_rad;
+   if (rad0<0) rad0+=2.0*TMath::Pi();
+
+   for (int ihit=0; ihit<g_nhits; ihit++) {
+
+      // calculate w_x/w_y using previous result
+      double xhit = g_xhits[ihit];
+      double yhit = g_yhits[ihit];
+      double ddx = (xhit - x0)/R;
+      double ddy = (yhit - y0)/R;
+      double rad = TMath::ATan2(ddy,ddx); 
       rad -= min_rad; // all angle are measured from min_rad
       if (rad<0) rad+=2.0*TMath::Pi();
 
       double drad = rad - rad0;
-      if (drad<0) drad += 2.0*TMath::Pi();
+      //if (drad<0) drad += 2.0*TMath::Pi();
       w_z = drad*L;
-      //printf("ilayer %d R %f ddx %f ddy %f rad0 %f rad %f (deg) drad %f w_z %f\n", g_hits_ilayer[ihit], R, ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180, drad, w_z);
+      printf("2) ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
+            g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
 
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
@@ -742,6 +755,7 @@ int main(int argc, char** argv)
    //int iev1=8, iev2=9;
    //int iev1=10, iev2=11;
    //int iev1=11, iev2=12;
+   //int iev1=13, iev2=14;
    //int iev1=14, iev2=15;
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
