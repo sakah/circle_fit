@@ -516,6 +516,11 @@ struct Helix
       rad0_fit  = var[3]; // rad
       L_fit  = var[4]; // cm
 
+      for (int ihit=0; ihit<nhits; ihit++) {
+         xhits[ihit] = g_xhits[ihit];
+         yhits[ihit] = g_yhits[ihit];
+         zhits[ihit] = g_zhits[ihit];
+      }
       printf("R_fit %f pt_fit %f\n", R_fit, get_pt_fit());
       printf("L_fit %f pz_fit %f\n", L_fit, get_pz_fit());
    };
