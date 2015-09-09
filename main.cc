@@ -64,6 +64,16 @@ static double rad2deg(double rad)
    return rad/TMath::Pi()*180.0;
 }
 
+void set_marker_color(TMarker* m, int iturn)
+{
+   int col;
+   if (iturn==0) col = kBlack;
+   if (iturn==1) col = kRed;
+   if (iturn==2) col = kBlue;
+   if (iturn>=3) col = kGreen;
+   m->SetMarkerColor(col);
+}
+
 static struct config* g_config;
 int g_nhits;
 double g_xhits[1000];
@@ -245,6 +255,7 @@ struct Circle
    double radius[20];
    int hits_ilayer[1000];
    int hits_icell[1000];
+   int hits_iturn[1000];
 
    int line_color;
 
@@ -289,12 +300,14 @@ struct Circle
          yhits[ihit] = other.yhits[ihit];
          hits_ilayer[ihit] = other.hits_ilayer[ihit];
          hits_icell[ihit]  = other.hits_icell[ihit];
+         hits_iturn[ihit]  = other.hits_iturn[ihit];
       }
    };
-   void add_hit(int ilayer, int icell, double x, double y)
+   void add_hit(int ilayer, int icell, int iturn, double x, double y)
    {
       hits_ilayer[nhits] = ilayer;
       hits_icell[nhits] = icell;
+      hits_iturn[nhits] = iturn;
       xhits[nhits] = x;
       yhits[nhits] = y;
       nhits++;
@@ -304,6 +317,7 @@ struct Circle
       for (int ihit=0; ihit<c1.nhits; ihit++) {
          hits_ilayer[nhits] = c1.hits_ilayer[ihit];
          hits_icell[nhits] = c1.hits_icell[ihit];
+         hits_iturn[nhits] = c1.hits_iturn[ihit];
          xhits[nhits] =  c1.xhits[ihit];
          yhits[nhits] = c1.yhits[ihit];
          nhits++;
@@ -311,6 +325,7 @@ struct Circle
       for (int ihit=0; ihit<c2.nhits; ihit++) {
          hits_ilayer[nhits] = c2.hits_ilayer[ihit];
          hits_icell[nhits] = c2.hits_icell[ihit];
+         hits_iturn[nhits] = c2.hits_iturn[ihit];
          xhits[nhits] =  c2.xhits[ihit];
          yhits[nhits] = c2.yhits[ihit];
          nhits++;
@@ -440,6 +455,7 @@ struct Circle
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
+         set_marker_color(m, hits_iturn[ihit]);
          m->Draw();
       }
    };
@@ -467,6 +483,7 @@ struct Helix
    double radius[20];
    int hits_ilayer[1000];
    int hits_icell[1000];
+   int hits_iturn[1000];
 
    int line_color;
 
@@ -554,6 +571,7 @@ struct Helix
          zhits[nhits] = 0.0; // zhits will be set afer fitting
          hits_ilayer[nhits] = c1.hits_ilayer[ihit];
          hits_icell[nhits]  = c1.hits_icell[ihit];
+         hits_iturn[nhits]  = c1.hits_iturn[ihit];
          nhits++;
       }
    };
@@ -566,6 +584,7 @@ struct Helix
          zhits[ihit] = other.zhits[ihit];
          hits_ilayer[ihit] = other.hits_ilayer[ihit];
          hits_icell[ihit]  = other.hits_icell[ihit];
+         hits_iturn[ihit]  = other.hits_iturn[ihit];
       }
    };
    void set_fit_inipar(double x0, double y0, double R, double rad0, double L)
@@ -694,6 +713,7 @@ struct Helix
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
+         set_marker_color(m, hits_iturn[ihit]);
          m->Draw();
       }
    };
@@ -701,6 +721,7 @@ struct Helix
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(zhits[ihit], xhits[ihit], 8);
+         set_marker_color(m, hits_iturn[ihit]);
          m->Draw();
       }
    };
@@ -708,6 +729,7 @@ struct Helix
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(zhits[ihit], yhits[ihit], 8);
+         set_marker_color(m, hits_iturn[ihit]);
          //printf("ihit %d xhits %f yhits %f zhits %f\n", ihit, xhits[ihit], yhits[ihit], zhits[ihit]);
          m->Draw();
       }
@@ -872,8 +894,8 @@ int main(int argc, char** argv)
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
          inROOT.getWirePosAtHitPoint(ihit, w_x, w_y, w_z);
 
-         if (ilayer%2==1) circ1.add_hit(ilayer, icell,w_x1, w_y1);
-         if (ilayer%2==0) circ2.add_hit(ilayer, icell,w_x1, w_y1);
+         if (ilayer%2==1) circ1.add_hit(ilayer, icell, iturn, w_x1, w_y1);
+         if (ilayer%2==0) circ2.add_hit(ilayer, icell, iturn, w_x1, w_y1);
       }
 
       circ1.set_fit_inipar();
