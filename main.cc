@@ -479,6 +479,7 @@ struct Circle
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
+         printf("HOGE:: ihit %d hits_iturn %d xhits %f yhits %f\n", ihit, hits_iturn[ihit], xhits[ihit], yhits[ihit]);
          set_marker_color(m, hits_iturn[ihit]);
          m->Draw();
       }
@@ -937,7 +938,7 @@ int main(int argc, char** argv)
       // Add noise. If R_noise is larger than R_sig, then use R_sig.
       for (int ilayer=0; ilayer<20; ilayer++) {
          for (int icell=0; icell<num_cells[ilayer]; icell++) {
-            config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, 0.0, "up", &w_x, &w_y);
+            config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, 0.0, "up", &w_x1, &w_y1);
             double prob = gRandom->Uniform();
             double R_noise = gRandom->Uniform(0, 1.6);
             double R_sig = g_R_sig[ilayer][icell];
