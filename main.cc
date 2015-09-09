@@ -1041,20 +1041,22 @@ struct Hough
    {
       strcpy(name, a_name);
    };
-   void fit(int iev, double z1, double z2, int num_hits, double* uhits, double* vhits, double* eu, double* ev)
+   void fit(int iev, double z1, double z2, int nhits, double* uhits, double* vhits, double* eu, double* ev)
    {
       if (gr!=NULL) delete gr;
-      gr = new TGraphErrors(num_hits, uhits, vhits, eu, ev);
+      gr = new TGraphErrors(nhits, uhits, vhits, eu, ev);
       gr->Fit("pol1");
       TF1* f = gr->GetFunction("pol1");
       chi2 = f->GetChisquare();
       printf("iev %d z1 %f z2 %f chi2 %f\n", iev, z1, z2, chi2);
    };
-   void transform(int num_hits, double* uhits, double* vhits)
+   void transform(int nhits, double* uhits, double* vhits)
    {
+      num_hits = nhits;
+
       double astep = 0.1;
-      double amin = -5;
-      double amax = 5;
+      double amin = -8;
+      double amax = 8;
       double bstep = 0.001;
       double bmin = -0.5;
       double bmax = 0.5;
