@@ -226,7 +226,7 @@ struct Circle
       double dx = (xhits[ihit] - x0_fit)/R_fit;
       double dy = (yhits[ihit] - y0_fit)/R_fit;
       double rad =  TMath::ATan2(dy,dx);
-      if (rad<0) rad+=2.0*TMath::Pi();
+      //if (rad<0) rad+=2.0*TMath::Pi();
       return rad;
    };
    double get_rad1_fit() { return get_rad_fit(0); };
