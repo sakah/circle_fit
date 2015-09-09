@@ -1092,12 +1092,12 @@ struct Hough
 
    void draw_hist_ab()
    {
-      h2ab->Draw();
+      h2ab->Draw("colz");
    };
    void draw_hist_uv()
    {
-      h2uv->Draw();
       get_line()->Draw("same");
+      h2uv->Draw();
    };
    void draw_hist_diff()
    {
