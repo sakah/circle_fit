@@ -99,18 +99,15 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
+   bool debug = false;
+   //bool debug = true;
+
    double x0 = x[0];
    double y0 = x[1];
    double R  = x[2];
-   double rad0  = x[3];
+   double rad0  = x[3]; // [0, 360deg]
    double L  = x[4];
    double chi2 = 0;
-
-   double rad0_org = rad0;
-
-   double w_x;
-   double w_y;
-   double w_z;
 
    double ang0 = 0.0;
    double ang90 = TMath::Pi()/2.0;
@@ -118,7 +115,11 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    double ang270 = TMath::Pi()*3.0/2.0;
    double ang360 = 2.0*TMath::Pi();
 
+   if (debug) printf("rad0 %f\n", rad2deg(rad0));
+   // Check hit region
+   // Copy rad [0, 360]
    int region_hit[4];
+   double rad_rotate[1000];
    for (int i=0; i<4; i++) region_hit[i] = 0;
 
    for (int ihit=0; ihit<g_nhits; ihit++) {
@@ -128,29 +129,17 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx);  // [-pi, pi]
       if (ddy<0) rad += 2.0*TMath::Pi();
+      rad_rotate[ihit] = rad;
       if (rad>=ang0   && rad<ang90)  region_hit[0] = 1;
       if (rad>=ang90  && rad<ang180) region_hit[1] = 1;
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
       if (rad>=ang270 && rad<ang360) region_hit[3] = 1;
-      //printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
+      if (debug) printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
    }
-   //fprintf(stdout,"1) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
-   // check rad0 also
-   if (rad0>=ang0   && rad0<ang90)  region_hit[0] = 1;
-   if (rad0>=ang90  && rad0<ang180) region_hit[1] = 1;
-   if (rad0>=ang180 && rad0<ang270) region_hit[2] = 1;
-   if (rad0>=ang270 && rad0<ang360) region_hit[3] = 1;
-   //fprintf(stdout,"2) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
+   if (debug) fprintf(stdout,"hit pattern [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
 
-   /*
-   printf("rad0 %f region_hit %d %d %d %d\n", 
-         rad2deg(rad0),
-         region_hit[0],
-         region_hit[1],
-         region_hit[2],
-         region_hit[3]);
-         */
-
+   // Calc offset_ang
+   // Calc min_rad
    double offset_ang[4];
    for (int i=0; i<4; i++) offset_ang[i] = 0;
 
@@ -180,44 +169,60 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       return;
       //exit(1);
    }
-   fprintf(stdout,"offset_ang [%f %f %f %f]\n", offset_ang[0], offset_ang[1], offset_ang[2], offset_ang[3]);
-   //printf("min_rad %f (deg)\n", rad2deg(min_rad));
-   // Add offset_ang and
-   // Re-set angle based on min_rad
-   if (rad0>=ang0   && rad0<ang90)  rad0 += offset_ang[0];
-   if (rad0>=ang90  && rad0<ang180) rad0 += offset_ang[1];
-   if (rad0>=ang180 && rad0<ang270) rad0 += offset_ang[2];
-   if (rad0>=ang270 && rad0<ang360) rad0 += offset_ang[3];
-   printf("1) rad0 %f\n", rad2deg(rad0));
-   rad0 -= min_rad;
-   printf("2) rad0 %f\n", rad2deg(rad0));
+   if (debug) fprintf(stdout,"min_rad %f (deg) offset_ang [%f %f %f %f]\n", rad2deg(min_rad), rad2deg(offset_ang[0]), rad2deg(offset_ang[1]), rad2deg(offset_ang[2]), rad2deg(offset_ang[3]));
+
+   // Add offset_ang
+   double rad0_rotate = rad0;
+   if (rad0>=ang0   && rad0<ang90)  rad0_rotate += ang360;
+   if (rad0>=ang90  && rad0<ang180) rad0_rotate += ang360;
+   if (rad0>=ang180 && rad0<ang270) rad0_rotate += ang360;
+   if (rad0>=ang270 && rad0<ang360) rad0_rotate += ang360;
+   if (debug) printf("add_offset_ang rad0_rotate %f\n", rad2deg(rad0_rotate));
 
    for (int ihit=0; ihit<g_nhits; ihit++) {
-      // calculate w_x/w_y using previous result
-      double xhit = g_xhits[ihit];
-      double yhit = g_yhits[ihit];
-      double ddx = (xhit - x0)/R;
-      double ddy = (yhit - y0)/R;
-      double rad = TMath::ATan2(ddy,ddx); 
-      if (ddy<0) rad += 2.0*TMath::Pi();
 
-      if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
-      if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
-      if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
-      if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
-      rad -= min_rad;
+      double rad = rad_rotate[ihit];
+      if (rad>=ang0   && rad<ang90)  rad_rotate[ihit] += offset_ang[0];
+      if (rad>=ang90  && rad<ang180) rad_rotate[ihit] += offset_ang[1];
+      if (rad>=ang180 && rad<ang270) rad_rotate[ihit] += offset_ang[2];
+      if (rad>=ang270 && rad<ang360) rad_rotate[ihit] += offset_ang[3];
+      if (debug) printf("add_offset_ang: ihit %d rad_rotate %f\n", ihit, rad2deg(rad_rotate[ihit]));
+   }
 
-      double drad = rad - rad0;
-      w_z = drad*L;
-      printf("2) ihit %d ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
-            ihit, g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
+   // Rotate by min_rad (ang270 or ang180)
+   // Calc max_rad
+   double max_rad=-1e10;
+   rad0_rotate -= min_rad;
+   if (debug) printf("rotate_by_min_rad rad0_rotate %f\n", rad2deg(rad0_rotate));
+
+   for (int ihit=0; ihit<g_nhits; ihit++) {
+      double rad = rad_rotate[ihit];
+      rad_rotate[ihit] -= min_rad;
+      if (rad_rotate[ihit] > max_rad) {
+         max_rad = rad_rotate[ihit];
+      }
+      if (debug) printf("rotate_by_min_rad: ihit %d rad_rotate %f\n", ihit, rad2deg(rad_rotate[ihit]));
+   }
+   if (debug) printf("max_rad %f\n", rad2deg(max_rad));
+
+   // Need to rotate rad0 if rad0 is in region of III or IV
+   if (rad0_rotate > max_rad) {
+      rad0_rotate -= ang360;
+   }
+
+   for (int ihit=0; ihit<g_nhits; ihit++) {
+      double drad = rad_rotate[ihit] - rad0_rotate;
+      double w_z = drad*L;
+      if (debug) printf("ihit %d ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", ihit, g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad_rotate[ihit]), rad2deg(drad), w_z);
 
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
+      double w_x;
+      double w_y;
       config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, w_z, "center", &w_x, &w_y);
 
-      double xexp = x0 + R * TMath::Cos(rad0_org + w_z/L);
-      double yexp = y0 + R * TMath::Sin(rad0_org + w_z/L);
+      double xexp = x0 + R * TMath::Cos(rad0 + w_z/L);
+      double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
@@ -570,6 +575,7 @@ struct Helix
       R_ini = R;
       rad0_ini = rad0;
       L_ini = L;
+      printf("set_fit_inipar: x0 %f y0 %f R %f rad0 %f (deg) L %f\n",x0,y0,R,rad2deg(rad0),L );
 
       x0_step = 1;
       y0_step = 1;
@@ -920,7 +926,7 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
+      fprintf(fpout, "%5d %5d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", iev, helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
       fflush(fpout);
 
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
