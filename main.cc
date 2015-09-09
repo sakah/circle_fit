@@ -982,7 +982,7 @@ struct Conformal
          yhits[n] = circ.yhits[ihit];
          double r2 = xhits[ihit]*xhits[ihit] + yhits[ihit]*yhits[ihit];
          uhits[n] = 2.0*xhits[ihit]/r2;
-         vhits[n] = 2.0*vhits[ihit]/r2;
+         vhits[n] = 2.0*yhits[ihit]/r2;
          eu[n] = 1.0;
          ev[n] = 1.0;
          n++;
