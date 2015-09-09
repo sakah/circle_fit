@@ -842,8 +842,8 @@ int main(int argc, char** argv)
    //int iev1=16, iev2=17;
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
-   //int iev1=0, iev2=30;
-   int iev1=0, iev2=2000;
+   int iev1=0, iev2=30;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
 
@@ -866,7 +866,7 @@ int main(int argc, char** argv)
          int ilayer = inROOT.getIlayer(ihit);
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
-         if (iturn!=0) break; 
+         //if (iturn!=0) break; 
          //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
