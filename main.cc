@@ -1053,11 +1053,11 @@ struct Hough
    void transform(int num_hits, double* uhits, double* vhits)
    {
       double astep = 0.1;
-      double amin = -0.5;
-      double amax = 0.5;
+      double amin = -5;
+      double amax = 5;
       double bstep = 0.001;
-      double bmin = -1.0;
-      double bmax = 1.0;
+      double bmin = -0.5;
+      double bmax = 0.5;
       int anum = (amax-amin)/astep;
       int bnum = (bmax-bmin)/bstep;
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
