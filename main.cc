@@ -770,8 +770,8 @@ int main(int argc, char** argv)
       double z1_fit = estimate_z1(tc.dr);
       double pa_guess = 104.0;
       // pz_guess should be tested both positive and negative case
-      //double pz_guess = sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
-      double pz_guess = -sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+      double pz_guess = sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+      //double pz_guess = -sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
       double B = 1.0; // T
       double L_guess = pz_guess/(3.0*B);
       double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
