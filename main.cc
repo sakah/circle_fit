@@ -1034,8 +1034,8 @@ struct Hough
       double amin = -10;
       double amax = 10;
       double bstep = 0.001;
-      double bmin = -3.0;
-      double bmax = 3.0;
+      double bmin = -1.0;
+      double bmax = 1.0;
       int anum = (amax-amin)/astep;
       int bnum = (bmax-bmin)/bstep;
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
@@ -1159,7 +1159,7 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   //int iev1=2, iev2=3;
+   int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
@@ -1172,7 +1172,7 @@ int main(int argc, char** argv)
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=30;
-   int iev1=0, iev2=100;
+   //int iev1=0, iev2=100;
    //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
