@@ -1019,11 +1019,10 @@ struct Hough
    double diff[10000];
    Hough()
    {
-      h2uv = new TH2F("h2uv", Form("%s U-V Space;u;v", name), 100, -0.1, 0.1, 100, -0.1, 0.1);
+      h2uv = NULL;
       h2ab = NULL;
       gr = NULL;
-      hdiff = new TH1F("hdiff","", 100, -0.01, 0.01);
-      hdiff->SetStats(11111111);
+      hdiff = NULL;
    };
    ~Hough()
    {
@@ -1059,6 +1058,9 @@ struct Hough
       if (h2ab==NULL) {
          h2ab = new TH2F("h2ab",Form("%s A-B Space;a;b",name),anum, amin, amax, bnum, bmin, bmax);
       }
+      if (h2uv==NULL) {
+         h2uv = new TH2F("h2uv",Form("%s U-V Space;u;v",name), 100, -0.1, 0.1, 100, -0.1, 0.1);
+      }
       h2ab->Reset();
 
       for (int i=0; i<num_hits; i++) {
@@ -1084,6 +1086,11 @@ struct Hough
    };
    void calc_diff(int num_hits, double* uhits, double* vhits, int* ilayers, int* icells, int* iturns, double* w_xs, double* w_ys, Circle& circ)
    {
+      if (hdiff==NULL) {
+         hdiff = new TH1F("hdiff",Form("%s Residual; Residual;",name), 100, -0.01, 0.01);
+         hdiff->SetStats(11111111);
+      }
+
       num_inside=0;
       for (int ihit=0; ihit<num_hits; ihit++) {
          double v = found_a * uhits[ihit] + found_b;
@@ -1156,24 +1163,30 @@ int main(int argc, char** argv)
    // Raw hits
    struct Circle circ1Raw; // odd-layer
    struct Circle circ2Raw; // even-layer
+   struct Circle circ3Raw; // odd/even-layer 
    circ1Raw.set_name("Raw odd-layer");
    circ2Raw.set_name("Raw even-layer");
+   circ3Raw.set_name("Raw odd/even-layer");
    circ1Raw.set_line_color(kRed);
    circ2Raw.set_line_color(kBlue);
 
    // After removing single hit cells
    struct Circle circ1Clus; // odd-layer
    struct Circle circ2Clus; // even-layer
+   struct Circle circ3Clus; // odd/even-layer 
    circ1Clus.set_name("Cluster odd-layer");
    circ2Clus.set_name("Cluster even-layer");
+   circ3Clus.set_name("Cluster odd/even-layer");
    circ1Clus.set_line_color(kRed);
    circ2Clus.set_line_color(kBlue);
 
    // After filtering by conf_hough transformation
    struct Circle circ1; // odd-layer
    struct Circle circ2; // even-layer
+   struct Circle circ3; // odd/even-layer
    circ1.set_name("Hough odd-layer");
    circ2.set_name("Hough even-layer");
+   circ3.set_name("Hough odd/even-layer");
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
 
@@ -1392,10 +1405,10 @@ int main(int argc, char** argv)
       int j=1;
       c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
       c1->cd(j++); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
-      c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits(); circ2Raw.draw_xy_hits_fits();
+      c1->cd(j++); circ3Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits(); circ2Raw.draw_xy_hits_fits();
       c1->cd(j++); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits();
       c1->cd(j++); circ2Clus.draw_xy_canvas(); circ2Clus.draw_xy_hits_fits();
-      c1->cd(j++); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
+      c1->cd(j++); circ3Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
       c1->cd(j++); hough1.draw_hist_uv();
       c1->cd(j++); hough2.draw_hist_uv();
       c1->cd(j++); 
@@ -1406,7 +1419,7 @@ int main(int argc, char** argv)
       c1->cd(j++); hough2.draw_hist_diff();
       c1->cd(j++); 
       c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
-      c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
+      c1->cd(j++); circ3.draw_xy_canvas(); circ2.draw_xy_hits_fits();
       c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
       c1->cd(j++); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
       c1->cd(j++); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
