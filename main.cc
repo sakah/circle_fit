@@ -1095,6 +1095,7 @@ struct Hough
    void draw_hist_uv()
    {
       h2uv->Draw();
+      get_line()->Draw("same");
    };
    void draw_hist_diff()
    {
