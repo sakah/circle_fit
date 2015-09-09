@@ -512,7 +512,7 @@ struct Circle
    };
    void draw_xy_fit()
    {
-      TMarker* m = new TMarker(x0_fit, y0_fit, 5);
+      TMarker* m = new TMarker(x0_fit, y0_fit, 1);
       m->SetMarkerColor(line_color);
       m->Draw();
 
@@ -787,7 +787,7 @@ struct Helix
    };
    void draw_xy_fit()
    {
-      TMarker* m = new TMarker(x0_fit, y0_fit, 5);
+      TMarker* m = new TMarker(x0_fit, y0_fit, 1);
       m->SetMarkerColor(line_color);
       m->Draw();
 
