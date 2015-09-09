@@ -108,10 +108,11 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx); 
-      if (rad<0) rad += 2.0*TMath::Pi();  // [0, 2pi]
-      if (rad<rad0) rad += 2.0*TMath::Pi(); // rad0 should be smallest
-      printf("R %f ddx %f ddy %f rad0 %f rad %f (deg)\n", R, ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
-      w_z = (rad - rad0)*L;
+      double drad = rad - rad0;
+      //if (rad<0) rad += 2.0*TMath::Pi();  // [0, 2pi]
+      //if (rad<rad0) rad += 2.0*TMath::Pi(); // rad0 should be smallest
+      w_z = drad*L;
+      printf("R %f ddx %f ddy %f rad0 %f rad %f (deg) drad %f w_z %f\n", R, ddx, ddy, rad0/TMath::Pi()*180, rad/TMath::Pi()*180, drad, w_z);
 
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
@@ -121,7 +122,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
-      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
+//      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
       chi2 += dx*dx + dy*dy;
 
       // update hit position for next fit
@@ -727,13 +728,13 @@ int main(int argc, char** argv)
    //int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
-   //int iev1=7, iev2=8;
+   int iev1=7, iev2=8;
    //int iev1=8, iev2=9;
    //int iev1=10, iev2=11;
    //int iev1=11, iev2=12;
    //int iev1=14, iev2=15;
    //int iev1=0, iev2=3;
-   int iev1=0, iev2=30;
+   //int iev1=0, iev2=30;
    //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
@@ -782,11 +783,12 @@ int main(int argc, char** argv)
       double pa_guess = 104.0;
 
       // pz_guess should be tested both positive and negative case
-      for (int isign=0; isign<2; isign++) {
+      for (int isign=1; isign<2; isign++) {
          int sign=1;
          if (isign==1) sign = -1;
          double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
          if (pz_guess==0) pz_guess = 0.1; // set anyway
+         pz_guess=6.0;
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
@@ -794,8 +796,8 @@ int main(int argc, char** argv)
          while (rad0_guess<0) {
             rad0_guess += 2.0*TMath::Pi();
          }
-         //printf("2) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
-         //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
+         printf("2) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
+         printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
          helix[isign].add_hits(circ1);
