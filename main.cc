@@ -298,9 +298,9 @@ struct Circle
       printf("R_fit %f\n", R_fit);
       printf("pt_fit %f\n", get_pt_fit());
    };
-   void print_fit_result()
+   void print_fit_result(char* prefix)
    {
-      printf("x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f\n", x0_fit, y0_fit, R_fit, get_pt_fit(), get_deg1_fit(), get_deg2_fit());
+      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), get_deg1_fit(), get_deg2_fit());
    };
    // Draw
    void draw_xy_canvas()
@@ -519,9 +519,9 @@ struct Helix
       printf("R_fit %f pt_fit %f\n", R_fit, get_pt_fit());
       printf("L_fit %f pz_fit %f\n", L_fit, get_pz_fit());
    };
-   void print_fit_result()
+   void print_fit_result(char* prefix)
    {
-      printf("x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f L %f pz %f\n", x0_fit, y0_fit, R_fit, get_pt_fit(), rad0_fit, L_fit, get_pz_fit());
+      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f L %f pz %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad0_fit, L_fit, get_pz_fit());
    };
 
    // Draw
@@ -748,10 +748,12 @@ int main(int argc, char** argv)
          if (ilayer%2==0) circ2.add_hit(ilayer, icell,w_x1, w_y1);
       }
 
+      circ1.set_fit_inipar();
+      circ2.set_fit_inipar();
       circ1.fit_circ();
       circ2.fit_circ();
-      circ1.print_fit_result();
-      circ2.print_fit_result();
+      circ1.print_fit_result(Form("Circ1: iev %d", iev));
+      circ2.print_fit_result(Form("Circ2: iev %d", iev));
 
       struct TwoCircle tc;
       tc.calc(circ1, circ2);
@@ -760,7 +762,8 @@ int main(int argc, char** argv)
       double z1_fit = estimate_z1(tc.dr);
       double pa_guess = 104.0;
       // pz_guess should be tested both positive and negative case
-      double pz_guess = sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+      //double pz_guess = sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+      double pz_guess = -sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
       double B = 1.0; // T
       double L_guess = pz_guess/(3.0*B);
       double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
@@ -771,7 +774,7 @@ int main(int argc, char** argv)
       helix.add_hits(circ2);
       helix.set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
       helix.fit_helix();
-      helix.print_fit_result();
+      helix.print_fit_result(Form("Helix: iev %d", iev));
 
       TVector3 mcPos;
       TVector3 mcMom;
