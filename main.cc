@@ -1005,6 +1005,8 @@ struct Conformal
 };
 struct Hough
 {
+   char name[128];
+
    TH2F* h2uv;
    TH2F* h2ab;
    double found_a;
@@ -1017,7 +1019,7 @@ struct Hough
    double diff[10000];
    Hough()
    {
-      h2uv = new TH2F("h2uv", "U-V Space;u;v", 100, -0.1, 0.1, 100, -0.1, 0.1);
+      h2uv = new TH2F("h2uv", Form("%s U-V Space;u;v", name), 100, -0.1, 0.1, 100, -0.1, 0.1);
       h2ab = NULL;
       gr = NULL;
       hdiff = new TH1F("hdiff","", 100, -0.01, 0.01);
@@ -1029,6 +1031,10 @@ struct Hough
       if (hdiff!=NULL) delete hdiff;
       if (h2ab!=NULL) delete h2ab;
       if (h2uv!=NULL) delete h2uv;
+   };
+   void set_name(char* a_name)
+   {
+      strcpy(name, a_name);
    };
    void fit(int iev, double z1, double z2, int num_hits, double* uhits, double* vhits, double* eu, double* ev)
    {
@@ -1051,7 +1057,7 @@ struct Hough
       int bnum = (bmax-bmin)/bstep;
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
       if (h2ab==NULL) {
-         h2ab = new TH2F("h2ab","A-B Space;a;b",anum, amin, amax, bnum, bmin, bmax);
+         h2ab = new TH2F("h2ab",Form("%s A-B Space;a;b",name),anum, amin, amax, bnum, bmin, bmax);
       }
       h2ab->Reset();
 
@@ -1313,6 +1319,8 @@ int main(int argc, char** argv)
 
       Hough hough1; // odd-layer
       Hough hough2; // even-layer
+      hough1.set_name("Hough odd-layer");
+      hough2.set_name("Hough even-layer");
 
       hough1.transform(conf1.num_hits, conf1.uhits, conf1.vhits);
       hough1.calc_diff(conf1.num_hits, conf1.uhits, conf1.vhits, conf1.ilayers, conf1.icells, conf1.iturns, conf1.xhits, conf1.yhits, circ1);
