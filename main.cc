@@ -805,18 +805,14 @@ int main(int argc, char** argv)
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
-      c1->Divide(2,2);
+      c1->Divide(3,2);
       c1->cd(1); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
       c1->cd(2); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
       c1->cd(3); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
-      c1->Print(Form("pdf/circle/%05d.pdf", iev));
-
-      TCanvas* c2 = new TCanvas("c2","",2000,2000);
-      c2->Divide(2,2);
-      c2->cd(1); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
-      c2->cd(2); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
-      c2->cd(3); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
-      c2->Print(Form("pdf/helix/%05d.pdf", iev));
+      c1->cd(4); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
+      c1->cd(5); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
+      c1->cd(6); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
+      c1->Print(Form("pdf/%05d.pdf", iev));
 
    }
    fclose(fpout);
