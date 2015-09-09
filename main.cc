@@ -753,11 +753,13 @@ struct Helix
    {
       draw_xz_hits();
       draw_xz_fit();
+      draw_xz_hits();
    };
    void draw_yz_hits_fits()
    {
       draw_yz_hits();
       draw_yz_fit();
+      draw_yz_hits();
    };
    void draw_radius()
    {
