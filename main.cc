@@ -1129,6 +1129,7 @@ struct Hough
       h2ab->Draw("colz");
       TMarker* m1 = new TMarker(found_a, found_b, 33);
       m1->SetMarkerColor(kRed);
+      m1->SetMarkerSize(3.0);
       m1->Draw("same");
    };
    void draw_hist_uv()
