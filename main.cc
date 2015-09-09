@@ -126,26 +126,30 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yhit = g_yhits[ihit];
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
-      double rad = TMath::ATan2(ddy,ddx); 
-      if (rad<0) rad+=ang360;
+      double rad = TMath::ATan2(ddy,ddx);  // [-pi, pi]
+      rad += TMath::Pi();
       if (rad>=ang0   && rad<ang90)  region_hit[0] = 1;
       if (rad>=ang90  && rad<ang180) region_hit[1] = 1;
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
       if (rad>=ang270 && rad<ang360) region_hit[3] = 1;
       printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
    }
+   fprintf(stdout,"1) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
    // check rad0 also
    if (rad0>=ang0   && rad0<ang90)  region_hit[0] = 1;
    if (rad0>=ang90  && rad0<ang180) region_hit[1] = 1;
    if (rad0>=ang180 && rad0<ang270) region_hit[2] = 1;
    if (rad0>=ang270 && rad0<ang360) region_hit[3] = 1;
+   fprintf(stdout,"2) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
 
+   /*
    printf("rad0 %f region_hit %d %d %d %d\n", 
          rad2deg(rad0),
          region_hit[0],
          region_hit[1],
          region_hit[2],
          region_hit[3]);
+         */
 
    double offset_ang[4];
    for (int i=0; i<4; i++) offset_ang[i] = 0;
@@ -171,10 +175,12 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    else if (chk_hitpattern(region_hit, 0,0,0,1)) { min_rad = ang0; }
 
    if (min_rad==-1) {
-      fprintf(stderr,"strange hit pattern. terminate.\n");
-      exit(1);
+      fprintf(stderr,"strange hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
+      f = 1e10;
+      return;
+      //exit(1);
    }
-   printf("min_rad %f (deg)\n", rad2deg(min_rad));
+   //printf("min_rad %f (deg)\n", rad2deg(min_rad));
    // Add offset_ang and
    // Re-set angle based on min_rad
    if (rad0>=ang0   && rad0<ang90)  rad0 += offset_ang[0];
@@ -192,11 +198,11 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double rad = TMath::ATan2(ddy,ddx); 
       if (rad<0) rad+=ang360;
 
-      if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
-      if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
-      if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
-      if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
-      rad -= min_rad;
+      //if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
+      //if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
+      //if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
+      //if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
+      //rad -= min_rad;
 
       double drad = rad - rad0;
       w_z = drad*L;
@@ -212,7 +218,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
-      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0, chi2);
+      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0, chi2);
 
       // update hit position for next fit
       g_xhits[ihit] = w_x;
@@ -815,15 +821,16 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   //int iev1=2, iev2=3;
+   int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
    //int iev1=8, iev2=9;
-   int iev1=10, iev2=11;
+   //int iev1=10, iev2=11;
    //int iev1=11, iev2=12;
    //int iev1=13, iev2=14;
    //int iev1=14, iev2=15;
+   //int iev1=16, iev2=17;
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=30;
@@ -891,8 +898,8 @@ int main(int argc, char** argv)
          if (rad0_guess>2.0*TMath::Pi()) {
             rad0_guess -= 2.0*TMath::Pi();
          }
-         printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
-         printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
+         //printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
+         //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
          helix[isign].add_hits(circ1);
