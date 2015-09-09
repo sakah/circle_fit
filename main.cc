@@ -1005,7 +1005,8 @@ struct Hough
    {
       h2 = NULL;
       gr = NULL;
-      hdiff = new TH1F("hdiff","", 100, -0.05, 0.05);
+      hdiff = new TH1F("hdiff","", 100, -0.01, 0.01);
+      hdiff->SetStats(11111111);
    };
    ~Hough()
    {
