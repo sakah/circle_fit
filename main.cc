@@ -127,7 +127,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx);  // [-pi, pi]
-      rad += TMath::Pi();
+      if (ddy<0) rad += 2.0*TMath::Pi();
       if (rad>=ang0   && rad<ang90)  region_hit[0] = 1;
       if (rad>=ang90  && rad<ang180) region_hit[1] = 1;
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
@@ -180,6 +180,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       return;
       //exit(1);
    }
+   fprintf(stdout,"offset_ang [%f %f %f %f]\n", offset_ang[0], offset_ang[1], offset_ang[2], offset_ang[3]);
    //printf("min_rad %f (deg)\n", rad2deg(min_rad));
    // Add offset_ang and
    // Re-set angle based on min_rad
@@ -187,7 +188,9 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    if (rad0>=ang90  && rad0<ang180) rad0 += offset_ang[1];
    if (rad0>=ang180 && rad0<ang270) rad0 += offset_ang[2];
    if (rad0>=ang270 && rad0<ang360) rad0 += offset_ang[3];
+   printf("1) rad0 %f\n", rad2deg(rad0));
    rad0 -= min_rad;
+   printf("2) rad0 %f\n", rad2deg(rad0));
 
    for (int ihit=0; ihit<g_nhits; ihit++) {
       // calculate w_x/w_y using previous result
@@ -196,18 +199,18 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx); 
-      if (rad<0) rad+=ang360;
+      if (ddy<0) rad += 2.0*TMath::Pi();
 
-      //if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
-      //if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
-      //if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
-      //if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
-      //rad -= min_rad;
+      if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
+      if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
+      if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
+      if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
+      rad -= min_rad;
 
       double drad = rad - rad0;
       w_z = drad*L;
-      //printf("2) ihit %d ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
-      //      ihit, g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
+      printf("2) ihit %d ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
+            ihit, g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
 
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
@@ -699,7 +702,7 @@ struct Helix
    {
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(zhits[ihit], yhits[ihit], 8);
-         printf("ihit %d xhits %f yhits %f zhits %f\n", ihit, xhits[ihit], yhits[ihit], zhits[ihit]);
+         //printf("ihit %d xhits %f yhits %f zhits %f\n", ihit, xhits[ihit], yhits[ihit], zhits[ihit]);
          m->Draw();
       }
    };
@@ -821,7 +824,7 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   int iev1=2, iev2=3;
+   //int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
@@ -833,7 +836,7 @@ int main(int argc, char** argv)
    //int iev1=16, iev2=17;
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
-   //int iev1=0, iev2=30;
+   int iev1=0, iev2=30;
    //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
