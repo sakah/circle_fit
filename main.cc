@@ -590,14 +590,14 @@ struct Helix
    void draw_xz_hits()
    {
       for (int ihit=0; ihit<nhits; ihit++) {
-         TMarker* m = new TMarker(xhits[ihit], zhits[ihit], 8);
+         TMarker* m = new TMarker(zhits[ihit], xhits[ihit], 8);
          m->Draw();
       }
    };
    void draw_yz_hits()
    {
       for (int ihit=0; ihit<nhits; ihit++) {
-         TMarker* m = new TMarker(xhits[ihit], zhits[ihit], 8);
+         TMarker* m = new TMarker(zhits[ihit], yhits[ihit], 8);
          m->Draw();
       }
    };
