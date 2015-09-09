@@ -949,6 +949,146 @@ void sort_raw_hits_by_icell()
    }
 }
 
+struct Conformal
+{
+   int num_hits;
+   int ilayers[10000];
+   int icells[10000];
+   int iturns[10000];
+   // before
+   double xhits[10000];
+   double yhits[10000];
+   // after
+   double uhits[10000];
+   double vhits[10000];
+   double eu[10000];
+   double ev[10000];
+   Conformal()
+   {
+      num_hits = 0;
+   };
+   void add_hits(Circle& circ)
+   {
+      int n = num_hits;
+      for (int ihit=0; ihit<circ.nhits; ihit++) {
+         if (n>=10000) {
+            fprintf(stderr,"Conformal: too many hits...\n");
+            break;
+         }
+         ilayers[n] = circ.hits_ilayer[ihit];
+         icells[n] = circ.hits_icell[ihit];
+         iturns[n] = circ.hits_iturn[ihit];
+         xhits[n] = circ.xhits[ihit];
+         yhits[n] = circ.yhits[ihit];
+         double r2 = xhits[ihit]*xhits[ihit] + yhits[ihit]*yhits[ihit];
+         uhits[n] = 2.0*xhits[ihit]/r2;
+         vhits[n] = 2.0*vhits[ihit]/r2;
+         eu[n] = 1.0;
+         ev[n] = 1.0;
+         n++;
+      }
+      num_hits = n;
+   };
+};
+struct Hough
+{
+   TH2F* h2;
+   double found_a;
+   double found_b;
+   int num_hits;
+   int num_inside;
+   double chi2;
+   TGraphErrors* gr;
+   TH1F* hdiff;
+   double diff[10000];
+   Hough()
+   {
+      h2 = NULL;
+      gr = NULL;
+      hdiff = new TH1F("hdiff","", 100, -0.05, 0.05);
+   };
+   ~Hough()
+   {
+      if (gr!=NULL) delete gr;
+      if (hdiff!=NULL) delete hdiff;
+   };
+   void fit(int iev, double z1, double z2, int num_hits, double* uhits, double* vhits, double* eu, double* ev)
+   {
+      if (gr!=NULL) delete gr;
+      gr = new TGraphErrors(num_hits, uhits, vhits, eu, ev);
+      gr->Fit("pol1");
+      TF1* f = gr->GetFunction("pol1");
+      chi2 = f->GetChisquare();
+      printf("iev %d z1 %f z2 %f chi2 %f\n", iev, z1, z2, chi2);
+   };
+   void transform(int num_hits, double* uhits, double* vhits)
+   {
+      double astep = 0.1;
+      double amin = -10;
+      double amax = 10;
+      double bstep = 0.001;
+      double bmin = -0.05;
+      double bmax = 0.05;
+      int anum = (amax-amin)/astep;
+      int bnum = (bmax-bmin)/bstep;
+      //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
+      if (h2==NULL) {
+         h2 = new TH2F("h2","",anum, amin, amax, bnum, bmin, bmax);
+      }
+      h2->Reset();
+
+      for (int i=0; i<num_hits; i++) {
+         for (int ia=0; ia<anum; ia++) {
+
+            double a = ia*astep + amin;
+            double b = -uhits[i]*a + vhits[i];
+
+            //printf("i %d a %lf b %lf\n", i, a, b);
+            h2->Fill(a, b, 1);
+         }
+      }
+      int ia_min;
+      int ib_min;
+      int tmp;
+      h2->GetMaximumBin(ia_min, ib_min, tmp);
+      found_a = h2->GetXaxis()->GetBinCenter(ia_min);
+      found_b = h2->GetYaxis()->GetBinCenter(ib_min);
+   };
+   void calc_diff(int num_hits, double* uhits, double* vhits, int* ilayers, int* icells, int* iturns, double* w_xs, double* w_ys, Circle& circ)
+   {
+      num_inside=0;
+      for (int ihit=0; ihit<num_hits; ihit++) {
+         double v = found_a * uhits[ihit] + found_b;
+         diff[ihit] = v - vhits[ihit];
+         hdiff->Fill(diff[ihit]);
+         //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
+         if (TMath::Abs(diff[ihit]) < 0.05) {
+            circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
+            num_inside++;
+         }
+      }
+   };
+   void print_result(int iev)
+   {
+      printf("Hough:: iev %d found_a %f found_b %f (num_hits %d num_inside %d)\n", iev, found_a, found_b, num_hits, num_inside);
+   };
+   TF1* get_line()
+   {
+      TF1* f1 = new TF1("f1", "[0]+[1]*x", -1e-1, 1e-1);
+      f1->SetParameters(found_b, found_a);
+      return f1;
+   };
+
+   void draw_uv_hits()
+   {
+      h2->Draw();
+   };
+   void draw_hist_diff()
+   {
+      hdiff->Draw();
+   };
+};
+
 int main(int argc, char** argv)
 {
    if (argc != 9) {
@@ -1126,6 +1266,24 @@ int main(int argc, char** argv)
       circ1Clus.print_fit_result(Form("Circ1Clus: iev %d", iev));
       circ2Clus.print_fit_result(Form("Circ2Clus: iev %d", iev));
 
+      // Conforma/Hough transformation
+
+      Conformal conf1; // odd-layer
+      Conformal conf2; // even-layer
+      conf1.add_hits(circ1Clus);
+      conf2.add_hits(circ2Clus);
+
+      Hough hough1; // odd-layer
+      Hough hough2; // even-layer
+
+      hough1.transform(conf1.num_hits, conf1.uhits, conf1.vhits);
+      hough1.calc_diff(conf1.num_hits, conf1.uhits, conf1.vhits, conf1.ilayers, conf1.icells, conf1.iturns, conf1.xhits, conf1.yhits, circ1);
+      hough1.print_result(iev);
+
+      hough2.transform(conf2.num_hits, conf2.uhits, conf2.vhits);
+      hough2.calc_diff(conf2.num_hits, conf2.uhits, conf2.vhits, conf2.ilayers, conf2.icells, conf2.iturns, conf2.xhits, conf2.yhits, circ2);
+      hough2.print_result(iev);
+
       struct TwoCircle tc;
       tc.calc(circ1, circ2);
       tc.print();
@@ -1175,17 +1333,23 @@ int main(int argc, char** argv)
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
-      TCanvas* c1 = new TCanvas("c1","",3000,3000);
-      c1->Divide(3,3);
+      TCanvas* c1 = new TCanvas("c1","",3000,5000);
+      c1->Divide(3,5);
       c1->cd(1); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
       c1->cd(2); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
       c1->cd(3); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
       c1->cd(4); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits();
-      c1->cd(5); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
-      c1->cd(6); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
-      c1->cd(7); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
-      c1->cd(8); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
-      c1->cd(9); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
+      c1->cd(5); circ2Clus.draw_xy_canvas(); circ2Clus.draw_xy_hits_fits();
+      c1->cd(6); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
+      c1->cd(7); hough1.draw_uv_hits();
+      c1->cd(8); hough2.draw_uv_hits();
+      c1->cd(9); 
+      c1->cd(10); hough1.draw_hist_diff();
+      c1->cd(11); hough2.draw_hist_diff();
+      c1->cd(12); 
+      c1->cd(13); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
+      c1->cd(14); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
+      c1->cd(15); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
       c1->Print(Form("pdf/%05d.pdf", iev));
 
    }
