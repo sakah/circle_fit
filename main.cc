@@ -273,6 +273,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
 
 struct Circle
 {
+   char name[128];
    int nhits;
    double xhits[1000];
    double yhits[1000];
@@ -315,6 +316,10 @@ struct Circle
       minuit->SetFCN(func_circ);
       g_xsig = 1.0;
       g_ysig = 1.0;
+   };
+   void set_name(char* a_name)
+   {
+      strcpy(name, a_name);
    };
    void remove_hit(int ilayer, int icell)
    {
@@ -478,7 +483,7 @@ struct Circle
    // Draw
    void draw_xy_canvas()
    {
-      TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
+      TH2F*  h2 = new TH2F("fname",Form("%s XY;X(cm);Y(cm)", name), 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
 
@@ -527,6 +532,8 @@ struct Circle
 
 struct Helix
 {
+   char name[128];
+
    int nhits;
    double xhits[1000];
    double yhits[1000];
@@ -604,6 +611,10 @@ struct Helix
       minuit->SetFCN(func_helix);
       g_xsig = 1.0;
       g_ysig = 1.0;
+   };
+   void set_name(char* a_name)
+   {
+      strcpy(name, a_name);
    };
    void set_line_color(int col)
    {
@@ -715,7 +726,7 @@ struct Helix
    // Draw
    void draw_xy_canvas()
    {
-      TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
+      TH2F*  h2 = new TH2F("fname-xy",Form("%s XY;X(cm);Y(cm)", name), 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
 
@@ -723,13 +734,13 @@ struct Helix
    };
    void draw_xz_canvas()
    {
-      TH2F*  h2 = new TH2F("fname-xz","", 100, -100, 100, 100, -100, 100);
+      TH2F*  h2 = new TH2F("fname-xz",Form("%s ZX;Z(cm);X(cm)", name), 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
    };
    void draw_yz_canvas()
    {
-      TH2F*  h2 = new TH2F("fname-yz","", 100, -100, 100, 100, -100, 100);
+      TH2F*  h2 = new TH2F("fname-yz",Form("%s ZY;Z(cm);Y(cm)", name), 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
    };
@@ -1006,7 +1017,7 @@ struct Hough
    double diff[10000];
    Hough()
    {
-      h2uv = new TH2F("h2uv", "U-V space;u;v", 100, -0.1, 0.1, 100, -0.1, 0.1);
+      h2uv = new TH2F("h2uv", "U-V Space;u;v", 100, -0.1, 0.1, 100, -0.1, 0.1);
       h2ab = NULL;
       gr = NULL;
       hdiff = new TH1F("hdiff","", 100, -0.01, 0.01);
@@ -1139,22 +1150,30 @@ int main(int argc, char** argv)
    // Raw hits
    struct Circle circ1Raw; // odd-layer
    struct Circle circ2Raw; // even-layer
+   circ1Raw.set_name("Raw odd-layer");
+   circ2Raw.set_name("Raw even-layer");
    circ1Raw.set_line_color(kRed);
    circ2Raw.set_line_color(kBlue);
 
    // After removing single hit cells
    struct Circle circ1Clus; // odd-layer
    struct Circle circ2Clus; // even-layer
+   circ1Clus.set_name("Cluster odd-layer");
+   circ2Clus.set_name("Cluster even-layer");
    circ1Clus.set_line_color(kRed);
    circ2Clus.set_line_color(kBlue);
 
    // After filtering by conf_hough transformation
    struct Circle circ1; // odd-layer
    struct Circle circ2; // even-layer
+   circ1.set_name("Hough odd-layer");
+   circ2.set_name("Hough even-layer");
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
 
    struct Helix helix[2];
+   helix[0].set_name("Helix odd-layer");
+   helix[1].set_name("Helix even-layer");
    helix[0].set_line_color(kMagenta); // positive ini_pz
    helix[1].set_line_color(kMagenta); // negative ini_pz
 
