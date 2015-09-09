@@ -622,7 +622,7 @@ struct Helix
       f1->SetLineStyle(1);
       f1->SetLineColor(line_color);
       f1->SetParameters(x0_fit, R_fit, rad0_fit, L_fit);
-      f1->Draw();
+      f1->Draw("same");
    };
    void draw_yz_fit()
    {
@@ -632,7 +632,7 @@ struct Helix
       f1->SetLineStyle(1);
       f1->SetLineColor(line_color);
       f1->SetParameters(y0_fit, R_fit, rad0_fit, L_fit);
-      f1->Draw();
+      f1->Draw("same");
    };
 };
 
