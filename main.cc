@@ -1347,8 +1347,8 @@ int main(int argc, char** argv)
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
-      TCanvas* c1 = new TCanvas("c1","",3000,6000);
-      c1->Divide(3,6);
+      TCanvas* c1 = new TCanvas("c1","",3000,7000);
+      c1->Divide(3,7);
       int j=1;
       c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
       c1->cd(j++); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
@@ -1365,6 +1365,9 @@ int main(int argc, char** argv)
       c1->cd(j++); hough1.draw_hist_diff();
       c1->cd(j++); hough2.draw_hist_diff();
       c1->cd(j++); 
+      c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
+      c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
+      c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
       c1->cd(j++); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
       c1->cd(j++); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
       c1->cd(j++); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
