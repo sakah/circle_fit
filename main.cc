@@ -132,15 +132,15 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       if (rad>=ang90  && rad<ang180) region_hit[1] = 1;
       if (rad>=ang180 && rad<ang270) region_hit[2] = 1;
       if (rad>=ang270 && rad<ang360) region_hit[3] = 1;
-      printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
+      //printf("ORG ihit %d ilayer %d rad %f\n", ihit, g_hits_ilayer[ihit], rad2deg(rad));
    }
-   fprintf(stdout,"1) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
+   //fprintf(stdout,"1) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
    // check rad0 also
    if (rad0>=ang0   && rad0<ang90)  region_hit[0] = 1;
    if (rad0>=ang90  && rad0<ang180) region_hit[1] = 1;
    if (rad0>=ang180 && rad0<ang270) region_hit[2] = 1;
    if (rad0>=ang270 && rad0<ang360) region_hit[3] = 1;
-   fprintf(stdout,"2) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
+   //fprintf(stdout,"2) hit pattern. [%d %d %d %d]\n", region_hit[0], region_hit[1], region_hit[2], region_hit[3]);
 
    /*
    printf("rad0 %f region_hit %d %d %d %d\n", 
@@ -198,11 +198,11 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double rad = TMath::ATan2(ddy,ddx); 
       if (rad<0) rad+=ang360;
 
-      //if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
-      //if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
-      //if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
-      //if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
-      //rad -= min_rad;
+      if (rad>=ang0   && rad<ang90)  rad += offset_ang[0];
+      if (rad>=ang90  && rad<ang180) rad += offset_ang[1];
+      if (rad>=ang180 && rad<ang270) rad += offset_ang[2];
+      if (rad>=ang270 && rad<ang360) rad += offset_ang[3];
+      rad -= min_rad;
 
       double drad = rad - rad0;
       w_z = drad*L;
@@ -213,8 +213,8 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       int icell = g_hits_icell[ihit];
       config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, w_z, "center", &w_x, &w_y);
 
-      double xexp = x0 + R * TMath::Cos(rad0_org + w_z/L);
-      double yexp = y0 + R * TMath::Sin(rad0_org + w_z/L);
+      double xexp = x0 + R * TMath::Cos(rad0 + w_z/L);
+      double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
@@ -821,7 +821,7 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   int iev1=2, iev2=3;
+   //int iev1=2, iev2=3;
    //int iev1=3, iev2=4;
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
@@ -833,7 +833,7 @@ int main(int argc, char** argv)
    //int iev1=16, iev2=17;
    //int iev1=28, iev2=29;
    //int iev1=0, iev2=3;
-   //int iev1=0, iev2=30;
+   int iev1=0, iev2=30;
    //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
