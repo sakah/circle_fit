@@ -1053,8 +1053,8 @@ struct Hough
    void transform(int num_hits, double* uhits, double* vhits)
    {
       double astep = 0.1;
-      double amin = -5;
-      double amax = 5;
+      double amin = -0.5;
+      double amax = 0.5;
       double bstep = 0.001;
       double bmin = -1.0;
       double bmax = 1.0;
@@ -1216,10 +1216,11 @@ int main(int argc, char** argv)
    //int iev1=14, iev2=15;
    //int iev1=16, iev2=17;
    //int iev1=28, iev2=29;
+   int iev1=329, iev2=330;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=30;
    //int iev1=0, iev2=100;
-   int iev1=0, iev2=2000;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
       clear_buffer();
