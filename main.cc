@@ -109,8 +109,8 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx);
       if (rad<0) rad += 2.0*TMath::Pi();
-      printf("ddx %f ddy %f\n", ddx, ddy);
-      printf("rad0 %f rad %f (deg)\n", rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
+      //printf("ddx %f ddy %f\n", ddx, ddy);
+      //printf("rad0 %f rad %f (deg)\n", rad0/TMath::Pi()*180, rad/TMath::Pi()*180);
       w_z = (rad - rad0)*L;
 
       int ilayer = g_hits_ilayer[ihit];
@@ -121,7 +121,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
-      printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
+      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0);
       chi2 += dx*dx + dy*dy;
 
       // update hit position for next fit
@@ -724,11 +724,11 @@ int main(int argc, char** argv)
    char title[12];
    //int iev1=11, iev2=12;
    //int iev1=4, iev2=5;
-   int iev1=14, iev2=15;
+   //int iev1=14, iev2=15;
    //int iev1=2, iev2=3;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=50;
-   //int iev1=0, iev2=2000;
+   int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
 
@@ -783,7 +783,7 @@ int main(int argc, char** argv)
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
-         printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
+         //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
          helix[isign].add_hits(circ1);
