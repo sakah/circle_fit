@@ -1031,8 +1031,8 @@ struct Hough
    void transform(int num_hits, double* uhits, double* vhits)
    {
       double astep = 0.1;
-      double amin = -10;
-      double amax = 10;
+      double amin = -5;
+      double amax = 5;
       double bstep = 0.001;
       double bmin = -1.0;
       double bmax = 1.0;
@@ -1097,7 +1097,7 @@ struct Hough
    void draw_hist_uv()
    {
       get_line()->Draw();
-      h2uv->Draw();
+      h2uv->Draw("same");
    };
    void draw_hist_diff()
    {
