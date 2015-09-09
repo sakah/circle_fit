@@ -60,9 +60,13 @@ static double sqrt2minus(double a, double b)
    return TMath::Sqrt(a*a-b*b); 
 }
 
+static struct config* g_config;
 int g_nhits;
 double g_xhits[1000];
 double g_yhits[1000];
+double g_zhits[1000];
+int    g_hits_ilayer[1000];
+int    g_hits_icell[1000];
 double g_xsig;
 double g_ysig;
 void func_circ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
@@ -80,6 +84,46 @@ void func_circ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag
       double dx = (xexp-x1)/g_xsig;
       double dy = (yexp-y1)/g_ysig;
       chi2 += dx*dx + dy*dy;
+   }
+   //printf("chi2 %f\n", chi2);
+   f = chi2;
+}
+void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
+{
+   double x0 = x[0];
+   double y0 = x[1];
+   double R  = x[2];
+   double rad0  = x[3];
+   double L  = x[4];
+   double chi2 = 0;
+
+   double w_x;
+   double w_y;
+   double w_z;
+   for (int ihit=0; ihit<g_nhits; ihit++) {
+
+      // calculate w_x/w_y using previous result
+      double xhit = g_xhits[ihit];
+      double yhit = g_yhits[ihit];
+      double ddx = (xhit - x0)/R;
+      double ddy = (yhit - y0)/R;
+      double rad = TMath::ATan2(ddy,ddx);
+      w_z = (rad - rad0)*L;
+
+      int ilayer = g_hits_ilayer[ihit];
+      int icell = g_hits_icell[ihit];
+      config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, w_z, "center", &w_x, &w_y);
+
+      double xexp = x0 + R * TMath::Cos(rad0 + w_z/L);
+      double yexp = y0 + R * TMath::Sin(rad0 + w_z/L);
+      double dx = (xexp-w_x)/g_xsig;
+      double dy = (yexp-w_y)/g_ysig;
+      chi2 += dx*dx + dy*dy;
+
+      // update hit position for next fit
+      g_xhits[ihit] = w_x;
+      g_yhits[ihit] = w_y;
+      g_zhits[ihit] = w_z;
    }
    //printf("chi2 %f\n", chi2);
    f = chi2;
@@ -164,25 +208,6 @@ struct Circle
          nhits++;
       }
    };
-   void update_xypos(struct config* config, double z1, double z2)
-   {
-      double w_x;
-      double w_y;
-      double rad0 = rad1_fit;
-      for (int ihit=0; ihit<nhits; ihit++) {
-         int ilayer = hits_ilayer[ihit];
-         int icell = hits_icell[ihit];
-         double dx = (xhits[ihit] - x0_fit)/R_fit;
-         double dy = (yhits[ihit] - y0_fit)/R_fit;
-         double rad = TMath::ATan2(dy, dx);
-         double drad = rad - rad0;
-         if (drad<0) drad += TMath::Pi()*2.0; // around 180deg line
-         double zhit = z1 + drad;
-         config_get_wire_pos(config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, zhit, "center", &w_x, &w_y);
-         xhits[ihit] = w_x;
-         yhits[ihit] = w_y;
-      }
-   };
    double x0_fit;
    double y0_fit;
    double R_fit;
@@ -192,11 +217,24 @@ struct Circle
    double x0_step;
    double y0_step;
    double R_step;
-   double rad1_fit;
-   double rad2_fit;
-   double deg1_fit;
-   double deg2_fit;
-   double pt_fit;
+   double get_rad_fit(int ihit) 
+   { 
+      double dx = (xhits[ihit] - x0_fit)/R_fit;
+      double dy = (yhits[ihit] - y0_fit)/R_fit;
+      return TMath::ATan2(dy,dx);
+   };
+   double get_rad1_fit() { return get_rad_fit(0); };
+   double get_rad2_fit() { return get_rad_fit(nhits-1); };
+   double get_deg1_fit() { return get_rad1_fit()/TMath::Pi()*180.0; };
+   double get_deg2_fit() { return get_rad2_fit()/TMath::Pi()*180.0; };
+   double get_pt_fit()
+   { 
+      // p (GeV) = 0.3 * B (T) * R (m)
+      // pm (MeV) * 1e-3 =  0.3 * B (T) * r (cm)*1e-2
+      double B = 1.0; // T
+      double pt = 3.0*B*R_fit; // MeV/c
+      return pt;
+   };
    void set_line_color(int col)
    {
       line_color = col;
@@ -205,7 +243,7 @@ struct Circle
    {
       nhits = 0;
    };
-   void calc_init()
+   void set_fit_inipar()
    {
       x0_ini = 20;
       y0_ini = -5;
@@ -226,7 +264,6 @@ struct Circle
          g_xhits[ihit] = xhits[ihit];
          g_yhits[ihit] = yhits[ihit];
       }
-      calc_init();
 
       Int_t ierflag;
       Double_t arglist[10];
@@ -258,60 +295,25 @@ struct Circle
       y0_fit = var[1]; //cm
       R_fit  = var[2]; // cm
 
-      double B = 1.0; // T
       printf("R_fit %f\n", R_fit);
-      pt_fit = 3.0*B*R_fit; // MeV/c
-      // p (GeV) = 0.3 * B (T) * R (m)
-      // pm (MeV) * 1e-3 =  0.3 * B (T) * r (cm)*1e-2
-
-      printf("pt_fit %f\n", pt_fit);
-
-      double dx1 = (xhits[0] - x0_fit)/R_fit;
-      double dy1 = (yhits[0] - y0_fit)/R_fit;
-      double dx2 = (xhits[nhits-1] - x0_fit)/R_fit;
-      double dy2 = (yhits[nhits-1] - y0_fit)/R_fit;
-      rad1_fit = TMath::ATan2(dy1,dx1);
-      rad2_fit = TMath::ATan2(dy2,dx2);
-      deg1_fit = rad1_fit/TMath::Pi()*180.0;
-      deg2_fit = rad2_fit/TMath::Pi()*180.0;
-   };
-   void draw_fit_circle()
-   {
-      TEllipse* e = new TEllipse(x0_fit, y0_fit, R_fit);
-      e->SetFillStyle(0);
-      e->SetLineWidth(1);
-      e->SetLineStyle(1);
-      e->SetLineColor(line_color);
-      e->Draw();
+      printf("pt_fit %f\n", get_pt_fit());
    };
    void print_fit_result()
    {
-      printf("x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f\n", x0_fit, y0_fit, R_fit, pt_fit, deg1_fit, deg2_fit);
+      printf("x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f\n", x0_fit, y0_fit, R_fit, get_pt_fit(), get_deg1_fit(), get_deg2_fit());
    };
-   void draw()
-   {
-
-      for (int ihit=0; ihit<nhits; ihit++) {
-         TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
-         m->Draw();
-      }
-
-      draw_fit_circle();
-      draw_center_point();
-   };
-   void draw_center_point()
-   {
-      TMarker* m = new TMarker(x0_fit, y0_fit, 8);
-      m->SetMarkerColor(line_color);
-      m->Draw();
-   };
-   void draw_canvas()
+   // Draw
+   void draw_xy_canvas()
    {
       TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
       h2->SetStats(0);
       h2->Draw();
-
+   };
+   void draw_xy_hits_fits()
+   {
       draw_radius();
+      draw_xy_hits();
+      draw_xy_fit();
    };
    void draw_radius()
    {
@@ -323,6 +325,306 @@ struct Circle
          e->SetLineStyle(1);
          e->Draw();
       }
+   };
+   void draw_xy_hits()
+   {
+      for (int ihit=0; ihit<nhits; ihit++) {
+         TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
+         m->Draw();
+      }
+   };
+   void draw_xy_fit()
+   {
+      TMarker* m = new TMarker(x0_fit, y0_fit, 8);
+      m->SetMarkerColor(line_color);
+      m->Draw();
+
+      TEllipse* e = new TEllipse(x0_fit, y0_fit, R_fit);
+      e->SetFillStyle(0);
+      e->SetLineWidth(1);
+      e->SetLineStyle(1);
+      e->SetLineColor(line_color);
+      e->Draw();
+   };
+};
+
+struct Helix
+{
+   int nhits;
+   double xhits[1000];
+   double yhits[1000];
+   double zhits[1000];
+   double radius[20];
+   int hits_ilayer[1000];
+   int hits_icell[1000];
+
+   int line_color;
+
+   TMinuit* minuit;
+   double chi2;
+   double x0_fit;
+   double y0_fit;
+   double R_fit;
+   double rad0_fit;
+   double L_fit;
+
+   double x0_ini;
+   double y0_ini;
+   double R_ini;
+   double rad0_ini;
+   double L_ini;
+
+   double x0_step;
+   double y0_step;
+   double R_step;
+   double rad0_step;
+   double L_step;
+
+   double get_pt_fit()
+   { 
+      // p (GeV) = 0.3 * B (T) * R (m)
+      // pm (MeV) * 1e-3 =  0.3 * B (T) * r (cm)*1e-2
+      double B = 1.0; // T
+      double pt = 3.0*B*R_fit; // MeV/c
+      return pt;
+   };
+   double get_pz_fit()
+   { 
+      // p (GeV) = 0.3 * B (T) * R (m)
+      // pm (MeV) * 1e-3 =  0.3 * B (T) * r (cm)*1e-2
+      double B = 1.0; // T
+      double pz = 3.0*B*L_fit; // MeV/c
+      return pz;
+   };
+   Helix()
+   {
+      nhits = 0;
+
+      int n = 0;
+      radius[n++] = 51.4000;
+      radius[n++] = 53.0000;
+      radius[n++] = 54.6000;
+      radius[n++] = 56.2000;
+      radius[n++] = 57.8000;
+      radius[n++] = 59.4000;
+      radius[n++] = 61.0000;
+      radius[n++] = 62.6000;
+      radius[n++] = 64.2000;
+      radius[n++] = 65.8000;
+      radius[n++] = 67.4000;
+      radius[n++] = 69.0000;
+      radius[n++] = 70.6000;
+      radius[n++] = 72.2000;
+      radius[n++] = 73.8000;
+      radius[n++] = 75.4000;
+      radius[n++] = 77.0000;
+      radius[n++] = 78.6000;
+      radius[n++] = 80.2000;
+      radius[n++] = 81.8000;
+
+      minuit = new TMinuit(5);
+      minuit->SetFCN(func_helix);
+      g_xsig = 1.0;
+      g_ysig = 1.0;
+   };
+   void set_line_color(int col)
+   {
+      line_color = col;
+   };
+   void clear()
+   {
+      nhits = 0;
+   };
+   void add_hits(Circle& c1)
+   {
+      int n = c1.nhits;
+      for (int ihit=0; ihit<n; ihit++) {
+         xhits[nhits] = c1.xhits[ihit];
+         yhits[nhits] = c1.yhits[ihit];
+         zhits[nhits] = 0.0; // zhits will be set afer fitting
+         hits_ilayer[nhits] = c1.hits_ilayer[ihit];
+         hits_icell[nhits]  = c1.hits_icell[ihit];
+         nhits++;
+      }
+   };
+   void copy_hits(Helix& other)
+   {
+      nhits = other.nhits;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         xhits[ihit] = other.xhits[ihit];
+         yhits[ihit] = other.yhits[ihit];
+         zhits[ihit] = other.zhits[ihit];
+         hits_ilayer[ihit] = other.hits_ilayer[ihit];
+         hits_icell[ihit]  = other.hits_icell[ihit];
+      }
+   };
+   void set_fit_inipar(double x0, double y0, double R, double rad0, double L)
+   {
+      x0_ini = x0;
+      y0_ini = y0;
+      R_ini = R;
+      rad0_ini = rad0;
+      L_ini = L;
+
+      x0_step = 1;
+      y0_step = 1;
+      R_step = 1;
+      rad0_step = 1;
+      L_step = 1;
+   };
+   void fit_helix()
+   {
+      // copy to global values
+      g_nhits = nhits;
+      for (int ihit=0; ihit<nhits; ihit++) {
+         g_xhits[ihit] = xhits[ihit];
+         g_yhits[ihit] = yhits[ihit];
+         g_zhits[ihit] = 0.0; // zhits will be set in func_helix using xypos
+      }
+
+      Int_t ierflag;
+      Double_t arglist[10];
+      TString Tag[3];
+      Double_t var[3];
+      Double_t verr[3];
+      Double_t bnd1, bnd2;
+      Int_t ivarbl;
+
+      minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
+      minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
+      minuit->mnparm(2 ,"R",  R_ini,  R_step,  0, 0, ierflag);
+      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step,  0, 0, ierflag);
+      minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
+      arglist[0] = 1; // use chi2
+      minuit->mnexcm("SET ERR", arglist, 1, ierflag);
+      arglist[0] = 1000; // do at least 1000 function calls
+      arglist[1] = 0.1;  // tolerance = 0.1
+      minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
+      for (int i=0; i<5; i++) {
+         minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
+         printf("i %d %f +/- %f\n", i, var[i], verr[i]);
+      }
+      // Result
+      Double_t amin,edm,errdef;
+      Int_t nvpar,nparx,icstat;
+      minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
+      chi2 = amin;
+
+      x0_fit = var[0]; //cm
+      y0_fit = var[1]; //cm
+      R_fit  = var[2]; // cm
+      rad0_fit  = var[3]; // rad
+      L_fit  = var[4]; // cm
+
+      printf("R_fit %f pt_fit %f\n", R_fit, get_pt_fit());
+      printf("L_fit %f pz_fit %f\n", L_fit, get_pz_fit());
+   };
+   void print_fit_result()
+   {
+      printf("x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f L %f pz %f\n", x0_fit, y0_fit, R_fit, get_pt_fit(), rad0_fit, L_fit, get_pz_fit());
+   };
+
+   // Draw
+   void draw_xy_canvas()
+   {
+      TH2F*  h2 = new TH2F("fname","", 100, -100, 100, 100, -100, 100);
+      h2->SetStats(0);
+      h2->Draw();
+
+      draw_radius();
+   };
+   void draw_xz_canvas()
+   {
+      TH2F*  h2 = new TH2F("fname-xz","", 100, -100, 100, 100, -100, 100);
+      h2->SetStats(0);
+      h2->Draw();
+   };
+   void draw_yz_canvas()
+   {
+      TH2F*  h2 = new TH2F("fname-yz","", 100, -100, 100, 100, -100, 100);
+      h2->SetStats(0);
+      h2->Draw();
+   };
+   void draw_xy_hits_fits()
+   {
+      draw_radius();
+      draw_xy_hits();
+      draw_xy_fit();
+   };
+   void draw_xz_hits_fits()
+   {
+      draw_xz_hits();
+      draw_xz_fit();
+   };
+   void draw_yz_hits_fits()
+   {
+      draw_yz_hits();
+      draw_yz_fit();
+   };
+   void draw_radius()
+   {
+      for (int ilayer=0; ilayer<20; ilayer++) {
+         if (ilayer%2==0) continue;
+         TEllipse* e = new TEllipse(0,0,radius[ilayer]);
+         e->SetFillStyle(0);
+         e->SetLineWidth(1);
+         e->SetLineStyle(1);
+         e->Draw();
+      }
+   };
+   void draw_xy_hits()
+   {
+      for (int ihit=0; ihit<nhits; ihit++) {
+         TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
+         m->Draw();
+      }
+   };
+   void draw_xz_hits()
+   {
+      for (int ihit=0; ihit<nhits; ihit++) {
+         TMarker* m = new TMarker(xhits[ihit], zhits[ihit], 8);
+         m->Draw();
+      }
+   };
+   void draw_yz_hits()
+   {
+      for (int ihit=0; ihit<nhits; ihit++) {
+         TMarker* m = new TMarker(xhits[ihit], zhits[ihit], 8);
+         m->Draw();
+      }
+   };
+   void draw_xy_fit()
+   {
+      TMarker* m = new TMarker(x0_fit, y0_fit, 8);
+      m->SetMarkerColor(line_color);
+      m->Draw();
+
+      TEllipse* e = new TEllipse(x0_fit, y0_fit, R_fit);
+      e->SetFillStyle(0);
+      e->SetLineWidth(1);
+      e->SetLineStyle(1);
+      e->SetLineColor(line_color);
+      e->Draw();
+   };
+   void draw_xz_fit()
+   {
+      // x0 + R*cos(rad0 + z/L)
+      TF1* f1 = new TF1("f1", "[0] + [1]*cos([2]+x/[3])", -100, 100);
+      f1->SetLineWidth(1);
+      f1->SetLineStyle(1);
+      f1->SetLineColor(line_color);
+      f1->SetParameters(x0_fit, R_fit, rad0_fit, L_fit);
+      f1->Draw();
+   };
+   void draw_yz_fit()
+   {
+      // x0 + R*cos(rad0 + z/L)
+      TF1* f1 = new TF1("f1", "[0] + [1]*sin([2]+x/[3])", -100, 100);
+      f1->SetLineWidth(1);
+      f1->SetLineStyle(1);
+      f1->SetLineColor(line_color);
+      f1->SetParameters(y0_fit, R_fit, rad0_fit, L_fit);
+      f1->Draw();
    };
 };
 
@@ -341,87 +643,6 @@ struct TwoCircle
    void print()
    {
       printf("dr %f deg %f\n", dr, deg);
-   };
-};
-
-static struct config* g_config;
-static Circle *g_c1;
-static Circle *g_c2;
-static double g_z1_fit;
-static Circle* g_c3;
-void func_scanz(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
-{
-
-   // Shift zpos according to tc.dr and set hits in circ3
-   Circle c10;
-   Circle c20;
-   c10.copy_hits(*g_c1);
-   c20.copy_hits(*g_c2);
-   double z2 = x[0];
-   c10.update_xypos(g_config, g_z1_fit, z2);
-   c20.update_xypos(g_config, g_z1_fit, z2);
-
-   if (g_c3==NULL) g_c3 = new Circle;
-   g_c3->set_line_color(kMagenta);
-   g_c3->clear();
-   g_c3->add_hits(c10, c20);
-   g_c3->fit_circ();
-
-   f = g_c3->chi2;
-};
-struct ScanZ
-{
-   double z2_step;
-   double z2_fit;
-
-   TMinuit* minuit;
-   double chi2;
-
-   void init()
-   {
-      minuit = new TMinuit(1);
-      minuit->SetFCN(func_scanz);
-      z2_step = 2.0;
-   };
-
-   void fit_scanz(Circle* c1, Circle* c2, double z1, double z2_ini)
-   {
-      g_c1 = c1;
-      g_c2 = c2;
-      g_z1_fit = z1;
-
-      Int_t ierflag;
-      Double_t arglist[10];
-      TString Tag[3];
-      Double_t var[3];
-      Double_t verr[3];
-      Double_t bnd1, bnd2;
-      Int_t ivarbl;
-
-      //printf("HOGE1 z2_ini %f\n", z2_ini);
-      minuit->mnparm(0, "z2", z2_ini, z2_step, 0, 0, ierflag);
-      //printf("HOGE2\n");
-      arglist[0] = 1; // use chi2
-      minuit->mnexcm("SET ERR", arglist, 1, ierflag);
-      arglist[0] = 100; // do at least 100 function calls
-      arglist[1] = 0.1;  // tolerance = 0.1
-      minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
-      for (int i=0; i<1; i++) {
-         minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
-         printf("i %d %f +/- %f\n", i, var[i], verr[i]);
-      }
-      // Result
-      Double_t amin,edm,errdef;
-      Int_t nvpar,nparx,icstat;
-      minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
-      chi2 = amin;
-
-      z2_fit = var[0]; //cm
-   };
-
-   void print_result()
-   {
-      printf("z2_fit %f chi2 %f\n", z2_fit, chi2);
    };
 };
 
@@ -484,9 +705,8 @@ int main(int argc, char** argv)
    struct Circle circ2; // even-layer
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
-
-   struct ScanZ scanz;
-   scanz.init();
+   struct Helix helix;
+   helix.set_line_color(kMagenta);
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
@@ -537,22 +757,21 @@ int main(int argc, char** argv)
       tc.calc(circ1, circ2);
       tc.print();
 
-      //double z1_fit = estimate_z1(tc.dr);
-      double z1_fit = 20.0;
+      double z1_fit = estimate_z1(tc.dr);
       double pa_guess = 104.0;
-      double pz_guess = -sqrt2minus(pa_guess, circ1.pt_fit); // assume positive
-      //double pz_guess = -sqrt2minus(pa_guess, circ1.pt_fit); // assume positive
-      //double pz_guess = -13.0;
-      // electron rotates anti-clockwise so drad is always positive
-      double drad = circ1.rad2_fit-circ1.rad1_fit;
-      if (drad<0) drad += 2.0*TMath::Pi();
-      double z2_guess = estimate_z2(z1_fit, drad, pz_guess);
-      printf("HOGE circ1.pt_fit %f (<=104.0)  z1_fit %f drad %f (deg) pz_guess %f -> z2_guess %f\n", circ1.pt_fit, z1_fit, drad/TMath::Pi()*180.0, pz_guess, z2_guess);
+      // pz_guess should be tested both positive and negative case
+      double pz_guess = sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+      double B = 1.0; // T
+      double L_guess = pz_guess/(3.0*B);
+      double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
+      printf("z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
-      scanz.fit_scanz(&circ1, &circ2, z1_fit, z2_guess);
-      scanz.print_result();
-
-      double pz_fit = estimate_pz(z1_fit, scanz.z2_fit, drad);
+      helix.clear();
+      helix.add_hits(circ1);
+      helix.add_hits(circ2);
+      helix.set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
+      helix.fit_helix();
+      helix.print_fit_result();
 
       TVector3 mcPos;
       TVector3 mcMom;
@@ -560,19 +779,25 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit, scanz.chi2);
+      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix.get_pt_fit(), mc_pz, helix.get_pz_fit(), helix.chi2);
       fflush(fpout);
 
-      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f circ1.pt_fit %f mc_pz %f pz_fit %f scanz.chi2 %f\n", 
-            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, circ1.pt_fit, mc_pz, pz_fit, scanz.chi2);
+      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
+            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix.get_pt_fit(), mc_pz, helix.get_pz_fit(), helix.chi2);
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
       c1->Divide(2,2);
-      c1->cd(1); circ1.draw_canvas(); circ1.draw();
-      c1->cd(2); circ2.draw_canvas(); circ2.draw();
-      c1->cd(3); circ1.draw_canvas(); circ1.draw(); circ2.draw();
-      c1->cd(4); g_c3->draw_canvas(); g_c3->draw();
-      c1->Print(Form("pdf/%05d.pdf", iev));
+      c1->cd(1); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
+      c1->cd(2); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
+      c1->cd(3); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
+      c1->Print(Form("pdf/circle/%05d.pdf", iev));
+
+      TCanvas* c2 = new TCanvas("c2","",2000,2000);
+      c2->Divide(2,2);
+      c2->cd(1); helix.draw_xy_canvas(); helix.draw_xy_hits_fits();
+      c2->cd(2); helix.draw_xz_canvas(); helix.draw_xz_hits_fits();
+      c2->cd(3); helix.draw_yz_canvas(); helix.draw_yz_hits_fits();
+      c2->Print(Form("pdf/helix/%05d.pdf", iev));
 
    }
    fclose(fpout);
