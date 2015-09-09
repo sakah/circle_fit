@@ -493,6 +493,7 @@ struct Circle
    {
       draw_xy_hits();
       draw_xy_fit();
+      draw_xy_hits();
    };
    void draw_radius()
    {
@@ -748,6 +749,7 @@ struct Helix
    {
       draw_xy_hits();
       draw_xy_fit();
+      draw_xy_hits();
    };
    void draw_xz_hits_fits()
    {
