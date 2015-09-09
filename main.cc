@@ -301,7 +301,7 @@ struct Circle
    };
    void print_fit_result(char* prefix)
    {
-      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), get_deg1_fit(), get_deg2_fit());
+      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), get_deg1_fit(), get_deg2_fit(), chi2);
    };
    // Draw
    void draw_xy_canvas()
@@ -529,7 +529,7 @@ struct Helix
    };
    void print_fit_result(char* prefix)
    {
-      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f L %f pz %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad0_fit, L_fit, get_pz_fit());
+      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f L %f pz %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad0_fit, L_fit, get_pz_fit(), chi2);
    };
 
    // Draw
@@ -719,9 +719,9 @@ int main(int argc, char** argv)
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
-   int iev1=11, iev2=12;
+   //int iev1=11, iev2=12;
    //int iev1=4, iev2=5;
-   //int iev1=14, iev2=15;
+   int iev1=14, iev2=15;
    //int iev1=2, iev2=3;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=50;
