@@ -713,17 +713,19 @@ int main(int argc, char** argv)
    struct Circle circ2; // even-layer
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
-   struct Helix helix;
-   helix.set_line_color(kMagenta);
+   struct Helix helix[2];
+   helix[0].set_line_color(kMagenta); // positive ini_pz
+   helix[1].set_line_color(kMagenta); // negative ini_pz
 
    FILE* fpout = fopen("debug.txt","w");
    char title[12];
+   int iev1=11, iev2=12;
    //int iev1=4, iev2=5;
    //int iev1=14, iev2=15;
    //int iev1=2, iev2=3;
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=50;
-   int iev1=0, iev2=2000;
+   //int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
 
@@ -769,20 +771,26 @@ int main(int argc, char** argv)
 
       double z1_fit = estimate_z1(tc.dr);
       double pa_guess = 104.0;
-      // pz_guess should be tested both positive and negative case
-      double pz_guess = sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
-      //double pz_guess = -sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
-      double B = 1.0; // T
-      double L_guess = pz_guess/(3.0*B);
-      double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
-      printf("z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
-      helix.clear();
-      helix.add_hits(circ1);
-      helix.add_hits(circ2);
-      helix.set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
-      helix.fit_helix();
-      helix.print_fit_result(Form("Helix: iev %d", iev));
+      // pz_guess should be tested both positive and negative case
+      for (int isign=0; isign<2; isign++) {
+         int sign=1;
+         if (isign==1) sign = -1;
+         double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
+         double B = 1.0; // T
+         double L_guess = pz_guess/(3.0*B);
+         double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
+         printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
+
+         helix[isign].clear();
+         helix[isign].add_hits(circ1);
+         helix[isign].add_hits(circ2);
+         helix[isign].set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
+         helix[isign].fit_helix();
+         helix[isign].print_fit_result(Form("Helix(%2d): iev %d", isign, iev));
+      }
+      int imin = 0;
+      if (helix[1].chi2 < helix[0].chi2) imin = 1;
 
       TVector3 mcPos;
       TVector3 mcMom;
@@ -790,11 +798,11 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix.get_pt_fit(), mc_pz, helix.get_pz_fit(), helix.chi2);
+      fprintf(fpout, "%5d %f %f %f %f %f %f %f %f %f\n", iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
       fflush(fpout);
 
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
-            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix.get_pt_fit(), mc_pz, helix.get_pz_fit(), helix.chi2);
+            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
       TCanvas* c1 = new TCanvas("c1","",2000,2000);
       c1->Divide(2,2);
@@ -805,9 +813,9 @@ int main(int argc, char** argv)
 
       TCanvas* c2 = new TCanvas("c2","",2000,2000);
       c2->Divide(2,2);
-      c2->cd(1); helix.draw_xy_canvas(); helix.draw_xy_hits_fits();
-      c2->cd(2); helix.draw_xz_canvas(); helix.draw_xz_hits_fits();
-      c2->cd(3); helix.draw_yz_canvas(); helix.draw_yz_hits_fits();
+      c2->cd(1); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
+      c2->cd(2); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
+      c2->cd(3); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
       c2->Print(Form("pdf/helix/%05d.pdf", iev));
 
    }
