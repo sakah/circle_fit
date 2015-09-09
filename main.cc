@@ -104,35 +104,54 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    double w_x;
    double w_y;
    double w_z;
-   double min_rad = rad0;
+   double rad90 = TMath::Pi()/2.0;
+   double rad270 = TMath::Pi()*3.0/2.0;
+   double rad360 = 2.0*TMath::Pi();
+   bool has_hit_on_1st_region = false;
+   bool has_hit_on_4th_region = false;
+   double min_rad=1e10;
+   double min_rad_3rd_or_4th_region=1e10;
+   // Re-set range of angle from 0 to 2pi
    for (int ihit=0; ihit<g_nhits; ihit++) {
-
-      // calculate w_x/w_y using previous result
       double xhit = g_xhits[ihit];
       double yhit = g_yhits[ihit];
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx); 
-      if (rad<0) rad+=2.0*TMath::Pi();
-      printf("min_rad %f ilayer %d ihit %d rad %f\n", rad2deg(min_rad), g_hits_ilayer[ihit], ihit, rad2deg(rad));
-      if (rad < min_rad) min_rad = rad;
+      if (rad<0) rad+=rad360;
+      if (rad>=0 && rad<=rad90)      has_hit_on_1st_region = true;
+      if (rad>=rad270 && rad<rad360) has_hit_on_4th_region = true;
+      if (rad>=rad270 && rad<rad360) {
+         if (rad<min_rad_3rd_or_4th_region) {
+            min_rad_3rd_or_4th_region = rad;
+         }
+      }
+      if (rad<min_rad) {
+         min_rad = rad;
+      }
    }
+   if (has_hit_on_1st_region && has_hit_on_4th_region) {
+      if (rad0 < min_rad_3rd_or_4th_region) {
+         min_rad = rad0;
+      } else {
+         min_rad = min_rad_3rd_or_4th_region;
+      }
+   }
+   printf("rad0 %f min_rad %f min_rad_3rd_or_4th_region %f\n", rad2deg(rad0), rad2deg(min_rad), rad2deg(min_rad_3rd_or_4th_region));
+
    rad0 -= min_rad;
-   if (rad0<0) rad0+=2.0*TMath::Pi();
-
    for (int ihit=0; ihit<g_nhits; ihit++) {
-
       // calculate w_x/w_y using previous result
       double xhit = g_xhits[ihit];
       double yhit = g_yhits[ihit];
       double ddx = (xhit - x0)/R;
       double ddy = (yhit - y0)/R;
       double rad = TMath::ATan2(ddy,ddx); 
-      rad -= min_rad; // all angle are measured from min_rad
-      if (rad<0) rad+=2.0*TMath::Pi();
+      if (rad<0) rad+=rad360;
+      rad -= min_rad;
+      if (rad<0) rad+=rad360;
 
       double drad = rad - rad0;
-      //if (drad<0) drad += 2.0*TMath::Pi();
       w_z = drad*L;
       printf("2) ilayer %d R %f min_rad %f (deg) rad0 %f (deg) rad %f (deg) drad %f (deg) w_z %f\n", 
             g_hits_ilayer[ihit], R, rad2deg(min_rad), rad2deg(rad0), rad2deg(rad), rad2deg(drad), w_z);
