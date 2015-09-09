@@ -1063,9 +1063,11 @@ struct Hough
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
       if (h2ab==NULL) {
          h2ab = new TH2F("h2ab",Form("%s A-B Space;a;b",name),anum, amin, amax, bnum, bmin, bmax);
+         h2ab->SetStats(0);
       }
       if (h2uv==NULL) {
          h2uv = new TH2F("h2uv",Form("%s U-V Space;u;v",name), 100, -0.1, 0.1, 100, -0.1, 0.1);
+         h2uv->SetStats(0);
       }
       h2ab->Reset();
 
@@ -1094,7 +1096,7 @@ struct Hough
    {
       if (hdiff==NULL) {
          hdiff = new TH1F("hdiff",Form("%s Residual; Residual;",name), 100, -0.01, 0.01);
-         hdiff->SetStats(11111111);
+         hdiff->SetStats(1111111111);
       }
 
       num_inside=0;
