@@ -1144,6 +1144,7 @@ struct Hough
          hdiff->Fill(diff[ihit]);
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
          if (TMath::Abs(diff[ihit]) < diff_threshold) {
+            h2uv_inside->Fill(uhits[ihit], vhits[ihit]);
             circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
             if (iturns[ihit]!=-1) num_signal_inside++;
          } else {
