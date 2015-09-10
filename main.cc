@@ -1040,7 +1040,7 @@ struct Hough
    double diff_threshold;
 
    double diff[10000];
-   Hough()
+   Hough(double threshold)
    {
       gr_uv = NULL;
       gr_uv_inside = NULL;
@@ -1060,7 +1060,7 @@ struct Hough
       gr = NULL;
       hdiff = NULL;
 
-      diff_threshold = 0.02;
+      diff_threshold = threshold;
    };
    ~Hough()
    {
@@ -1265,6 +1265,7 @@ struct Config
    double posSmear_cm;
    double momSmear_percent;
    double noise_occupancy;
+   double diff_threshold;
    char turn_type[16];
    /* command line argument */
    char* config_file[1280];
@@ -1317,6 +1318,7 @@ struct Config
          set_value_double(key,value,&posSmear_cm,     "posSmear_cm");
          set_value_double(key,value,&momSmear_percent,"momSmear_percent");
          set_value_double(key,value,&noise_occupancy, "noise_occupancy");
+         set_value_double(key,value,&diff_threshold,  "diff_threshold");
          set_value_char(key,value,turn_type,          "turn_type");
       }
       fclose(fp);
@@ -1537,8 +1539,8 @@ int main(int argc, char** argv)
       conf1.add_hits(circ1Clus);
       conf2.add_hits(circ2Clus);
 
-      Hough hough1; // odd-layer
-      Hough hough2; // even-layer
+      Hough hough1(config.diff_threshold); // odd-layer
+      Hough hough2(config.diff_threshold); // even-layer
       hough1.set_name("Hough odd-layer");
       hough2.set_name("Hough even-layer");
 
