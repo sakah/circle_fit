@@ -1016,6 +1016,7 @@ struct Hough
    char name[128];
 
    TH2F* h2uv;
+   TH2F* h2uv_inside;
    TH2F* h2ab;
    double found_a;
    double found_b;
@@ -1034,6 +1035,7 @@ struct Hough
    Hough()
    {
       h2uv = NULL;
+      h2uv_inside = NULL;
       h2ab = NULL;
       found_a = 1e10;
       found_b = 1e10;
@@ -1055,6 +1057,7 @@ struct Hough
       if (hdiff!=NULL) delete hdiff;
       if (h2ab!=NULL) delete h2ab;
       if (h2uv!=NULL) delete h2uv;
+      if (h2uv_inside!=NULL) delete h2uv_inside;
    };
    void set_name(char* a_name)
    {
@@ -1089,6 +1092,7 @@ struct Hough
       if (h2uv==NULL) {
          h2uv = new TH2F("h2uv",Form("%s U-V Space;u;v",name), 100, -0.1, 0.1, 100, -0.1, 0.1);
          h2uv->SetStats(0);
+
       }
       h2ab->Reset();
 
@@ -1120,6 +1124,14 @@ struct Hough
          gStyle->SetOptStat(1111111);
          hdiff->SetStats(1);
       }
+      hdiff->Reset();
+
+      if (h2uv_inside==NULL) {
+         h2uv_inside = new TH2F("h2uv_inside",Form("%s U-V Space (Inside);u;v",name), 100, -0.1, 0.1, 100, -0.1, 0.1);
+         h2uv_inside->SetStats(0);
+         h2uv_inside->SetMarkerColor(kBlue);
+      }
+      h2uv_inside->Reset();
 
       num_signal=0;
       num_signal_inside=0;
@@ -1166,6 +1178,7 @@ struct Hough
       h2uv->Draw();
       get_line()->Draw("same");
       h2uv->Draw("same");
+      h2uv_inside->Draw("same");
    };
    void draw_hist_diff()
    {
