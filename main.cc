@@ -1187,8 +1187,8 @@ struct Hough
       hdiff->Draw();
       double x1L = -diff_threshold, y1L = 0.0;
       double x2L = +diff_threshold, y2L = 0.0;
-      double x1R = -diff_threshold, y1R = hdiff->GetMaximum();
-      double x2R = +diff_threshold, y2R = hdiff->GetMaximum();
+      double x1R = -diff_threshold, y1R = hdiff->GetYaxis()->GetXmax();
+      double x2R = +diff_threshold, y2R = hdiff->GetYaxis()->GetXmax();
       TLine* l1 = new TLine(x1L, y1L, x1R, y1R); l1->SetLineColor(kRed); l1->Draw("same");
       TLine* l2 = new TLine(x2L, y2L, x2R, y2R); l2->SetLineColor(kRed); l2->Draw("same");
    };
