@@ -44,6 +44,7 @@
 #include <stdlib.h>
 #include <vector>
 
+#include "TStyle.h"
 #include "TCanvas.h"
 #include "TH2F.h"
 #include "TF1.h"
@@ -1098,7 +1099,8 @@ struct Hough
    {
       if (hdiff==NULL) {
          hdiff = new TH1F("hdiff",Form("%s Residual; Residual;",name), 100, -0.01, 0.01);
-         hdiff->SetStats(1111111111);
+         gStyle->SetOptStat(1111111);
+         hdiff->SetStats(1);
       }
 
       num_inside=0;
