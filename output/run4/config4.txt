@@ -1,0 +1,10 @@
+input_root        | /home/had/hideyuki/private/genfit2/KEKCC/root/digit_all_turn/1600/sub/hoge1-0.root
+wire_config       | /home/had/hideyuki/private/genfit2/KEKCC/DriftChamber_new7/B1T_square_1.5m_ver_2014_03_28.txt
+sample_type       | SampleD
+t2r_type          | MCR
+rdrift_err_cm     | 0.02
+posSmear_cm       | 0.1
+momSmear_percent  | 0.001
+noise_occupancy   | 0.1
+turn_type         | multi
+diff_threshold    | 0.02
