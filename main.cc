@@ -1137,7 +1137,6 @@ struct Hough
       num_inside_signal=0;
       num_inside_noise=0;
 
-      int num_inside = 0;
       double uhits_inside[1000];
       double vhits_inside[1000];
 
@@ -1149,7 +1148,6 @@ struct Hough
          hdiff->Fill(diff[ihit]);
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
          if (TMath::Abs(diff[ihit]) < diff_threshold) {
-            num_inside++;
             uhits_inside[num_inside] = uhits[ihit];
             vhits_inside[num_inside] = vhits[ihit];
             num_inside++;
@@ -1164,6 +1162,7 @@ struct Hough
             if (iturns[ihit]!=-1) num_signal_outside++;
          }
       }
+      //printf("DEBUG: num_inside %d (sig %d noise %d)\n", num_inside, num_inside_signal, num_inside_noise);
       gr_uv_inside = new TGraph(num_inside, uhits_inside, vhits_inside);
       gr_uv_inside->SetMarkerColor(kBlue);
       gr_uv_inside->SetTitle(Form("%s U-V Space(Inside);u;v",name));
@@ -1172,10 +1171,10 @@ struct Hough
    void print_result(int iev)
    {
       printf("Hough:: iev %d found_a %f found_b %f ", iev, found_a, found_b);
-      printf("signal: inside %3.1f (%d/%d) outside %3.1f (%d/%d)", 
+      printf("signal: inside %5.2f (%d/%d) outside %5.2f (%d/%d) ", 
             (double)num_signal_inside/num_signal, num_signal_inside, num_signal,
             (double)num_signal_outside/num_signal, num_signal_outside, num_signal);
-      printf("inside: signal %3.1f (%d/%d) noise %3.1f (%d/%d)\n", 
+      printf("inside: signal %5.2f (%d/%d) noise %5.2f (%d/%d)\n", 
             (double)num_inside_signal/num_inside, num_inside_signal, num_inside,
             (double)num_inside_noise/num_inside, num_inside_signal, num_inside);
    };
