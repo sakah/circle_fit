@@ -1028,6 +1028,10 @@ struct Hough
    int num_signal_inside;
    int num_signal_outside;
 
+   int num_inside;
+   int num_inside_signal;
+   int num_inside_noise;
+
    double chi2;
    TGraphErrors* gr;
    TH1F* hdiff;
@@ -1046,6 +1050,9 @@ struct Hough
       num_signal= 0;
       num_signal_inside= 0;
       num_signal_inside= 0;
+      num_inside= 0;
+      num_inside_signal= 0;
+      num_inside_noise= 0;
 
       chi2 = 1e10;
       gr = NULL;
@@ -1126,6 +1133,10 @@ struct Hough
       num_signal_inside=0;
       num_signal_outside=0;
 
+      num_inside=0;
+      num_inside_signal=0;
+      num_inside_noise=0;
+
       int num_inside = 0;
       double uhits_inside[1000];
       double vhits_inside[1000];
@@ -1138,11 +1149,17 @@ struct Hough
          hdiff->Fill(diff[ihit]);
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
          if (TMath::Abs(diff[ihit]) < diff_threshold) {
+            num_inside++;
             uhits_inside[num_inside] = uhits[ihit];
             vhits_inside[num_inside] = vhits[ihit];
             num_inside++;
             circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
-            if (iturns[ihit]!=-1) num_signal_inside++;
+            if (iturns[ihit]!=-1) {
+               num_signal_inside++;
+               num_inside_signal++;
+            } else {
+               num_inside_noise++;
+            }
          } else {
             if (iturns[ihit]!=-1) num_signal_outside++;
          }
@@ -1155,9 +1172,12 @@ struct Hough
    void print_result(int iev)
    {
       printf("Hough:: iev %d found_a %f found_b %f ", iev, found_a, found_b);
-      printf("signal_inside %3.1f (%d/%d) signal_outside %3.1f (%d/%d)\n", 
+      printf("signal: inside %3.1f (%d/%d) outside %3.1f (%d/%d)", 
             (double)num_signal_inside/num_signal, num_signal_inside, num_signal,
             (double)num_signal_outside/num_signal, num_signal_outside, num_signal);
+      printf("inside: signal %3.1f (%d/%d) noise %3.1f (%d/%d)\n", 
+            (double)num_inside_signal/num_inside, num_inside_signal, num_inside,
+            (double)num_inside_noise/num_inside, num_inside_signal, num_inside);
    };
    TF1* get_line()
    {
@@ -1498,10 +1518,12 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
+      fprintf(fpout, "%5d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
             iev, 
             hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
+            hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
             hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
+            hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
             helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
       fflush(fpout);
 
