@@ -1223,9 +1223,9 @@ int main(int argc, char** argv)
    double w_z;
 
    // Raw hits
-   struct Circle circ1Raw; // odd-layer
-   struct Circle circ2Raw; // even-layer
-   struct Circle circ3Raw; // odd/even-layer 
+   Circle circ1Raw; // odd-layer
+   Circle circ2Raw; // even-layer
+   Circle circ3Raw; // odd/even-layer 
    circ1Raw.set_name("Raw odd-layer");
    circ2Raw.set_name("Raw even-layer");
    circ3Raw.set_name("Raw odd/even-layer");
@@ -1233,9 +1233,9 @@ int main(int argc, char** argv)
    circ2Raw.set_line_color(kBlue);
 
    // After removing single hit cells
-   struct Circle circ1Clus; // odd-layer
-   struct Circle circ2Clus; // even-layer
-   struct Circle circ3Clus; // odd/even-layer 
+   Circle circ1Clus; // odd-layer
+   Circle circ2Clus; // even-layer
+   Circle circ3Clus; // odd/even-layer 
    circ1Clus.set_name("Cluster odd-layer");
    circ2Clus.set_name("Cluster even-layer");
    circ3Clus.set_name("Cluster odd/even-layer");
@@ -1243,16 +1243,21 @@ int main(int argc, char** argv)
    circ2Clus.set_line_color(kBlue);
 
    // After filtering by conf_hough transformation
-   struct Circle circ1; // odd-layer
-   struct Circle circ2; // even-layer
-   struct Circle circ3; // odd/even-layer
+   Circle circ1; // odd-layer
+   Circle circ2; // even-layer
+   Circle circ3; // odd/even-layer
    circ1.set_name("Hough odd-layer");
    circ2.set_name("Hough even-layer");
    circ3.set_name("Hough odd/even-layer");
    circ1.set_line_color(kRed);
    circ2.set_line_color(kBlue);
 
-   struct Helix helix[2];
+   Hough hough1; // odd-layer
+   Hough hough2; // even-layer
+   hough1.set_name("Hough odd-layer");
+   hough2.set_name("Hough even-layer");
+
+   Helix helix[2];
    helix[0].set_name("Helix odd-layer");
    helix[1].set_name("Helix even-layer");
    helix[0].set_line_color(kMagenta); // positive ini_pz
@@ -1392,11 +1397,6 @@ int main(int argc, char** argv)
       Conformal conf2; // even-layer
       conf1.add_hits(circ1Clus);
       conf2.add_hits(circ2Clus);
-
-      Hough hough1; // odd-layer
-      Hough hough2; // even-layer
-      hough1.set_name("Hough odd-layer");
-      hough2.set_name("Hough even-layer");
 
       hough1.transform(conf1.num_hits, conf1.uhits, conf1.vhits);
       hough1.calc_diff(conf1.num_hits, conf1.uhits, conf1.vhits, conf1.ilayers, conf1.icells, conf1.iturns, conf1.xhits, conf1.yhits, circ1);
