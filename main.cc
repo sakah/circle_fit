@@ -1409,25 +1409,6 @@ int main(int argc, char** argv)
    helix[0].set_line_color(kMagenta); // positive ini_pz
    helix[1].set_line_color(kMagenta); // negative ini_pz
 
-<<<<<<< HEAD
-   FILE* fpout = fopen("debug.txt","w");
-   char title[12];
-   //int iev1=2, iev2=3;
-   //int iev1=3, iev2=4;
-   //int iev1=4, iev2=5;
-   //int iev1=7, iev2=8;
-   //int iev1=8, iev2=9;
-   //int iev1=10, iev2=11;
-   //int iev1=11, iev2=12;
-   //int iev1=13, iev2=14;
-   //int iev1=14, iev2=15;
-   //int iev1=16, iev2=17;
-   //int iev1=28, iev2=29;
-   //int iev1=0, iev2=3;
-   int iev1=0, iev2=30;
-   //int iev1=0, iev2=2000;
-   for (int iev=iev1; iev<iev2; iev++) { 
-=======
    FILE* fpout = fopen(Form("%s/output.txt",config.output_dir),"w");
    if (fpout==NULL) {
       fprintf(stderr,"ERROR: cannot open for write '%s/output.txt'\n", config.output_dir);
@@ -1438,7 +1419,7 @@ int main(int argc, char** argv)
    if (strcmp(config.turn_type,"single")==0) single_turn=true;
 
    for (int iev=config.iev1; iev<=config.iev2; iev++) { 
->>>>>>> single_turn_conf_hough
+
       fprintf(stderr,"iev %d\n", iev);
       clear_buffer();
 
@@ -1466,13 +1447,10 @@ int main(int argc, char** argv)
          int ilayer = inROOT.getIlayer(ihit);
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
-<<<<<<< HEAD
-         //if (iturn!=0) break; 
-=======
+
          g_R_sig[ilayer][icell] = inROOT.getDriftDistance(iev, ihit);
 
          if (single_turn && iturn>=1) break;
->>>>>>> single_turn_conf_hough
          //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
