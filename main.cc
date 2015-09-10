@@ -1049,7 +1049,7 @@ struct Hough
       gr = NULL;
       hdiff = NULL;
 
-      diff_threshold = 0.010;
+      diff_threshold = 0.02;
    };
    ~Hough()
    {
@@ -1114,7 +1114,7 @@ struct Hough
    void calc_diff(int num_hits, double* uhits, double* vhits, int* ilayers, int* icells, int* iturns, double* w_xs, double* w_ys, Circle& circ)
    {
       if (hdiff==NULL) {
-         hdiff = new TH1F("hdiff",Form("%s Residual; Residual;",name), 100, -0.01, 0.01);
+         hdiff = new TH1F("hdiff",Form("%s Residual; Residual;",name), 100, -0.03, 0.03);
          gStyle->SetOptStat(1111111);
          hdiff->SetStats(1);
       }
