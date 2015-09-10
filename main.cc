@@ -45,6 +45,8 @@
 #include <vector>
 
 #include "InputROOT.h"
+
+#include "TFrame.h"
 #include "TMinuit.h"
 #include "TRandom.h"
 #include "TStyle.h"
@@ -1185,10 +1187,11 @@ struct Hough
    void draw_hist_diff()
    {
       hdiff->Draw();
+      double ymax = gPad->GetFrame()->GetY2();
       double x1L = -diff_threshold, y1L = 0.0;
       double x2L = +diff_threshold, y2L = 0.0;
-      double x1R = -diff_threshold, y1R = hdiff->GetYaxis()->GetXmax();
-      double x2R = +diff_threshold, y2R = hdiff->GetYaxis()->GetXmax();
+      double x1R = -diff_threshold, y1R = ymax;
+      double x2R = +diff_threshold, y2R = ymax;
       TLine* l1 = new TLine(x1L, y1L, x1R, y1R); l1->SetLineColor(kRed); l1->Draw("same");
       TLine* l2 = new TLine(x2L, y2L, x2R, y2R); l2->SetLineColor(kRed); l2->Draw("same");
    };
