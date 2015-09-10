@@ -1366,7 +1366,7 @@ int main(int argc, char** argv)
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
          g_R_sig[ilayer][icell] = inROOT.getDriftDistance(iev, ihit);
-         if (iturn!=0) break; 
+         if (iturn>=1) break;  // noise are included
          //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
