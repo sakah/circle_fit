@@ -7,4 +7,4 @@ posSmear_cm       | 0.1
 momSmear_percent  | 0.001
 noise_occupancy   | 0.1
 turn_type         | single
-diff_threshold    | 0.01
+diff_threshold    | 0.005

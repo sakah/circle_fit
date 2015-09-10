@@ -32,3 +32,13 @@ run()
 #run config2.txt output/run6/ 0 1999 no # multi -0%-0.01-threshold
 #run config3.txt output/run7/ 0 1999 no # single-10%-0.01-threshold
 #run config4.txt output/run8/ 0 1999 no # multi -10%-0.01-threshold
+
+#run config1.txt output/run9/ 10 10 yes # single-0%-0.005-threshold
+#run config2.txt output/run10/ 10 10 yes # multi -0%-0.005-threshold
+#run config3.txt output/run11/ 10 10 yes # single-10%-0.005-threshold
+#run config4.txt output/run12/ 10 10 yes # multi -10%-0.005-threshold
+
+run config1.txt output/run9/  0 1999 no # single-0%-0.005-threshold
+run config2.txt output/run10/ 0 1999 no # multi -0%-0.005-threshold
+run config3.txt output/run11/ 0 1999 no # single-10%-0.005-threshold
+run config4.txt output/run12/ 0 1999 no # multi -10%-0.005-threshold

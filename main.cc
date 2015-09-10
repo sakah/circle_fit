@@ -1420,6 +1420,8 @@ int main(int argc, char** argv)
    bool single_turn=false;
    if (strcmp(config.turn_type,"single")==0) single_turn=true;
 
+   time_t time1 = time(NULL);
+
    for (int iev=config.iev1; iev<=config.iev2; iev++) { 
 
       fprintf(stderr,"iev %d\n", iev);
@@ -1647,5 +1649,11 @@ int main(int argc, char** argv)
    }
 
    fclose(fpout);
+
+   time_t time2 = time(NULL);
+   int dn = config.iev2-config.iev1+1;
+   int dt = time2-time1;
+   printf("Run summary\nNevent %d\nTime %d\nSpeed %f (Hz)\n\n", dn, dt, (double)dn/dt);
+
    return 0;
 }
