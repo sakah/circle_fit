@@ -1187,6 +1187,8 @@ struct Hough
    void draw_hist_diff()
    {
       hdiff->Draw();
+      gPad->Modified();
+      gPad->Update();
       double ymax = gPad->GetFrame()->GetY2();
       double x1L = -diff_threshold, y1L = 0.0;
       double x2L = +diff_threshold, y2L = 0.0;
