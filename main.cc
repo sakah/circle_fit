@@ -1058,7 +1058,7 @@ struct Hough
       gr = NULL;
       hdiff = NULL;
 
-      diff_threshold = 0.02;
+      diff_threshold = 0.01;
    };
    ~Hough()
    {
