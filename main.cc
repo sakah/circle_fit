@@ -40,6 +40,8 @@
    layer   39     19    G      -       81.5889      81.8000      158.3252     612        -14         -143.733        0.2111     -74.061       10.267
  */
 #include <stdio.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <vector>
@@ -1091,8 +1093,8 @@ struct Hough
       double bstep = 0.001;
       double bmin = -0.5;
       double bmax = 0.5;
-      int anum = (amax-amin)/astep;
-      int bnum = (bmax-bmin)/bstep;
+      int anum = static_cast<int>((amax-amin)/astep);
+      int bnum = static_cast<int>((bmax-bmin)/bstep);
       //printf("anum %d %f %f bnum %d %f %f\n", anum, amin, amax, bnum, bmin, bmax);
       if (h2ab==NULL) {
          h2ab = new TH2F("h2ab",Form("%s A-B Space;a;b",name),anum, amin, amax, bnum, bmin, bmax);
@@ -1252,20 +1254,109 @@ struct Stats
 };
 */
 
+struct Config
+{
+   /* config file */
+   char input_root[1280];
+   char wire_config[1280];
+   char sample_type[16];
+   char t2r_type[16];
+   double rdrift_err_cm;
+   double posSmear_cm;
+   double momSmear_percent;
+   double noise_occupancy;
+   char turn_type[16];
+   /* command line argument */
+   char* config_file[1280];
+   char output_dir[128];
+   int iev1;
+   int iev2;
+   bool make_pdf;
+   void parse_option(int argc, char** argv)
+   {
+      if (argc!=6) {
+         fprintf(stderr,"Usage %s <config.txt> <output_dir> <iev1> <iev2> <make_pdf|yes or no>\n", argv[0]);
+         exit(1);
+      }
+      for (int i=0; i<argc; i++) {
+         printf("i %d %s\n", i, argv[i]);
+      }
+      parse_config(argv[1]);
+      strcpy(output_dir,argv[2]);
+      iev1 = atoi(argv[3]);
+      iev2 = atoi(argv[4]);
+      if (strcmp(argv[5],"yes")==0) {
+         make_pdf = true;
+      } else {
+         make_pdf = false;
+      }
+
+      // make output directory
+      mkdir(output_dir, 0755);
+      mkdir(Form("%s/pdf/",output_dir), 0755);
+   };
+   void parse_config(char* config_txt)
+   {
+      FILE* fp = fopen(config_txt,"r");
+      if (fp==NULL) {
+         fprintf(stderr,"ERROR: parse_option: cannot open file '%s'\n", config_txt);
+         exit(1);
+      }
+      char line[1280];
+      char key[128];
+      char value[128];
+      while (fgets(line, sizeof(line), fp)) {
+         if (line[0]=='#') continue; // skip comment line
+         sscanf(line, "%s | %s", key, value);
+         //printf("'%s' '%s'\n", key, value);
+         set_value_char(key,value,input_root,         "input_root");
+         set_value_char(key,value,wire_config,        "wire_config");
+         set_value_char(key,value,sample_type,        "sample_type");
+         set_value_char(key,value,t2r_type,           "t2r_type");
+         set_value_double(key,value,&rdrift_err_cm,   "rdrift_err_cm");
+         set_value_double(key,value,&posSmear_cm,     "posSmear_cm");
+         set_value_double(key,value,&momSmear_percent,"momSmear_percent");
+         set_value_double(key,value,&noise_occupancy, "noise_occupancy");
+         set_value_char(key,value,turn_type,          "turn_type");
+      }
+      fclose(fp);
+
+   };
+   void set_value_char(char* key, char* value, char* set_value, char* set_key)
+   {
+      if (strcmp(key,set_key)==0) {
+         strcpy(set_value, value);
+         printf("%s %s\n", key, set_value);
+      }
+   };
+   void set_value_double(char* key, char* value, double* set_value, char* set_key)
+   {
+      if (strcmp(key,set_key)==0) {
+         *set_value = atof(value);
+         printf("%s %f\n", key, *set_value);
+      }
+   };
+   void set_value_int(char* key, char* value, int* set_value, char* set_key)
+   {
+      if (strcmp(key,set_key)==0) {
+         *set_value = atoi(value);
+         printf("%s %d\n", key, *set_value);
+      }
+   };
+};
 int main(int argc, char** argv)
 {
-   if (argc != 9) {
-      fprintf(stderr,"Usage %s <input.root> <wire_config.txt> <sample_type> <t2r_type> <rdrift_err_cm> <posSmear_cm> <momSmear_percent> <noise_occupancy>\n", argv[0]);
-      return -1;
-   }
-   char* input_root = argv[1];
-   char* wire_config_txt = argv[2];
-   char* sample_type = argv[3];
-   char* t2r_type = argv[4];
-   double rdrift_err_cm = atof(argv[5]);
-   double posSmear_cm = atof(argv[6]);
-   double momSmear_percent = atof(argv[7]);
-   double noise_occupancy = atof(argv[8]);
+   Config config;
+   config.parse_option(argc, argv);
+
+   char* input_root = config.input_root;
+   char* wire_config_txt = config.wire_config;
+   char* sample_type = config.sample_type;
+   char* t2r_type = config.t2r_type;
+   double rdrift_err_cm = config.rdrift_err_cm;
+   double posSmear_cm = config.posSmear_cm;
+   double momSmear_percent = config.momSmear_percent;
+   double noise_occupancy = config.noise_occupancy;
 
    InputROOT inROOT(input_root, wire_config_txt, sample_type, t2r_type, rdrift_err_cm, posSmear_cm, momSmear_percent);
    g_config = inROOT.getConfig();
@@ -1318,27 +1409,16 @@ int main(int argc, char** argv)
    helix[0].set_line_color(kMagenta); // positive ini_pz
    helix[1].set_line_color(kMagenta); // negative ini_pz
 
+   FILE* fpout = fopen(Form("%s/output.txt",config.output_dir),"w");
+   if (fpout==NULL) {
+      fprintf(stderr,"ERROR: cannot open for write '%s/output.txt'\n", config.output_dir);
+      exit(1);
+   }
 
-   FILE* fpout = fopen("debug.txt","w");
-   char title[12];
-   //int iev1=2, iev2=3;
-   //int iev1=3, iev2=4;
-   //int iev1=4, iev2=5;
-   //int iev1=7, iev2=8;
-   //int iev1=8, iev2=9;
-   //int iev1=10, iev2=11;
-   //int iev1=11, iev2=12;
-   //int iev1=12, iev2=13;
-   //int iev1=13, iev2=14;
-   //int iev1=14, iev2=15;
-   //int iev1=16, iev2=17;
-   //int iev1=28, iev2=29;
-   //int iev1=329, iev2=330;
-   //int iev1=0, iev2=3;
-   //int iev1=0, iev2=30;
-   //int iev1=0, iev2=100;
-   int iev1=0, iev2=2000;
-   for (int iev=iev1; iev<iev2; iev++) { 
+   bool single_turn=false;
+   if (strcmp(config.turn_type,"single")==0) single_turn=true;
+
+   for (int iev=config.iev1; iev<=config.iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
       clear_buffer();
 
@@ -1358,6 +1438,7 @@ int main(int argc, char** argv)
 
       //printf("iev %d numHits %d\n", iev, numHits );
 
+      /* Get signal hits */
       double zpos = -1;
       int icell1 = -1;
       int icell2 = -1;
@@ -1366,20 +1447,20 @@ int main(int argc, char** argv)
          int icell = inROOT.getIcell(ihit);
          int iturn = inROOT.getIturn(ihit);
          g_R_sig[ilayer][icell] = inROOT.getDriftDistance(iev, ihit);
-         if (iturn>=1) break;
+
+         if (single_turn && iturn>=1) break;
          //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
 
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
-         inROOT.getWirePosAtHitPoint(ihit, w_x, w_y, w_z);
 
          if (ilayer%2==1) circ1Raw.add_hit(ilayer, icell, iturn, w_x1, w_y1);
          if (ilayer%2==0) circ2Raw.add_hit(ilayer, icell, iturn, w_x1, w_y1);
 
          add_raw_hits(ilayer, icell, iturn, w_x1, w_y1);
-
       }
+
       bool debug = false;
-      // Add noise. If R_noise is larger than R_sig, then use R_sig.
+      /* Add noise. If R_noise is larger than R_sig, then use R_sig. */
       for (int ilayer=0; ilayer<20; ilayer++) {
          for (int icell=0; icell<num_cells[ilayer]; icell++) {
             config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, 0.0, "up", &w_x1, &w_y1);
@@ -1411,7 +1492,7 @@ int main(int argc, char** argv)
       circ1.print_fit_result(Form("Circ1Raw: iev %d", iev));
       circ2.print_fit_result(Form("Circ2Raw: iev %d", iev));
 
-      // Remove single hit cells
+      /* Remove single hit cells */
       sort_raw_hits_by_icell();
       for (int ilayer=0; ilayer<20; ilayer++) {
          // If left and right cells are not next, middle cell is isolated, so remove this.
@@ -1447,7 +1528,7 @@ int main(int argc, char** argv)
       circ1Clus.print_fit_result(Form("Circ1Clus: iev %d", iev));
       circ2Clus.print_fit_result(Form("Circ2Clus: iev %d", iev));
 
-      // Conforma/Hough transformation
+      /* Conforma/Hough transformation */
 
       Conformal conf1; // odd-layer
       Conformal conf2; // even-layer
@@ -1517,45 +1598,50 @@ int main(int argc, char** argv)
       double mc_z  = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-      fprintf(fpout, "%5d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
-            iev, 
-            hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
-            hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
-            hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
-            hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
-            helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
-      fflush(fpout);
+
+      if (fpout!=NULL) {
+         fprintf(fpout, "%5d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
+               iev, 
+               hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
+               hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
+               hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
+               hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
+               helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
+         fflush(fpout);
+      }
 
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
-      TCanvas* c1 = new TCanvas("c1","",3000,7000);
-      c1->Divide(3,7);
-      int j=1;
-      c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
-      c1->cd(j++); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
-      c1->cd(j++); circ3Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits(); circ2Raw.draw_xy_hits_fits();
-      c1->cd(j++); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits();
-      c1->cd(j++); circ2Clus.draw_xy_canvas(); circ2Clus.draw_xy_hits_fits();
-      c1->cd(j++); circ3Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
-      c1->cd(j++); hough1.draw_hist_uv();
-      c1->cd(j++); hough2.draw_hist_uv();
-      c1->cd(j++); 
-      c1->cd(j++); hough1.draw_hist_ab();
-      c1->cd(j++); hough2.draw_hist_ab();
-      c1->cd(j++); 
-      c1->cd(j++); hough1.draw_hist_diff();
-      c1->cd(j++); hough2.draw_hist_diff();
-      c1->cd(j++); 
-      c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
-      c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
-      c1->cd(j++); circ3.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
-      c1->cd(j++); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
-      c1->cd(j++); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
-      c1->cd(j++); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
-      c1->Print(Form("pdf/%05d.pdf", iev));
-
+      if (config.make_pdf) {
+         TCanvas* c1 = new TCanvas("c1","",3000,7000);
+         c1->Divide(3,7);
+         int j=1;
+         c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
+         c1->cd(j++); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
+         c1->cd(j++); circ3Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits(); circ2Raw.draw_xy_hits_fits();
+         c1->cd(j++); circ1Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits();
+         c1->cd(j++); circ2Clus.draw_xy_canvas(); circ2Clus.draw_xy_hits_fits();
+         c1->cd(j++); circ3Clus.draw_xy_canvas(); circ1Clus.draw_xy_hits_fits(); circ2Clus.draw_xy_hits_fits();
+         c1->cd(j++); hough1.draw_hist_uv();
+         c1->cd(j++); hough2.draw_hist_uv();
+         c1->cd(j++); 
+         c1->cd(j++); hough1.draw_hist_ab();
+         c1->cd(j++); hough2.draw_hist_ab();
+         c1->cd(j++); 
+         c1->cd(j++); hough1.draw_hist_diff();
+         c1->cd(j++); hough2.draw_hist_diff();
+         c1->cd(j++); 
+         c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
+         c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
+         c1->cd(j++); circ3.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
+         c1->cd(j++); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
+         c1->cd(j++); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
+         c1->cd(j++); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
+         c1->Print(Form("%s/pdf/%05d.pdf", config.output_dir, iev));
+      }
    }
+
    fclose(fpout);
    return 0;
 }
