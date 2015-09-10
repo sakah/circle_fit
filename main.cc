@@ -1113,7 +1113,7 @@ struct Hough
       found_a = h2ab->GetXaxis()->GetBinCenter(ia_min);
       found_b = h2ab->GetYaxis()->GetBinCenter(ib_min);
    };
-   void calc_diff(int num_hits, double* uhits, double* vhits, int* ilayers, int* icells, int* iturns, double* w_xs, double* w_ys, Circle& circ)
+   void calc_diff(int iev, int num_hits, double* uhits, double* vhits, int* ilayers, int* icells, int* iturns, double* w_xs, double* w_ys, Circle& circ)
    {
       if (hdiff==NULL) {
          hdiff = new TH1F("hdiff",Form("%s Residual; Residual;",name), 100, -0.01, 0.01);
@@ -1122,12 +1122,13 @@ struct Hough
       }
 
       if (hNumSigOVTotal==NULL) {
-         hNumSigOVTotal = new TH1F("hNumSigOVTotal",Form("%s Ratio of SIG; #/sig vs #/total;",name), 100, 0, 1);
+         hNumSigOVTotal = new TH1F("hNumSigOVTotal",Form("%s Ratio of SIG; N/sig vs N/total;",name), 100, 0, 1);
          hNumSigOVTotal->SetStats(1);
+         printf("hNumSigOVTotal is created\n");
       }
 
       if (hNumNoiseOVTotal==NULL) {
-         hNumNoiseOVTotal = new TH1F("hNumNoiseOVTotal",Form("%s Ratio of Noise; #/noise vs #/total;",name), 100, 0, 1);
+         hNumNoiseOVTotal = new TH1F("hNumNoiseOVTotal",Form("%s Ratio of Noise; N/noise vs  N/total;",name), 100, 0, 1);
          hNumNoiseOVTotal->SetStats(1);
       }
 
@@ -1152,6 +1153,7 @@ struct Hough
       double ratio_noise  = (double)num_inside_noise/num_hits;
       hNumSigOVTotal->Fill(ratio_signal);
       hNumNoiseOVTotal->Fill(ratio_noise);
+      printf("iev %d ratio_signal %f ratio_noise %f\n", iev, ratio_signal, ratio_noise);
    };
    void print_result(int iev)
    {
@@ -1399,11 +1401,11 @@ int main(int argc, char** argv)
       conf2.add_hits(circ2Clus);
 
       hough1.transform(conf1.num_hits, conf1.uhits, conf1.vhits);
-      hough1.calc_diff(conf1.num_hits, conf1.uhits, conf1.vhits, conf1.ilayers, conf1.icells, conf1.iturns, conf1.xhits, conf1.yhits, circ1);
+      hough1.calc_diff(iev, conf1.num_hits, conf1.uhits, conf1.vhits, conf1.ilayers, conf1.icells, conf1.iturns, conf1.xhits, conf1.yhits, circ1);
       hough1.print_result(iev);
 
       hough2.transform(conf2.num_hits, conf2.uhits, conf2.vhits);
-      hough2.calc_diff(conf2.num_hits, conf2.uhits, conf2.vhits, conf2.ilayers, conf2.icells, conf2.iturns, conf2.xhits, conf2.yhits, circ2);
+      hough2.calc_diff(iev, conf2.num_hits, conf2.uhits, conf2.vhits, conf2.ilayers, conf2.icells, conf2.iturns, conf2.xhits, conf2.yhits, circ2);
       hough2.print_result(iev);
 
 
