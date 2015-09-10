@@ -44,16 +44,17 @@
 #include <stdlib.h>
 #include <vector>
 
+#include "InputROOT.h"
+#include "TMinuit.h"
+#include "TRandom.h"
 #include "TStyle.h"
 #include "TCanvas.h"
 #include "TH2F.h"
 #include "TF1.h"
 #include "TMarker.h"
-#include "InputROOT.h"
+#include "TLine.h"
 #include "TGraphErrors.h"
 #include "TEllipse.h"
-#include "TMinuit.h"
-#include "TRandom.h"
 
 int num_cells[20] =  {
    396/2,
@@ -1027,6 +1028,7 @@ struct Hough
    double chi2;
    TGraphErrors* gr;
    TH1F* hdiff;
+   double diff_threshold;
 
    double diff[10000];
    Hough()
@@ -1044,6 +1046,8 @@ struct Hough
       chi2 = 1e10;
       gr = NULL;
       hdiff = NULL;
+
+      diff_threshold = 0.005;
    };
    ~Hough()
    {
@@ -1127,7 +1131,7 @@ struct Hough
          diff[ihit] = v - vhits[ihit];
          hdiff->Fill(diff[ihit]);
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
-         if (TMath::Abs(diff[ihit]) < 0.005) {
+         if (TMath::Abs(diff[ihit]) < diff_threshold) {
             circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
             if (iturns[ihit]!=-1) num_signal_inside++;
          } else {
@@ -1166,6 +1170,12 @@ struct Hough
    void draw_hist_diff()
    {
       hdiff->Draw();
+      double x1L = -diff_threshold, y1L = 0.0;
+      double x2L = +diff_threshold, y2L = 0.0;
+      double x1R = -diff_threshold, y1R = hdiff->GetMaximum();
+      double x2R = +diff_threshold, y2R = hdiff->GetMaximum();
+      TLine* l1 = new TLine(x1L, y1L, x1R, y1R); l1->SetLineColor(kRed); l1->Draw("same");
+      TLine* l2 = new TLine(x2L, y2L, x2R, y2R); l2->SetLineColor(kRed); l2->Draw("same");
    };
 };
 
