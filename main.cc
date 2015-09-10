@@ -1146,6 +1146,7 @@ struct Hough
          }
       }
       gr_uv_inside = new TGraph(num_inside, uhits_inside, vhits_inside);
+      gr_uv_inside->SetMarkerColor(kBlue);
       gr_uv_inside->SetTitle(Form("%s U-V Space(Inside);u;v",name));
 
    };
@@ -1176,6 +1177,7 @@ struct Hough
       TH2F* hframe = new TH2F("hframe","",10,-0.1, 0.1, 10, -0.1, 0.1);
       hframe->SetStats(0);
       hframe->Draw();
+      hframe->SetTitle(gr_uv->GetTitle());
       get_line()->Draw("same");
       gr_uv->Draw("p same");
       gr_uv_inside->Draw("p same");
