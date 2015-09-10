@@ -1015,8 +1015,8 @@ struct Hough
 {
    char name[128];
 
-   TH2F* h2uv;
-   TH2F* h2uv_inside;
+   TGraph* gr_uv;
+   TGraph* gr_uv_inside;
    TH2F* h2ab;
    double found_a;
    double found_b;
@@ -1034,8 +1034,8 @@ struct Hough
    double diff[10000];
    Hough()
    {
-      h2uv = NULL;
-      h2uv_inside = NULL;
+      gr_uv = NULL;
+      gr_uv_inside = NULL;
       h2ab = NULL;
       found_a = 1e10;
       found_b = 1e10;
@@ -1056,8 +1056,8 @@ struct Hough
       if (gr!=NULL) delete gr;
       if (hdiff!=NULL) delete hdiff;
       if (h2ab!=NULL) delete h2ab;
-      if (h2uv!=NULL) delete h2uv;
-      if (h2uv_inside!=NULL) delete h2uv_inside;
+      if (gr_uv!=NULL) delete gr_uv;
+      if (gr_uv_inside!=NULL) delete gr_uv_inside;
    };
    void set_name(char* a_name)
    {
@@ -1089,17 +1089,11 @@ struct Hough
          h2ab = new TH2F("h2ab",Form("%s A-B Space;a;b",name),anum, amin, amax, bnum, bmin, bmax);
          h2ab->SetStats(0);
       }
-      if (h2uv==NULL) {
-         h2uv = new TH2F("h2uv",Form("%s U-V Space;u;v",name), 100, -0.1, 0.1, 100, -0.1, 0.1);
-         h2uv->SetStats(0);
-
-      }
       h2ab->Reset();
 
-      for (int i=0; i<num_hits; i++) {
-         //printf("#### i %d uhits %f vhits %f\n", i, uhits[i], vhits[i]);
-         h2uv->Fill(uhits[i], vhits[i]);
-      }
+      gr_uv = new TGraph(num_hits, uhits, vhits);
+      gr_uv->SetTitle(Form("%s U-V Space;u;v",name));
+
       for (int i=0; i<num_hits; i++) {
          for (int ia=0; ia<anum; ia++) {
 
@@ -1126,16 +1120,14 @@ struct Hough
       }
       hdiff->Reset();
 
-      if (h2uv_inside==NULL) {
-         h2uv_inside = new TH2F("h2uv_inside",Form("%s U-V Space (Inside);u;v",name), 100, -0.1, 0.1, 100, -0.1, 0.1);
-         h2uv_inside->SetStats(0);
-         h2uv_inside->SetMarkerColor(kBlue);
-      }
-      h2uv_inside->Reset();
-
       num_signal=0;
       num_signal_inside=0;
       num_signal_outside=0;
+
+      int num_inside = 0;
+      double uhits_inside[1000];
+      double vhits_inside[1000];
+
       for (int ihit=0; ihit<num_hits; ihit++) {
          if (iturns[ihit]!=-1) num_signal++;
 
@@ -1144,13 +1136,18 @@ struct Hough
          hdiff->Fill(diff[ihit]);
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
          if (TMath::Abs(diff[ihit]) < diff_threshold) {
-            h2uv_inside->Fill(uhits[ihit], vhits[ihit]);
+            uhits_inside[num_inside] = uhits[ihit];
+            vhits_inside[num_inside] = vhits[ihit];
+            num_inside++;
             circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
             if (iturns[ihit]!=-1) num_signal_inside++;
          } else {
             if (iturns[ihit]!=-1) num_signal_outside++;
          }
       }
+      gr_uv_inside = new TGraph(num_inside, uhits_inside, vhits_inside);
+      gr_uv_inside->SetTitle(Form("%s U-V Space(Inside);u;v",name));
+
    };
    void print_result(int iev)
    {
@@ -1176,10 +1173,12 @@ struct Hough
    };
    void draw_hist_uv()
    {
-      h2uv->Draw();
+      TH2F* hframe = new TH2F("hframe","",10,-0.1, 0.1, 10, -0.1, 0.1);
+      hframe->SetStats(0);
+      hframe->Draw();
       get_line()->Draw("same");
-      h2uv->Draw("same");
-      h2uv_inside->Draw("same");
+      gr_uv->Draw("p same");
+      gr_uv_inside->Draw("p same");
    };
    void draw_hist_diff()
    {
