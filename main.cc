@@ -1018,18 +1018,36 @@ struct Hough
    TH2F* h2ab;
    double found_a;
    double found_b;
+
    int num_hits;
    int num_inside;
+   int num_inside_signal;
+   int num_inside_noise;
+
    double chi2;
    TGraphErrors* gr;
    TH1F* hdiff;
+   TH1F* hNumSigOVTotal;
+   TH1F* hNumNoiseOVTotal;
+
    double diff[10000];
    Hough()
    {
       h2uv = NULL;
       h2ab = NULL;
+      found_a = 1e10;
+      found_b = 1e10;
+
+      num_hits = 0;
+      num_inside = 0;
+      num_inside_signal = 0;
+      num_inside_noise = 0;
+
+      chi2 = 1e10;
       gr = NULL;
       hdiff = NULL;
+      hNumSigOVTotal = NULL;
+      hNumNoiseOVTotal = NULL;
    };
    ~Hough()
    {
@@ -1103,7 +1121,19 @@ struct Hough
          hdiff->SetStats(1);
       }
 
+      if (hNumSigOVTotal==NULL) {
+         hNumSigOVTotal = new TH1F("hNumSigOVTotal",Form("%s Ratio of SIG; #/sig vs #/total;",name), 100, 0, 1);
+         hNumSigOVTotal->SetStats(1);
+      }
+
+      if (hNumNoiseOVTotal==NULL) {
+         hNumNoiseOVTotal = new TH1F("hNumNoiseOVTotal",Form("%s Ratio of Noise; #/noise vs #/total;",name), 100, 0, 1);
+         hNumNoiseOVTotal->SetStats(1);
+      }
+
       num_inside=0;
+      num_inside_signal=0;
+      num_inside_noise=0;
       for (int ihit=0; ihit<num_hits; ihit++) {
          double v = found_a * uhits[ihit] + found_b;
          diff[ihit] = v - vhits[ihit];
@@ -1111,9 +1141,17 @@ struct Hough
          //printf("ihit %d vcalc %f vhits %f diff %f\n", ihit, v, hits.vhits[ihit], diff);
          if (TMath::Abs(diff[ihit]) < 0.005) {
             circ.add_hit(ilayers[ihit], icells[ihit], iturns[ihit], w_xs[ihit], w_ys[ihit]);
+
             num_inside++;
+            if (iturns[ihit]==-1) num_inside_noise++;
+            else num_inside_signal++;
          }
       }
+
+      double ratio_signal = (double)num_inside_signal/num_hits;
+      double ratio_noise  = (double)num_inside_noise/num_hits;
+      hNumSigOVTotal->Fill(ratio_signal);
+      hNumNoiseOVTotal->Fill(ratio_noise);
    };
    void print_result(int iev)
    {
@@ -1143,6 +1181,14 @@ struct Hough
    void draw_hist_diff()
    {
       hdiff->Draw();
+   };
+   void draw_hist_sig_ratio()
+   {
+      hNumSigOVTotal->Draw();
+   };
+   void draw_hist_noise_ratio()
+   {
+      hNumNoiseOVTotal->Draw();
    };
 };
 
@@ -1417,8 +1463,8 @@ int main(int argc, char** argv)
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
             iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
 
-      TCanvas* c1 = new TCanvas("c1","",3000,7000);
-      c1->Divide(3,7);
+      TCanvas* c1 = new TCanvas("c1","",3000,9000);
+      c1->Divide(3,9);
       int j=1;
       c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
       c1->cd(j++); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
@@ -1434,6 +1480,12 @@ int main(int argc, char** argv)
       c1->cd(j++); 
       c1->cd(j++); hough1.draw_hist_diff();
       c1->cd(j++); hough2.draw_hist_diff();
+      c1->cd(j++); 
+      c1->cd(j++); hough1.draw_hist_sig_ratio();
+      c1->cd(j++); hough2.draw_hist_sig_ratio();
+      c1->cd(j++); 
+      c1->cd(j++); hough1.draw_hist_noise_ratio();
+      c1->cd(j++); hough2.draw_hist_noise_ratio();
       c1->cd(j++); 
       c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
       c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
