@@ -1058,7 +1058,7 @@ struct Hough
       gr = NULL;
       hdiff = NULL;
 
-      diff_threshold = 0.01;
+      diff_threshold = 0.02;
    };
    ~Hough()
    {
@@ -1326,7 +1326,7 @@ int main(int argc, char** argv)
    //int iev1=4, iev2=5;
    //int iev1=7, iev2=8;
    //int iev1=8, iev2=9;
-   int iev1=10, iev2=11;
+   //int iev1=10, iev2=11;
    //int iev1=11, iev2=12;
    //int iev1=12, iev2=13;
    //int iev1=13, iev2=14;
@@ -1337,7 +1337,7 @@ int main(int argc, char** argv)
    //int iev1=0, iev2=3;
    //int iev1=0, iev2=30;
    //int iev1=0, iev2=100;
-   //int iev1=0, iev2=2000;
+   int iev1=0, iev2=2000;
    for (int iev=iev1; iev<iev2; iev++) { 
       fprintf(stderr,"iev %d\n", iev);
       clear_buffer();
