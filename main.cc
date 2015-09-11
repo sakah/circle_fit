@@ -93,6 +93,13 @@ static double rad2deg(double rad)
    return rad/TMath::Pi()*180.0;
 }
 
+void set_marker_style(TMarker* m, int ilayer)
+{
+   int style;
+   if (ilayer%2==1) style = 8; // ●
+   if (ilayer%2==0) style = 22; // ▲
+   m->SetMarkerColor(style);
+}
 void set_marker_color(TMarker* m, int iturn)
 {
    int col;
@@ -519,6 +526,7 @@ struct Circle
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
          //printf("HOGE:: ihit %d hits_iturn %d xhits %f yhits %f\n", ihit, hits_iturn[ihit], xhits[ihit], yhits[ihit]);
          set_marker_color(m, hits_iturn[ihit]);
+         set_marker_style(m, hits_ilayer[ihit]);
          m->Draw();
       }
    };
@@ -786,6 +794,7 @@ struct Helix
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(xhits[ihit], yhits[ihit], 8);
          set_marker_color(m, hits_iturn[ihit]);
+         set_marker_style(m, hits_ilayer[ihit]);
          m->Draw();
       }
    };
@@ -794,6 +803,7 @@ struct Helix
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(zhits[ihit], xhits[ihit], 8);
          set_marker_color(m, hits_iturn[ihit]);
+         set_marker_style(m, hits_ilayer[ihit]);
          m->Draw();
       }
    };
@@ -802,6 +812,7 @@ struct Helix
       for (int ihit=0; ihit<nhits; ihit++) {
          TMarker* m = new TMarker(zhits[ihit], yhits[ihit], 8);
          set_marker_color(m, hits_iturn[ihit]);
+         set_marker_style(m, hits_ilayer[ihit]);
          //printf("ihit %d xhits %f yhits %f zhits %f\n", ihit, xhits[ihit], yhits[ihit], zhits[ihit]);
          m->Draw();
       }
