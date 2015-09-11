@@ -1615,14 +1615,14 @@ int main(int argc, char** argv)
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
       if (fpout!=NULL) {
-         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
+         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
                iev, 
                inROOT.getMaxLayerIdx(),
                hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
                hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
                hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
                hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
-               helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
+               helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].rad0_fit,helix[imin].chi2);
          fflush(fpout);
       }
 

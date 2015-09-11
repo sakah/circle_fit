@@ -33,7 +33,7 @@ class Run
       {
          t = new TTree("t","t");
          t->SetMarkerStyle(20);
-         t->ReadFile(txt,"iev/I:maxLayer:sig1:sig1in:sig1out:in1:in1sig:in1noise:sig2:sig2in:sig2out:in2:in2sig:in2noise:num:dr/D:deg:zhit:zfit:pthit:ptfit:pzhit:pzfit:chi2");
+         t->ReadFile(txt,"iev/I:maxLayer:sig1:sig1in:sig1out:in1:in1sig:in1noise:sig2:sig2in:sig2out:in2:in2sig:in2noise:num:dr/D:deg:zhit:zfit:pthit:ptfit:pzhit:pzfit:rad0:chi2");
       };
 
       void read_setup(int irun, char* txt)

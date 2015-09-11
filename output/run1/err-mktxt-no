@@ -6,7 +6,7 @@ InputROOT start 5
 Error in <TTree::SetBranchAddress>: unknown branch -> num_noise
 Error in <TTree::SetBranchAddress>: unknown branch -> num_pileup
 InputROOT end
-iev 128
+iev 10
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
@@ -18,7 +18,7 @@ Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory lea
 Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
-Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run1/pdf/00128.pdf has been created
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run1/pdf/00010.pdf has been created
 
  *** Break *** segmentation violation
 
@@ -28,17 +28,17 @@ Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circ
 There was a crash.
 This is the entire stack trace of all threads:
 ===========================================================
-#0  0x00002b93d1630dd5 in waitpid () from /lib64/libc.so.6
-#1  0x00002b93d15d34a1 in do_system () from /lib64/libc.so.6
-#2  0x00002b93cc4ba902 in TUnixSystem::StackTrace() ()
+#0  0x00002ae872128dd5 in waitpid () from /lib64/libc.so.6
+#1  0x00002ae8720cb4a1 in do_system () from /lib64/libc.so.6
+#2  0x00002ae86cfc7902 in TUnixSystem::StackTrace() ()
    from /home/had/hideyuki/private/sw/root/lib/libCore.so
-#3  0x00002b93cc4b730a in TUnixSystem::DispatchSignals(ESignals) ()
+#3  0x00002ae86cfc430a in TUnixSystem::DispatchSignals(ESignals) ()
    from /home/had/hideyuki/private/sw/root/lib/libCore.so
 #4  <signal handler called>
-#5  0x00002b93d15f6c17 in fclose
+#5  0x00002ae8720eec17 in fclose
 
 GLIBC_2.2.5 () from /lib64/libc.so.6
-#6  0x000000000042209d in main ()
+#6  0x00000000004220cb in main ()
 ===========================================================
 
 
@@ -48,10 +48,10 @@ http://root.cern.ch/bugs. Please post the ENTIRE stack trace
 from above as an attachment in addition to anything else
 that might help us fixing this issue.
 ===========================================================
-#5  0x00002b93d15f6c17 in fclose
+#5  0x00002ae8720eec17 in fclose
 
 GLIBC_2.2.5 () from /lib64/libc.so.6
-#6  0x000000000042209d in main ()
+#6  0x00000000004220cb in main ()
 ===========================================================
 
 
