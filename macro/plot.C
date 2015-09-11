@@ -123,7 +123,7 @@ class Run
          char* hname1 = Form("h3-%s", hname);
          TH1F* h1 = new TH1F(hname1,Form("%s (pzres);(pzfit-pzhit)/pzhit",htitle),100,-2,2);
          t->Draw(Form("(pzfit-pzhit)/pzhit>>%s", hname1));
-         h1->Fit("gaus","","",-0.3,0.3);
+         h1->Fit("gaus","","",-0.5,0.5);
          return h1;
       };
       TH1F* get_z(TTree* t, char* hname, char* htitle)
