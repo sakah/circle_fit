@@ -60,7 +60,7 @@
 #include "TGraphErrors.h"
 #include "TEllipse.h"
 
-int num_cells[20] =  {
+int g_num_cells[20] =  {
    396/2,
    396/2,
    408/2,
@@ -147,6 +147,20 @@ double g_yA_circ2;
 double g_xB_circ2;
 double g_yB_circ2;
 
+int g_icell_region[20][4]; // define bordering icells in four region
+void set_icell_region()
+{
+   for (int ilayer=0; ilayer<20; ilayer++) {
+      int n1 = g_num_cells[ilayer]/4;
+      int n2 = g_num_cells[ilayer]/2;
+      int n3 = g_num_cells[ilayer]*3/4;
+      g_icell_region[ilayer][0] = 0;
+      g_icell_region[ilayer][1] = n1;
+      g_icell_region[ilayer][2] = n2;
+      g_icell_region[ilayer][3] = n3;
+   }
+}
+
 void func_circ(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
    double x0 = x[0];
@@ -218,7 +232,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
-      //printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad, rad0, chi2);
+      if (debug) printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad0, chi2);
 
       // update hit position for next fit
       g_xhits[ihit] = w_x;
@@ -865,19 +879,51 @@ double estimate_pz(double z1, double z2, double drad)
    return pz;
 }
 
+
 int g_num_raw_hits[20];
 int g_raw_hits_icell[20][400];
 int g_raw_hits_iturn[20][400];
 double g_raw_hits_xpos[20][400];
 double g_raw_hits_ypos[20][400];
+
 double g_R_sig[20][400];
+
+int g_num_sort_hits[20];
+int g_sort_hits_icell[20][400];
+int g_sort_hits_iturn[20][400];
+double g_sort_hits_xpos[20][400];
+double g_sort_hits_ypos[20][400];
+
 void clear_buffer()
 {
    for (int ilayer=0; ilayer<20; ilayer++) {
-      g_num_raw_hits[ilayer] =0;
-      for (int icell=0; icell<num_cells[ilayer]; icell++) {
+      g_num_raw_hits[ilayer] = 0;
+      g_num_sort_hits[ilayer] = 0;
+      for (int icell=0; icell<g_num_cells[ilayer]; icell++) {
          g_R_sig[ilayer][icell] = 1e10;
       }
+   }
+}
+void print_raw_hits(int ilayer)
+{
+   int nhits = g_num_raw_hits[ilayer];
+   for (int ihit=0; ihit<nhits; ihit++) {
+      printf("RAW:  ihit %d ilayer %d iturn %d icell %d xpos %f ypos %f\n", ihit, ilayer,
+            g_raw_hits_iturn[ilayer][ihit], 
+            g_raw_hits_icell[ilayer][ihit], 
+            g_raw_hits_xpos[ilayer][ihit], 
+            g_raw_hits_ypos[ilayer][ihit]);
+   }
+}
+void print_sort_hits(int ilayer)
+{
+   int nhits = g_num_sort_hits[ilayer];
+   for (int ihit=0; ihit<nhits; ihit++) {
+      printf("SORT: ihit %d ilayer %d iturn %d icell %d xpos %f ypos %f\n", ihit, ilayer,
+            g_sort_hits_iturn[ilayer][ihit], 
+            g_sort_hits_icell[ilayer][ihit], 
+            g_sort_hits_xpos[ilayer][ihit], 
+            g_sort_hits_ypos[ilayer][ihit]);
    }
 }
 void add_raw_hits(int ilayer, int icell, int iturn, double x, double y)
@@ -921,7 +967,80 @@ int sort_int_data(const void* a, const void* b)
    //printf("sort_int_data: v1 %d v2 %d\n", v1, v2);
    return v1 - v2;
 }
-void sort_raw_hits_by_icell()
+
+void set_hit_pattern(int ilayer, int *pattern)
+{
+   pattern[0] = 0;
+   pattern[1] = 0;
+   pattern[2] = 0;
+   pattern[3] = 0;
+   int nhits = g_num_raw_hits[ilayer];
+   for (int ihit=0; ihit<nhits; ihit++) {
+      int icell = g_raw_hits_icell[ilayer][ihit];
+      if (icell>=g_icell_region[ilayer][0] && icell< g_icell_region[ilayer][1]) pattern[0] = 1;
+      if (icell>=g_icell_region[ilayer][1] && icell< g_icell_region[ilayer][2]) pattern[1] = 1;
+      if (icell>=g_icell_region[ilayer][2] && icell< g_icell_region[ilayer][3]) pattern[2] = 1;
+      if (icell>=g_icell_region[ilayer][3]                                    ) pattern[3] = 1;
+   }
+}
+bool hits_at(int *pattern, int reg1, int reg2, int reg3, int reg4)
+{
+   return (pattern[0]==reg1 && pattern[1]==reg2 && pattern[2]==reg3 && pattern[3]==reg4);
+}
+
+
+void sort_cells_by_region(int ilayer, int first, int second, int third, int fourth)
+{
+   int buffer[500]; // store index
+   int nhits = g_num_raw_hits[ilayer];
+
+   int jhit=0;
+   // (1) choose icells in first region
+   for (int ihit=0; ihit<nhits; ihit++) {
+      int icell = g_raw_hits_icell[ilayer][ihit];
+      if (icell>=g_icell_region[ilayer][first-1] && 
+            icell< g_icell_region[ilayer][first]) {
+         buffer[jhit++] = ihit;
+      }
+   }
+   // (2) choose icells in second region
+   for (int ihit=0; ihit<nhits; ihit++) {
+      int icell = g_raw_hits_icell[ilayer][ihit];
+      if (icell>=g_icell_region[ilayer][second-1] && 
+            icell< g_icell_region[ilayer][second]) {
+         buffer[jhit++] = ihit;
+      }
+   }
+   // (3) choose icells in third region
+   if (third==-1) return;
+   for (int ihit=0; ihit<nhits; ihit++) {
+      int icell = g_raw_hits_icell[ilayer][ihit];
+      if (icell>=g_icell_region[ilayer][third-1] && 
+            icell< g_icell_region[ilayer][third]) {
+         buffer[jhit++] = ihit;
+      }
+   }
+   // (4) choose icells in fourth region
+   if (fourth==-1) return;
+   for (int ihit=0; ihit<nhits; ihit++) {
+      int icell = g_raw_hits_icell[ilayer][ihit];
+      if (icell>=g_icell_region[ilayer][fourth-1] && 
+            icell< g_icell_region[ilayer][fourth]) {
+         buffer[jhit++] = ihit;
+      }
+   }
+
+   // store data in sort_hits_XXX
+   g_num_sort_hits[ilayer] = nhits;
+   for (int i=0; i<nhits; i++) {
+      int ihit = buffer[i];
+      g_sort_hits_icell[ilayer][i] = g_raw_hits_icell[ilayer][ihit];
+      g_sort_hits_iturn[ilayer][i] = g_raw_hits_iturn[ilayer][ihit];
+      g_sort_hits_xpos[ilayer][i] = g_raw_hits_xpos[ilayer][ihit];
+      g_sort_hits_ypos[ilayer][i] = g_raw_hits_ypos[ilayer][ihit];
+   }
+}
+void sort_raw_hits_by_icell(int debug)
 {
    int num_data=0;
    Sort_int_data data[1000];
@@ -950,7 +1069,45 @@ void sort_raw_hits_by_icell()
          g_raw_hits_iturn[ilayer][ihit] = data[ihit].buf3;
       }
    }
+   // Ok, first sorting is done.
+   // Next consider case when cells cross bounday at rad=0
+   // Divide two regions, and if there is hit at
+   // (1) 1,2,4
+   // (2) 1,3,4
+   // (3) 1,4
+   // then, cells should be re-ordered.
+
+   // data is copied from g_raw_hits_XXX to g_sort_hits_XXX
+   int hit_pattern[4];
+   for (int ilayer=0; ilayer<20; ilayer++) {
+      set_hit_pattern(ilayer, hit_pattern);
+      if      (hits_at(hit_pattern, 1,1,0,1)) sort_cells_by_region(ilayer, 4, 1, 2,-1);
+      else if (hits_at(hit_pattern, 1,0,1,1)) sort_cells_by_region(ilayer, 3, 4, 1,-1);
+      else if (hits_at(hit_pattern, 1,0,0,1)) sort_cells_by_region(ilayer, 4, 1,-1,-1);
+      else sort_cells_by_region(ilayer, 1, 2, 3, 4);
+   }
+
+   // Ok, finally collect cells in order of hits
+   // First collect outgoing cells and top cells and ingoing cells
+   // To do this, we have to set boundary between outgoing and ingoing cells in each layers.
+
+
+   // Finish sorting!
+   if (debug) {
+      printf("hit_pattern: %d %d %d %d\n", hit_pattern[0], hit_pattern[1], hit_pattern[2], hit_pattern[3]);
+      for (int ilayer=0; ilayer<20; ilayer++) {
+         printf("icell_region: ilayer %d [%3d %3d %3d %3d]\n", ilayer,
+               g_icell_region[ilayer][0],
+               g_icell_region[ilayer][1],
+               g_icell_region[ilayer][2],
+               g_icell_region[ilayer][3]);
+
+         print_raw_hits(ilayer);
+         print_sort_hits(ilayer);
+      }
+   }
 }
+
 
 struct Conformal
 {
@@ -1344,6 +1501,11 @@ int main(int argc, char** argv)
    double momSmear_percent = config.momSmear_percent;
    double noise_occupancy = config.noise_occupancy;
 
+
+   /* Initialize global variables */
+   set_icell_region();
+
+   /* Setup inputs */
    InputROOT inROOT(input_root, wire_config_txt, sample_type, t2r_type, rdrift_err_cm, posSmear_cm, momSmear_percent);
    g_config = inROOT.getConfig();
    //int total = inROOT.getEntries();
@@ -1410,6 +1572,8 @@ int main(int argc, char** argv)
    time_t time1 = time(NULL);
 
    for (int iev=config.iev1; iev<=config.iev2; iev++) { 
+      //bool debug = false;
+      bool debug = true;
 
       fprintf(stderr,"iev %d\n", iev);
       clear_buffer();
@@ -1442,7 +1606,7 @@ int main(int argc, char** argv)
          g_R_sig[ilayer][icell] = inROOT.getDriftDistance(iev, ihit);
 
          if (single_turn && iturn>=1) break;
-         //printf("ilayer %d icell %d iturn %d\n", ilayer, icell, iturn);
+         if (debug) printf("ihit %d iturn %d ilayer %d icell %d\n", ihit, iturn, ilayer, icell);
 
          inROOT.getWirePosAtEndPlates(ihit, w_x1, w_y1, w_z1, w_x2, w_y2, w_z2);
 
@@ -1452,10 +1616,9 @@ int main(int argc, char** argv)
          add_raw_hits(ilayer, icell, iturn, w_x1, w_y1);
       }
 
-      bool debug = false;
       /* Add noise. If R_noise is larger than R_sig, then use R_sig. */
       for (int ilayer=0; ilayer<20; ilayer++) {
-         for (int icell=0; icell<num_cells[ilayer]; icell++) {
+         for (int icell=0; icell<g_num_cells[ilayer]; icell++) {
             config_get_wire_pos(g_config, ilayer, LAYER_TYPE_SENSE, icell, WIRE_TYPE_SENSE, 0.0, "up", &w_x1, &w_y1);
             double prob = gRandom->Uniform();
             double R_noise = gRandom->Uniform(0, 1.6);
@@ -1486,23 +1649,27 @@ int main(int argc, char** argv)
       circ2.print_fit_result(Form("Circ2Raw: iev %d", iev));
 
       /* Remove single hit cells */
-      sort_raw_hits_by_icell();
+      // !! NOTE !!
+      // Order of cell is very important in helical fitting because zpos are calculated assuming
+      // cells are aligned sequentially (anti-clock wise in this MC)
+      sort_raw_hits_by_icell(debug);
+
       for (int ilayer=0; ilayer<20; ilayer++) {
          // If left and right cells are not next, middle cell is isolated, so remove this.
-         for (int ihit=0; ihit<g_num_raw_hits[ilayer]; ihit++) {
+         for (int ihit=0; ihit<g_num_sort_hits[ilayer]; ihit++) {
             int ihitL = ihit-1;
             int ihitM = ihit;
             int ihitR = ihit+1;
-            if (ihitL<0) ihitL = g_num_raw_hits[ilayer] - 1;
-            if (ihitR>=num_cells[ilayer]) ihitR  = 0;
-            int icellL = g_raw_hits_icell[ilayer][ihitL];
-            int icellM = g_raw_hits_icell[ilayer][ihitM];
-            int icellR = g_raw_hits_icell[ilayer][ihitR];
-            int iturn = g_raw_hits_iturn[ilayer][ihitM];
-            double x = g_raw_hits_xpos[ilayer][ihitM];
-            double y = g_raw_hits_ypos[ilayer][ihitM];
+            if (ihitL<0) ihitL = g_num_sort_hits[ilayer] - 1;
+            if (ihitR>=g_num_cells[ilayer]) ihitR  = 0;
+            int icellL = g_sort_hits_icell[ilayer][ihitL];
+            int icellM = g_sort_hits_icell[ilayer][ihitM];
+            int icellR = g_sort_hits_icell[ilayer][ihitR];
+            int iturn = g_sort_hits_iturn[ilayer][ihitM];
+            double x = g_sort_hits_xpos[ilayer][ihitM];
+            double y = g_sort_hits_ypos[ilayer][ihitM];
             if (debug) printf("$$$$$ ilayer %d ihit %d icellM %d iturn %d", ilayer, ihit, icellM, iturn);
-            int icellL2 = icellL+1; if (icellL2>=num_cells[ilayer]) icellL2 -= num_cells[ilayer];
+            int icellL2 = icellL+1; if (icellL2>=g_num_cells[ilayer]) icellL2 -= g_num_cells[ilayer];
             int icellR2 = icellR-1; if (icellL2<0) icellR = 0;
             if (icellL2 != icellM && icellM != icellR2) {
                if (debug) printf("--> excluded\n");
@@ -1566,12 +1733,12 @@ int main(int argc, char** argv)
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_radA_fit() - z1_fit/L_guess;
          //printf("1) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
-         while (rad0_guess<0) {
-            rad0_guess += 2.0*TMath::Pi();
-         }
-         if (rad0_guess>2.0*TMath::Pi()) {
-            rad0_guess -= 2.0*TMath::Pi();
-         }
+         //while (rad0_guess<0) {
+         //   rad0_guess += 2.0*TMath::Pi();
+         //}
+         //if (rad0_guess>2.0*TMath::Pi()) {
+         //   rad0_guess -= 2.0*TMath::Pi();
+         //}
          //printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
          //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
