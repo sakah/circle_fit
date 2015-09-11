@@ -98,7 +98,7 @@ void set_marker_style(TMarker* m, int ilayer)
    int style;
    if (ilayer%2==1) style = 8; // ●
    if (ilayer%2==0) style = 22; // ▲
-   m->SetMarkerColor(style);
+   m->SetMarkerStyle(style);
 }
 void set_marker_color(TMarker* m, int iturn)
 {
