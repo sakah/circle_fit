@@ -11,8 +11,8 @@ run()
 {
    ijob=$1
    irun=$2
-   echo "ijob ${ijob}"
-   echo "irun ${irun}"
+   #echo "ijob ${ijob}"
+   #echo "irun ${irun}"
    [ $ijob -ne $set_ijob ] && return
    output_dir=$TOP_DIR/output/run${irun}
    config=$output_dir/config.txt
@@ -75,3 +75,6 @@ run 29 13 0 1999 no yes # single-0%
 run 30 14 0 1999 no yes # multi -0%
 run 31 15 0 1999 no yes # single-10%
 run 32 16 0 1999 no yes # multi -10%
+
+# debug pzres tail
+run 33 1 257 257 yes no
