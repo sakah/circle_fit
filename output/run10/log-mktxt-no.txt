@@ -14,46 +14,46 @@ posSmear_cm 0.100000
 momSmear_percent 0.001000
 noise_occupancy 0.000000
 turn_type multi
-diff_threshold 0.001000
-type G wid 1 cid 0 raidus_at_endplate 51.400000 (cm) length 147.604600 (cm) cell_size 198 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.232700 (cm) first_sense_hole_pos 11062
-type F wid 2 cid 1 raidus_at_endplate 52.200000 (cm) length 147.886700 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.164200 (cm) first_sense_hole_pos 11062
-type S wid 3 cid 1 raidus_at_endplate 53.000000 (cm) length 148.168800 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.166700 (cm) first_sense_hole_pos 11062
-type F wid 4 cid 2 raidus_at_endplate 53.800000 (cm) length 148.450900 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.229500 (cm) first_sense_hole_pos 11062
-type S wid 5 cid 2 raidus_at_endplate 54.600000 (cm) length 148.733100 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.232900 (cm) first_sense_hole_pos 11062
-type F wid 6 cid 3 raidus_at_endplate 55.400000 (cm) length 149.015200 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.223000 (cm) first_sense_hole_pos 11062
-type S wid 7 cid 3 raidus_at_endplate 56.200000 (cm) length 149.297300 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226200 (cm) first_sense_hole_pos 11062
-type F wid 8 cid 4 raidus_at_endplate 57.000000 (cm) length 149.579400 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.216900 (cm) first_sense_hole_pos 11062
-type S wid 9 cid 4 raidus_at_endplate 57.800000 (cm) length 149.861600 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.219900 (cm) first_sense_hole_pos 11062
-type F wid 10 cid 5 raidus_at_endplate 58.600000 (cm) length 150.143700 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11062
-type S wid 11 cid 5 raidus_at_endplate 59.400000 (cm) length 150.425800 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.214000 (cm) first_sense_hole_pos 11062
-type F wid 12 cid 6 raidus_at_endplate 60.200000 (cm) length 150.707900 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.205600 (cm) first_sense_hole_pos 11062
-type S wid 13 cid 6 raidus_at_endplate 61.000000 (cm) length 150.990000 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.208300 (cm) first_sense_hole_pos 11062
-type F wid 14 cid 7 raidus_at_endplate 61.800000 (cm) length 151.272200 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.200400 (cm) first_sense_hole_pos 11062
-type S wid 15 cid 7 raidus_at_endplate 62.600000 (cm) length 151.554300 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.203000 (cm) first_sense_hole_pos 11062
-type F wid 16 cid 8 raidus_at_endplate 63.400000 (cm) length 151.836400 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.195400 (cm) first_sense_hole_pos 11062
-type S wid 17 cid 8 raidus_at_endplate 64.200000 (cm) length 152.118500 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.197900 (cm) first_sense_hole_pos 11062
-type F wid 18 cid 9 raidus_at_endplate 65.000000 (cm) length 152.400700 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.190700 (cm) first_sense_hole_pos 11062
-type S wid 19 cid 9 raidus_at_endplate 65.800000 (cm) length 152.682800 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.193100 (cm) first_sense_hole_pos 11062
-type F wid 20 cid 10 raidus_at_endplate 66.600000 (cm) length 152.964900 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.186200 (cm) first_sense_hole_pos 11062
-type S wid 21 cid 10 raidus_at_endplate 67.400000 (cm) length 153.247000 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.188500 (cm) first_sense_hole_pos 11062
-type F wid 22 cid 11 raidus_at_endplate 68.200000 (cm) length 153.529200 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.181900 (cm) first_sense_hole_pos 11062
-type S wid 23 cid 11 raidus_at_endplate 69.000000 (cm) length 153.811300 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.184100 (cm) first_sense_hole_pos 11062
-type F wid 24 cid 12 raidus_at_endplate 69.800000 (cm) length 154.093400 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.177800 (cm) first_sense_hole_pos 11062
-type S wid 25 cid 12 raidus_at_endplate 70.600000 (cm) length 154.375500 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.179900 (cm) first_sense_hole_pos 11062
-type F wid 26 cid 13 raidus_at_endplate 71.400000 (cm) length 154.657600 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.173900 (cm) first_sense_hole_pos 11062
-type S wid 27 cid 13 raidus_at_endplate 72.200000 (cm) length 154.939800 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.175900 (cm) first_sense_hole_pos 11062
-type F wid 28 cid 14 raidus_at_endplate 73.000000 (cm) length 155.221900 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.170200 (cm) first_sense_hole_pos 11062
-type S wid 29 cid 14 raidus_at_endplate 73.800000 (cm) length 155.504000 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.172000 (cm) first_sense_hole_pos 11062
-type F wid 30 cid 15 raidus_at_endplate 74.600000 (cm) length 155.786100 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226700 (cm) first_sense_hole_pos 11062
-type S wid 31 cid 15 raidus_at_endplate 75.400000 (cm) length 156.068300 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.229100 (cm) first_sense_hole_pos 11062
-type F wid 32 cid 16 raidus_at_endplate 76.200000 (cm) length 156.350400 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.222000 (cm) first_sense_hole_pos 11062
-type S wid 33 cid 16 raidus_at_endplate 77.000000 (cm) length 156.632500 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.224400 (cm) first_sense_hole_pos 11062
-type F wid 34 cid 17 raidus_at_endplate 77.800000 (cm) length 156.914600 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.217500 (cm) first_sense_hole_pos 11062
-type S wid 35 cid 17 raidus_at_endplate 78.600000 (cm) length 157.196800 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.219800 (cm) first_sense_hole_pos 11062
-type F wid 36 cid 18 raidus_at_endplate 79.400000 (cm) length 157.478900 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.213200 (cm) first_sense_hole_pos 11062
-type S wid 37 cid 18 raidus_at_endplate 80.200000 (cm) length 157.761000 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.215400 (cm) first_sense_hole_pos 11062
-type F wid 38 cid 19 raidus_at_endplate 81.000000 (cm) length 158.043100 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.209100 (cm) first_sense_hole_pos 11062
-type G wid 39 cid 19 raidus_at_endplate 81.800000 (cm) length 158.325200 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11062
+diff_threshold 0.005000
+type G wid 1 cid 0 raidus_at_endplate 51.400000 (cm) length 147.604600 (cm) cell_size 198 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.232700 (cm) first_sense_hole_pos 11087
+type F wid 2 cid 1 raidus_at_endplate 52.200000 (cm) length 147.886700 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.164200 (cm) first_sense_hole_pos 11087
+type S wid 3 cid 1 raidus_at_endplate 53.000000 (cm) length 148.168800 (cm) cell_size 198 shift -6.000000 theta0_at_endplate 15.867000 (mrad) stereo_drop 0.166700 (cm) first_sense_hole_pos 11087
+type F wid 4 cid 2 raidus_at_endplate 53.800000 (cm) length 148.450900 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.229500 (cm) first_sense_hole_pos 11087
+type S wid 5 cid 2 raidus_at_endplate 54.600000 (cm) length 148.733100 (cm) cell_size 204 shift 6.000000 theta0_at_endplate 15.400000 (mrad) stereo_drop 0.232900 (cm) first_sense_hole_pos 11087
+type F wid 6 cid 3 raidus_at_endplate 55.400000 (cm) length 149.015200 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.223000 (cm) first_sense_hole_pos 11087
+type S wid 7 cid 3 raidus_at_endplate 56.200000 (cm) length 149.297300 (cm) cell_size 210 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226200 (cm) first_sense_hole_pos 11087
+type F wid 8 cid 4 raidus_at_endplate 57.000000 (cm) length 149.579400 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.216900 (cm) first_sense_hole_pos 11087
+type S wid 9 cid 4 raidus_at_endplate 57.800000 (cm) length 149.861600 (cm) cell_size 216 shift 6.000000 theta0_at_endplate 14.544000 (mrad) stereo_drop 0.219900 (cm) first_sense_hole_pos 11087
+type F wid 10 cid 5 raidus_at_endplate 58.600000 (cm) length 150.143700 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11087
+type S wid 11 cid 5 raidus_at_endplate 59.400000 (cm) length 150.425800 (cm) cell_size 222 shift -6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.214000 (cm) first_sense_hole_pos 11087
+type F wid 12 cid 6 raidus_at_endplate 60.200000 (cm) length 150.707900 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.205600 (cm) first_sense_hole_pos 11087
+type S wid 13 cid 6 raidus_at_endplate 61.000000 (cm) length 150.990000 (cm) cell_size 228 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.208300 (cm) first_sense_hole_pos 11087
+type F wid 14 cid 7 raidus_at_endplate 61.800000 (cm) length 151.272200 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.200400 (cm) first_sense_hole_pos 11087
+type S wid 15 cid 7 raidus_at_endplate 62.600000 (cm) length 151.554300 (cm) cell_size 234 shift -6.000000 theta0_at_endplate 13.426000 (mrad) stereo_drop 0.203000 (cm) first_sense_hole_pos 11087
+type F wid 16 cid 8 raidus_at_endplate 63.400000 (cm) length 151.836400 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.195400 (cm) first_sense_hole_pos 11087
+type S wid 17 cid 8 raidus_at_endplate 64.200000 (cm) length 152.118500 (cm) cell_size 240 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.197900 (cm) first_sense_hole_pos 11087
+type F wid 18 cid 9 raidus_at_endplate 65.000000 (cm) length 152.400700 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.190700 (cm) first_sense_hole_pos 11087
+type S wid 19 cid 9 raidus_at_endplate 65.800000 (cm) length 152.682800 (cm) cell_size 246 shift -6.000000 theta0_at_endplate 12.771000 (mrad) stereo_drop 0.193100 (cm) first_sense_hole_pos 11087
+type F wid 20 cid 10 raidus_at_endplate 66.600000 (cm) length 152.964900 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.186200 (cm) first_sense_hole_pos 11087
+type S wid 21 cid 10 raidus_at_endplate 67.400000 (cm) length 153.247000 (cm) cell_size 252 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.188500 (cm) first_sense_hole_pos 11087
+type F wid 22 cid 11 raidus_at_endplate 68.200000 (cm) length 153.529200 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.181900 (cm) first_sense_hole_pos 11087
+type S wid 23 cid 11 raidus_at_endplate 69.000000 (cm) length 153.811300 (cm) cell_size 258 shift -6.000000 theta0_at_endplate 12.177000 (mrad) stereo_drop 0.184100 (cm) first_sense_hole_pos 11087
+type F wid 24 cid 12 raidus_at_endplate 69.800000 (cm) length 154.093400 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.177800 (cm) first_sense_hole_pos 11087
+type S wid 25 cid 12 raidus_at_endplate 70.600000 (cm) length 154.375500 (cm) cell_size 264 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.179900 (cm) first_sense_hole_pos 11087
+type F wid 26 cid 13 raidus_at_endplate 71.400000 (cm) length 154.657600 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.173900 (cm) first_sense_hole_pos 11087
+type S wid 27 cid 13 raidus_at_endplate 72.200000 (cm) length 154.939800 (cm) cell_size 270 shift -6.000000 theta0_at_endplate 11.636000 (mrad) stereo_drop 0.175900 (cm) first_sense_hole_pos 11087
+type F wid 28 cid 14 raidus_at_endplate 73.000000 (cm) length 155.221900 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.170200 (cm) first_sense_hole_pos 11087
+type S wid 29 cid 14 raidus_at_endplate 73.800000 (cm) length 155.504000 (cm) cell_size 276 shift 6.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.172000 (cm) first_sense_hole_pos 11087
+type F wid 30 cid 15 raidus_at_endplate 74.600000 (cm) length 155.786100 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.226700 (cm) first_sense_hole_pos 11087
+type S wid 31 cid 15 raidus_at_endplate 75.400000 (cm) length 156.068300 (cm) cell_size 282 shift -7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.229100 (cm) first_sense_hole_pos 11087
+type F wid 32 cid 16 raidus_at_endplate 76.200000 (cm) length 156.350400 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.222000 (cm) first_sense_hole_pos 11087
+type S wid 33 cid 16 raidus_at_endplate 77.000000 (cm) length 156.632500 (cm) cell_size 288 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.224400 (cm) first_sense_hole_pos 11087
+type F wid 34 cid 17 raidus_at_endplate 77.800000 (cm) length 156.914600 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.217500 (cm) first_sense_hole_pos 11087
+type S wid 35 cid 17 raidus_at_endplate 78.600000 (cm) length 157.196800 (cm) cell_size 294 shift -7.000000 theta0_at_endplate 10.686000 (mrad) stereo_drop 0.219800 (cm) first_sense_hole_pos 11087
+type F wid 36 cid 18 raidus_at_endplate 79.400000 (cm) length 157.478900 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.213200 (cm) first_sense_hole_pos 11087
+type S wid 37 cid 18 raidus_at_endplate 80.200000 (cm) length 157.761000 (cm) cell_size 300 shift 7.000000 theta0_at_endplate 0.000000 (mrad) stereo_drop 0.215400 (cm) first_sense_hole_pos 11087
+type F wid 38 cid 19 raidus_at_endplate 81.000000 (cm) length 158.043100 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.209100 (cm) first_sense_hole_pos 11087
+type G wid 39 cid 19 raidus_at_endplate 81.800000 (cm) length 158.325200 (cm) cell_size 306 shift -7.000000 theta0_at_endplate 10.267000 (mrad) stereo_drop 0.211100 (cm) first_sense_hole_pos 11087
 config_init: read 39 layers (20 sense layers)
 layer_size        39
 inner_wall_radius 50.600000
@@ -270,8 +270,8 @@ R_fit 35.274206
 pt_fit 105.822618
 Circ1Clus: iev 10 x0 24.750930 y0 32.461635 R 34.872779 pt 104.618338 (MeV/c) deg1 -40.280761 deg2 71.160344 chi2 109.424796
 Circ2Clus: iev 10 x0 31.464301 y0 24.024680 R 35.274206 pt 105.822618 (MeV/c) deg1 -45.067608 deg2 72.990524 chi2 270.401204
-Hough:: iev 10 found_a -0.750000 found_b 0.033500 signal: inside  0.74 (51/69) outside  0.26 (18/69) inside: signal  1.00 (51/51) noise  0.00 (51/51)
-Hough:: iev 10 found_a -1.150000 found_b 0.041500 signal: inside  0.42 (26/62) outside  0.58 (36/62) inside: signal  1.00 (26/26) noise  0.00 (26/26)
+Hough:: iev 10 found_a -0.750000 found_b 0.033500 signal: inside  1.00 (69/69) outside  0.00 (0/69) inside: signal  1.00 (69/69) noise  0.00 (69/69)
+Hough:: iev 10 found_a -1.150000 found_b 0.041500 signal: inside  0.95 (59/62) outside  0.05 (3/62) inside: signal  1.00 (59/59) noise  0.00 (59/59)
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
      1 x0           2.00000e+01  1.00000e+00     no limits
@@ -285,37 +285,37 @@ Hough:: iev 10 found_a -1.150000 found_b 0.041500 signal: inside  0.42 (26/62) o
  **********
  FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
  START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-04
- FCN=35339.1 FROM MIGRAD    STATUS=INITIATE       12 CALLS         133 TOTAL
+ FCN=42231.9 FROM MIGRAD    STATUS=INITIATE       12 CALLS         133 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
   EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.00000e+01   1.00000e+00   1.00000e+00  -5.65585e+02
-   2  y0          -5.00000e+00   1.00000e+00   1.00000e+00  -2.32442e+03
-   3  R            4.00000e+01   1.00000e+00   4.08376e-02  -6.21491e+04
+   1  x0           2.00000e+01   1.00000e+00   1.00000e+00  -6.18557e+02
+   2  y0          -5.00000e+00   1.00000e+00   1.00000e+00  -2.82998e+03
+   3  R            4.00000e+01   1.00000e+00   4.08376e-02  -7.59637e+04
  MIGRAD MINIMIZATION HAS CONVERGED.
  MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
  COVARIANCE MATRIX CALCULATED SUCCESSFULLY
- FCN=35.368 FROM MIGRAD    STATUS=CONVERGED     114 CALLS         235 TOTAL
-                     EDM=1.34008e-06    STRATEGY= 1      ERROR MATRIX ACCURATE 
+ FCN=109.425 FROM MIGRAD    STATUS=CONVERGED     106 CALLS         227 TOTAL
+                     EDM=9.15109e-07    STRATEGY= 1      ERROR MATRIX ACCURATE 
   EXT PARAMETER                                   STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.35674e+01   3.37127e-01   5.99126e-04   6.20893e-03
-   2  y0           3.09676e+01   4.47342e-01   5.68642e-04  -1.45766e-03
-   3  R            3.64457e+01   3.93186e-01   1.75519e-05   8.67677e-03
+   1  x0           2.47509e+01   2.62374e-01   8.54599e-04  -3.28512e-03
+   2  y0           3.24616e+01   3.24430e-01   8.95071e-04   4.51218e-03
+   3  R            3.48728e+01   2.61196e-01   2.70204e-05  -3.59873e-02
  EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  3    ERR DEF=1
-  1.137e-01  1.015e-01 -1.050e-01 
-  1.015e-01  2.001e-01 -1.582e-01 
- -1.050e-01 -1.582e-01  1.546e-01 
+  6.884e-02  5.708e-02 -5.289e-02 
+  5.708e-02  1.053e-01 -7.140e-02 
+ -5.289e-02 -7.140e-02  6.823e-02 
  PARAMETER  CORRELATION COEFFICIENTS  
        NO.  GLOBAL      1      2      3
-        1  0.79736   1.000  0.673 -0.792
-        2  0.90203   0.673  1.000 -0.900
-        3  0.93444  -0.792 -0.900  1.000
-i 0 23.567418 +/- 0.337127
-i 1 30.967587 +/- 0.447342
-i 2 36.445737 +/- 0.393186
-R_fit 36.445737
-pt_fit 109.337212
+        1  0.77270   1.000  0.671 -0.772
+        2  0.84313   0.671  1.000 -0.843
+        3  0.88746  -0.772 -0.843  1.000
+i 0 24.750930 +/- 0.262374
+i 1 32.461635 +/- 0.324430
+i 2 34.872779 +/- 0.261196
+R_fit 34.872779
+pt_fit 104.618338
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
      1 x0           2.00000e+01  1.00000e+00     no limits
@@ -329,49 +329,47 @@ pt_fit 109.337212
  **********
  FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
  START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-04
- FCN=12539.3 FROM MIGRAD    STATUS=INITIATE       12 CALLS         133 TOTAL
+ FCN=22634.8 FROM MIGRAD    STATUS=INITIATE       12 CALLS         133 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
   EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.00000e+01   1.00000e+00   1.00000e+00  -4.25708e+02
-   2  y0          -5.00000e+00   1.00000e+00   1.00000e+00  -9.14247e+02
-   3  R            4.00000e+01   1.00000e+00   4.08376e-02  -2.63090e+04
+   1  x0           2.00000e+01   1.00000e+00   1.00000e+00  -7.22795e+02
+   2  y0          -5.00000e+00   1.00000e+00   1.00000e+00  -1.70196e+03
+   3  R            4.00000e+01   1.00000e+00   4.08376e-02  -4.87880e+04
  MIGRAD MINIMIZATION HAS CONVERGED.
  MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
  COVARIANCE MATRIX CALCULATED SUCCESSFULLY
- FCN=9.64989 FROM MIGRAD    STATUS=CONVERGED     104 CALLS         225 TOTAL
-                     EDM=1.53487e-06    STRATEGY= 1      ERROR MATRIX ACCURATE 
+ FCN=192.279 FROM MIGRAD    STATUS=CONVERGED      96 CALLS         217 TOTAL
+                     EDM=1.19682e-06    STRATEGY= 1      ERROR MATRIX ACCURATE 
   EXT PARAMETER                                   STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.96100e+01   6.60172e-01   4.42855e-04  -3.09363e-03
-   2  y0           2.58839e+01   6.40066e-01   4.41199e-04   4.75153e-03
-   3  R            3.52558e+01   6.55903e-01   1.35714e-05   4.80186e-02
+   1  x0           3.04963e+01   3.83187e-01   1.26523e-03  -1.63015e-04
+   2  y0           2.37682e+01   3.18252e-01   1.23825e-03   4.08779e-04
+   3  R            3.60511e+01   3.05211e-01   3.78508e-05  -1.14228e-01
  EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  3    ERR DEF=1
-  4.358e-01  3.332e-01 -3.920e-01 
-  3.332e-01  4.097e-01 -3.777e-01 
- -3.920e-01 -3.777e-01  4.303e-01 
+  1.468e-01  9.157e-02 -1.019e-01 
+  9.157e-02  1.013e-01 -7.919e-02 
+ -1.019e-01 -7.919e-02  9.316e-02 
  PARAMETER  CORRELATION COEFFICIENTS  
        NO.  GLOBAL      1      2      3
-        1  0.90707   1.000  0.788 -0.905
-        2  0.90160   0.788  1.000 -0.900
-        3  0.95427  -0.905 -0.900  1.000
-i 0 29.609994 +/- 0.660172
-i 1 25.883935 +/- 0.640066
-i 2 35.255772 +/- 0.655903
-R_fit 35.255772
-pt_fit 105.767315
-Circ1: iev 10 x0 23.567418 y0 30.967587 R 36.445737 pt 109.337212 (MeV/c) deg1 -37.244218 deg2 70.182587 chi2 35.368019
-Circ2: iev 10 x0 29.609994 y0 25.883935 R 35.255772 pt 105.767315 (MeV/c) deg1 119.240285 deg2 64.225778 chi2 9.649893
-dr 7.896597 deg -40.074080
-set_fit_inipar: x0 23.567418 y0 30.967587 R 36.445737 rad0 332.782344 (deg) L 0.033333
+        1  0.87374   1.000  0.751 -0.871
+        2  0.81948   0.751  1.000 -0.815
+        3  0.90447  -0.871 -0.815  1.000
+i 0 30.496271 +/- 0.383187
+i 1 23.768175 +/- 0.318252
+i 2 36.051061 +/- 0.305211
+R_fit 36.051061
+pt_fit 108.153183
+Circ1: iev 10 x0 24.750930 y0 32.461635 R 34.872779 pt 104.618338 (MeV/c) deg1 -40.280761 deg2 71.160344 chi2 109.424796
+Circ2: iev 10 x0 30.496271 y0 23.768175 R 36.051061 pt 108.153183 (MeV/c) deg1 -43.574880 deg2 71.723319 chi2 192.278636
+dr 10.420423 deg -56.540048
+set_fit_inipar: x0 24.750930 y0 32.461635 R 34.872779 rad0 191.657012 (deg) L 0.033333
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     1 x0           2.35674e+01  1.00000e+00     no limits
-     2 y0           3.09676e+01  1.00000e+00     no limits
-     3 R            3.64457e+01  1.00000e+00    2.00000e+01  7.00000e+01
-     4 rad0         5.80815e+00  1.00000e+00    0.00000e+00  6.28319e+00
- MINUIT WARNING IN PARAMETR
- ============== VARIABLE4 BROUGHT BACK INSIDE LIMITS.
+     1 x0           2.47509e+01  1.00000e+00     no limits
+     2 y0           3.24616e+01  1.00000e+00     no limits
+     3 R            3.48728e+01  1.00000e+00    2.00000e+01  7.00000e+01
+     4 rad0         3.34505e+00  1.00000e+00    0.00000e+00  6.28319e+00
      5 L            3.33333e-02  1.00000e+00     no limits
  **********
  **    1 **SET ERR           1
@@ -381,69 +379,88 @@ set_fit_inipar: x0 23.567418 y0 30.967587 R 36.445737 rad0 332.782344 (deg) L 0.
  **********
  FIRST CALL TO USER FUNCTION AT NEW START POINT, WITH IFLAG=4.
  START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-04
- FCN=380.887 FROM MIGRAD    STATUS=INITIATE      152 CALLS         153 TOTAL
+ FCN=1453.4 FROM MIGRAD    STATUS=INITIATE      200 CALLS         201 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
   EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.55518e+01   1.00000e+00   0.00000e+00  -1.04137e-01
-   2  y0           3.09676e+01   1.00000e+00   0.00000e+00   2.11801e+02
-   3  R            3.64457e+01   1.00000e+00   0.00000e+00   4.86018e+03
-   4  rad0         2.36352e+00   1.00000e+00  -5.50074e-05   1.87273e-02
-   5  L            6.34274e-02   1.00000e+00   0.00000e+00  -9.97645e-02
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN MIGRAD  
- ============== 1.00011 added to diagonal of error matrix
- MIGRAD MINIMIZATION HAS CONVERGED.
- MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
- COVARIANCE MATRIX CALCULATED SUCCESSFULLY
- FCN=52.3243 FROM HESSE     STATUS=OK             61 CALLS         946 TOTAL
-                     EDM=1.09213    STRATEGY= 1      ERROR MATRIX ACCURATE 
-  EXT PARAMETER                                   STEP         FIRST   
+   1  x0           2.88811e+01   1.00000e+00   0.00000e+00   3.35762e-01
+   2  y0           3.24616e+01   1.00000e+00   0.00000e+00   4.60725e+02
+   3  R            3.48728e+01   1.00000e+00   0.00000e+00   8.89174e+03
+   4  rad0         2.44325e+00   1.00000e+00  -3.30255e-04   4.65781e+00
+   5  L            1.13837e-01   1.00000e+00   0.00000e+00   2.69928e+01
+ MIGRAD FAILS TO FIND IMPROVEMENT
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 5 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1.66227e+15 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.7085e+07  9.3533e-01  1.0000e+00  1.0000e+00  2.7085e+07
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 27112216.930545 TO DIAGONAL.
+ FCN=1462.9 FROM HESSE     STATUS=NOT POSDEF     67 CALLS         270 TOTAL
+                     EDM=0.000194824    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+  EXT PARAMETER                APPROXIMATE        STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.69054e+01   3.09563e-01   1.87278e-02   6.76116e+00
-   2  y0           2.88879e+01   3.52103e-01   1.81597e-02   3.15241e-03
-   3  R            3.54640e+01   3.32943e-01   5.63842e-04   2.08297e-01
-   4  rad0         1.63606e-07   9.36146e-02   2.66807e-02** at limit **
-   5  L            1.74064e+01   1.01710e+00   1.14294e-01   9.88913e-03
- MIGRAD MINIMIZATION HAS CONVERGED.
- FCN=52.3243 FROM MIGRAD    STATUS=CONVERGED     970 CALLS         971 TOTAL
-                     EDM=3.97169e-06    STRATEGY= 1  ERROR MATRIX UNCERTAINTY   6.8 per cent
-  EXT PARAMETER                                   STEP         FIRST   
+   1  x0           2.88811e+01   6.66165e-12   2.43623e-02  -3.87345e-02
+   2  y0           3.24616e+01   6.66165e-12   7.69986e-02   4.60466e+02
+   3  R            3.48728e+01   3.87665e-09   1.98877e-07   8.90032e+03
+   4  rad0         2.44325e+00   1.86160e-02   1.06888e-07   4.59337e+00
+   5  L            1.13837e-01   4.32843e-11   5.80183e-07  -5.61908e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 5 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.42189 added to diagonal of error matrix
+ MIGRAD FAILS TO FIND IMPROVEMENT
+ MIGRAD TERMINATED WITHOUT CONVERGENCE.
+ FCN=1453.49 FROM MIGRAD    STATUS=FAILED        424 CALLS         425 TOTAL
+                     EDM=39.9164    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+  EXT PARAMETER                APPROXIMATE        STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.69048e+01   1.28159e-02  -5.51047e-04   8.83468e-03
-   2  y0           2.88874e+01   2.47446e-01  -4.46242e-04   4.09182e-03
-   3  R            3.54645e+01   1.78124e-01   2.16776e-05   2.37041e-01
-   4  rad0         1.46940e-07   9.34808e-02   1.68784e-05** at limit **
-   5  L            1.74067e+01   1.00912e+00   2.24342e-04   3.20012e-03
+   1  x0           2.88811e+01   1.19243e+00   0.00000e+00  -3.44544e-02
+   2  y0           3.24616e+01   1.19243e+00  -0.00000e+00   4.60469e+02
+   3  R            3.48728e+01   3.24270e+01  -0.00000e+00   8.90030e+03
+   4  rad0         2.49881e+00   4.58315e+00   0.00000e+00  -4.61323e+00
+   5  L            1.13837e-01   1.19243e+00   0.00000e+00  -5.53415e+01
  EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  5    ERR DEF=1
-  1.642e-04  1.153e-04 -1.659e-04 -6.818e-08 -1.062e-03 
-  1.153e-04  6.123e-02 -3.305e-02  1.944e-06  1.964e-02 
- -1.659e-04 -3.305e-02  3.173e-02  9.887e-07  1.901e-02 
- -6.818e-08  1.944e-06  9.887e-07  5.522e-08  6.971e-05 
- -1.062e-03  1.964e-02  1.901e-02  6.971e-05  1.018e+00 
+  1.422e+00 -8.697e-28 -2.175e-20  1.050e-13 -2.401e-22 
+ -8.697e-28  1.422e+00 -6.849e-21  3.306e-14 -7.561e-23 
+ -2.175e-20 -6.849e-21  7.429e+02  8.266e-07 -1.891e-15 
+  1.050e-13  3.306e-14  8.266e-07  9.456e+00  9.126e-09 
+ -2.401e-22 -7.561e-23 -1.891e-15  9.126e-09  1.422e+00 
+ERR MATRIX NOT POS-DEF
  PARAMETER  CORRELATION COEFFICIENTS  
        NO.  GLOBAL      1      2      3      4      5
-        1  0.10480   1.000  0.036 -0.073 -0.023 -0.082
-        2  0.76660   0.036  1.000 -0.750  0.033  0.079
-        3  0.76856  -0.073 -0.750  1.000  0.024  0.106
-        4  0.29415  -0.023  0.033  0.024  1.000  0.294
-        5  0.38367  -0.082  0.079  0.106  0.294  1.000
-i 0 26.904813 +/- 0.012816
-i 1 28.887409 +/- 0.247446
-i 2 35.464500 +/- 0.178124
-i 3 0.000000 +/- 0.093481
-i 4 17.406668 +/- 1.009115
-R_fit 35.464500 pt_fit 106.393500
-L_fit 17.406668 pz_fit 52.220003
-Helix( 0): iev 10 x0 26.904813 y0 28.887409 R 35.464500 pt 106.393500 (MeV/c) rad0 0.000000 L 17.406668 pz 52.220003 chi2 52.324262
-set_fit_inipar: x0 23.567418 y0 30.967587 R 36.445737 rad0 16512.729219 (deg) L -0.033333
+        1  0.00000   1.000 -0.000 -0.000  0.000 -0.000
+        2  0.00000  -0.000  1.000 -0.000  0.000 -0.000
+        3  0.00000  -0.000 -0.000  1.000  0.000 -0.000
+        4  0.00000   0.000  0.000  0.000  1.000  0.000
+        5  0.00000  -0.000 -0.000 -0.000  0.000  1.000
+ ERR MATRIX NOT POS-DEF
+i 0 28.881123 +/- 1.192431
+i 1 32.461635 +/- 1.192431
+i 2 34.872789 +/- 32.427030
+i 3 2.498808 +/- 4.583153
+i 4 0.113837 +/- 1.192431
+R_fit 34.872789 pt_fit 104.618367
+L_fit 0.113837 pz_fit 0.341510
+Helix( 0): iev 10 x0 28.881123 y0 32.461635 R 34.872789 pt 104.618367 (MeV/c) rad0 2.498808 L 0.113837 pz 0.341510 chi2 1453.490880
+set_fit_inipar: x0 24.750930 y0 32.461635 R 34.872779 rad0 50127.781466 (deg) L -0.033333
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     1 x0           2.35674e+01  1.00000e+00     no limits
-     2 y0           3.09676e+01  1.00000e+00     no limits
-     3 R            3.64457e+01  1.00000e+00    2.00000e+01  7.00000e+01
-     4 rad0         2.88201e+02  1.00000e+00    0.00000e+00  6.28319e+00
+     1 x0           2.47509e+01  1.00000e+00     no limits
+     2 y0           3.24616e+01  1.00000e+00     no limits
+     3 R            3.48728e+01  1.00000e+00    2.00000e+01  7.00000e+01
+     4 rad0         8.74895e+02  1.00000e+00    0.00000e+00  6.28319e+00
  MINUIT WARNING IN PARAM DEF
  ============== STARTING VALUE OUTSIDE LIMITS.
  MINUIT WARNING IN PARAMETR
@@ -461,85 +478,76 @@ set_fit_inipar: x0 23.567418 y0 30.967587 R 36.445737 rad0 16512.729219 (deg) L 
  MINUIT WARNING IN MIGrad    
  ============== VARIABLE4 BROUGHT BACK INSIDE LIMITS.
  START MIGRAD MINIMIZATION.  STRATEGY  1.  CONVERGENCE WHEN EDM .LT. 1.00e-04
- FCN=380.899 FROM MIGRAD    STATUS=INITIATE       63 CALLS          64 TOTAL
+ FCN=1483.27 FROM MIGRAD    STATUS=INITIATE       63 CALLS          64 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
   EXT PARAMETER               CURRENT GUESS       STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.55352e+01   1.00000e+00   0.00000e+00  -1.08102e+00
-   2  y0           3.09676e+01   1.00000e+00   0.00000e+00   2.11397e+02
-   3  R            3.64457e+01   1.00000e+00   0.00000e+00   4.82820e+03
-   4  rad0         6.28319e+00   1.00000e+00   1.94877e-03** at limit **
-   5  L           -3.33333e-02   1.00000e+00   0.00000e+00   2.41196e-01
- MINUIT WARNING IN MIGRAD  
- ============== Negative diagonal element 1 in Error Matrix
+   1  x0           2.82601e+01   1.00000e+00   0.00000e+00  -7.52864e+01
+   2  y0           3.24616e+01   1.00000e+00   0.00000e+00   4.74892e+02
+   3  R            3.48728e+01   1.00000e+00   0.00000e+00   7.42448e+03
+   4  rad0         6.28319e+00   1.00000e+00   1.95298e-03** at limit **
+   5  L           -3.33333e-02   1.00000e+00   0.00000e+00  -4.89811e+00
  MINUIT WARNING IN MIGRAD  
  ============== Negative diagonal element 4 in Error Matrix
  MINUIT WARNING IN MIGRAD  
- ============== 1.23723 added to diagonal of error matrix
+ ============== 1.01095 added to diagonal of error matrix
  MIGRAD FAILS TO FIND IMPROVEMENT
  MINUIT WARNING IN HESSE   
- ============== Negative diagonal element 1 in Error Matrix
- MINUIT WARNING IN HESSE   
- ============== Negative diagonal element 2 in Error Matrix
- MINUIT WARNING IN HESSE   
- ============== Negative diagonal element 3 in Error Matrix
- MINUIT WARNING IN HESSE   
  ============== Negative diagonal element 4 in Error Matrix
  MINUIT WARNING IN HESSE   
- ============== Negative diagonal element 5 in Error Matrix
- MINUIT WARNING IN HESSE   
- ============== 1.87543e+14 added to diagonal of error matrix
- EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
-        -5.6677e+05  9.9915e-01  9.9984e-01  9.9991e-01  5.6677e+05
- MINUIT WARNING IN HESSE   
- ============== MATRIX FORCED POS-DEF BY ADDING 567332.041018 TO DIAGONAL.
- FCN=59.7016 FROM HESSE     STATUS=NOT POSDEF     33 CALLS         197 TOTAL
-                     EDM=27.7956    STRATEGY= 1      ERR MATRIX NOT POS-DEF
-  EXT PARAMETER                APPROXIMATE        STEP         FIRST   
+ ============== 386.526 added to diagonal of error matrix
+ COVARIANCE MATRIX CALCULATED SUCCESSFULLY
+ FCN=498.077 FROM HESSE     STATUS=OK             61 CALLS         324 TOTAL
+                     EDM=16.1429    STRATEGY= 1      ERROR MATRIX ACCURATE 
+  EXT PARAMETER                                   STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.63733e+01   5.28175e-10   1.25757e-05   1.03299e+00
-   2  y0           2.83396e+01   4.94394e-10   1.35134e-05   1.51003e+00
-   3  R            3.61118e+01   9.81465e-01   1.73320e-07   2.50964e+02
-   4  rad0         6.23822e+00   1.47010e-09   2.32781e-06   6.64333e+00
-   5  L            1.19736e+01   1.13343e-09   5.70948e-06  -7.82604e-01
- MIGRAD FAILS TO FIND IMPROVEMENT
- MIGRAD MINIMIZATION HAS CONVERGED.
- MIGRAD WILL VERIFY CONVERGENCE AND ERROR MATRIX.
- EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
-        -2.9634e+01  2.9976e-01  6.6486e-01  2.0604e+00  3.1609e+01
- MINUIT WARNING IN HESSE   
- ============== MATRIX FORCED POS-DEF BY ADDING 29.665259 TO DIAGONAL.
+   1  x0           2.80597e+01   6.56654e-02   4.43459e-02   3.50095e+01
+   2  y0           2.81087e+01   6.59686e-02   3.27155e-02  -6.04381e+00
+   3  R            3.53324e+01   9.75082e-02   1.33877e-03  -2.60966e+02
+   4  rad0         6.28295e+00   4.74132e+00   2.51483e-02  -4.71037e+00
+   5  L            1.44452e+01   8.10408e-02   2.57567e-01  -2.00784e-01
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.64005 added to diagonal of error matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.00065 added to diagonal of error matrix
+ CALL LIMIT EXCEEDED IN MIGRAD.
  MIGRAD TERMINATED WITHOUT CONVERGENCE.
- FCN=56.5105 FROM MIGRAD    STATUS=FAILED        289 CALLS         290 TOTAL
-                     EDM=0.117363    STRATEGY= 1      ERR MATRIX NOT POS-DEF
+ FCN=358.831 FROM MIGRAD    STATUS=CALL LIMIT   1009 CALLS        1010 TOTAL
+                     EDM=2.27861    STRATEGY= 1  ERROR MATRIX UNCERTAINTY   1.2 per cent
   EXT PARAMETER                APPROXIMATE        STEP         FIRST   
   NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE 
-   1  x0           2.63733e+01   3.80359e-02   6.23568e-04   7.40416e+00
-   2  y0           2.83396e+01   4.36603e-01   5.81857e-04  -4.46039e+00
-   3  R            3.60420e+01   3.12197e-01   1.78326e-05  -2.96837e-01
-   4  rad0         6.23822e+00   4.14237e-01   2.37437e-02   6.72244e+00
-   5  L            1.19736e+01   2.34742e+00   7.21688e-02  -8.31478e-01
+   1  x0           2.75665e+01   3.26460e-05  -1.87728e-07  -8.89377e+00
+   2  y0           2.79515e+01   1.26283e-01  -2.91565e-03  -8.52376e-01
+   3  R            3.56750e+01   9.70513e-02   4.05408e-05  -5.32263e+00
+   4  rad0         3.88701e+00   1.43927e-01   2.08852e-03  -2.77039e+01
+   5  L            1.48919e+01   2.54956e-01  -1.15929e-02   7.82252e+00
  EXTERNAL ERROR MATRIX.    NDIM=  25    NPAR=  5    ERR DEF=1
-  1.447e-03  9.977e-03  7.128e-03  6.311e-03  5.381e-02 
-  9.977e-03  1.906e-01  1.357e-01  1.203e-01  1.022e+00 
-  7.128e-03  1.357e-01  9.747e-02  8.600e-02  7.312e-01 
-  6.311e-03  1.203e-01  8.600e-02  7.678e-02  6.466e-01 
-  5.381e-02  1.022e+00  7.312e-01  6.466e-01  5.510e+00 
-ERR MATRIX NOT POS-DEF
+  1.066e-09  1.284e-06 -5.203e-07  1.000e-07  1.778e-06 
+  1.284e-06  1.595e-02 -6.368e-03 -9.360e-04  2.312e-02 
+ -5.203e-07 -6.368e-03  9.419e-03 -5.411e-04 -8.359e-03 
+  1.000e-07 -9.360e-04 -5.411e-04  2.073e-02 -2.534e-02 
+  1.778e-06  2.312e-02 -8.359e-03 -2.534e-02  6.500e-02 
+ERR MATRIX APPROXIMATE
  PARAMETER  CORRELATION COEFFICIENTS  
        NO.  GLOBAL      1      2      3      4      5
-        1  0.60286   1.000  0.601  0.600  0.599  0.603
-        2  0.99789   0.601  1.000  0.996  0.994  0.998
-        3  0.99789   0.600  0.996  1.000  0.994  0.998
-        4  0.99523   0.599  0.994  0.994  1.000  0.994
-        5  0.99872   0.603  0.998  0.998  0.994  1.000
- ERR MATRIX NOT POS-DEF
-i 0 26.373255 +/- 0.038036
-i 1 28.339569 +/- 0.436603
-i 2 36.042022 +/- 0.312197
-i 3 6.238221 +/- 0.414237
-i 4 11.973642 +/- 2.347422
-R_fit 36.042022 pt_fit 108.126065
-L_fit 11.973642 pz_fit 35.920927
-Helix( 1): iev 10 x0 26.373255 y0 28.339569 R 36.042022 pt 108.126065 (MeV/c) rad0 6.238221 L 11.973642 pz 35.920927 chi2 56.510458
-## iev    10 tc.dr 7.896597 tc.deg -40.074080 mc_z 35.554066 z1_fit 9.837824 mc_pt 104.249519 helix.pt_fit 106.393500 mc_pz -7.983457 helix.pz_fit 52.220003 helix.chi2 52.324262
+        1  0.31956   1.000  0.312 -0.164  0.021  0.214
+        2  0.94624   0.312  1.000 -0.520 -0.051  0.718
+        3  0.52470  -0.164 -0.520  1.000 -0.039 -0.338
+        4  0.94056   0.021 -0.051 -0.039  1.000 -0.690
+        5  0.97147   0.214  0.718 -0.338 -0.690  1.000
+ ERR MATRIX APPROXIMATE
+i 0 27.566519 +/- 0.000033
+i 1 27.951472 +/- 0.126283
+i 2 35.674994 +/- 0.097051
+i 3 3.887009 +/- 0.143927
+i 4 14.891875 +/- 0.254956
+R_fit 35.674994 pt_fit 107.024983
+L_fit 14.891875 pz_fit 44.675625
+Helix( 1): iev 10 x0 27.566519 y0 27.951472 R 35.674994 pt 107.024983 (MeV/c) rad0 3.887009 L 14.891875 pz 44.675625 chi2 358.831397
+## iev    10 tc.dr 10.420423 tc.deg -56.540048 mc_z 35.554066 z1_fit 29.396035 mc_pt 104.249519 helix.pt_fit 107.024983 mc_pz -7.983457 helix.pz_fit 44.675625 helix.chi2 358.831397

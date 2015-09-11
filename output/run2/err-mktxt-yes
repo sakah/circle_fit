@@ -153,24 +153,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 68
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 69
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -281,7 +263,6 @@ iev 129
 iev 130
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 131
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -329,8 +310,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 149
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 150
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -688,6 +667,45 @@ iev 319
 iev 320
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
 iev 321
 iev 322
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -877,6 +895,36 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 411
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
 iev 412
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -940,6 +988,13 @@ iev 443
 iev 444
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
 iev 445
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -992,45 +1047,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 472
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 473
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1116,24 +1132,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 513
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 514
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1181,6 +1179,13 @@ iev 533
 iev 534
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
 iev 535
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1376,7 +1381,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 623
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 624
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1458,7 +1462,6 @@ iev 657
 iev 658
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 659
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1503,7 +1506,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 678
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 679
 iev 680
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -1581,7 +1583,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 723
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 724
 iev 725
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -1597,6 +1598,7 @@ iev 729
 iev 730
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
 iev 731
 iev 732
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -1647,19 +1649,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 754
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 755
 iev 756
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -1684,7 +1673,6 @@ iev 763
 iev 764
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 765
 iev 766
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -1700,7 +1688,6 @@ iev 770
 iev 771
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 772
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1768,16 +1755,6 @@ strange hit pattern. [1 0 1 0]
 strange hit pattern. [1 0 1 0]
 strange hit pattern. [1 0 1 0]
 strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 798
 iev 799
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -1820,9 +1797,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 815
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 816
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1873,46 +1847,6 @@ iev 838
 iev 839
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 840
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1970,7 +1904,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 864
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 865
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2050,11 +1983,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 899
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 900
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2310,7 +2238,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1026
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1027
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2343,8 +2270,6 @@ iev 1041
 iev 1042
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1043
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2393,37 +2318,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1064
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1065
 iev 1066
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -2492,7 +2386,6 @@ iev 1095
 iev 1096
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1097
 iev 1098
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -2586,7 +2479,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1141
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1142
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2722,6 +2614,7 @@ iev 1205
 iev 1206
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
 iev 1207
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2794,7 +2687,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1244
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1245
 iev 1246
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -2819,6 +2711,12 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1254
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
+strange hit pattern. [1 0 1 0]
 iev 1255
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -2841,7 +2739,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1264
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1265
 iev 1266
 iev 1267
@@ -2899,12 +2796,6 @@ iev 1288
 iev 1289
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1290
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -3068,17 +2959,12 @@ iev 1371
 iev 1372
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1373
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
 iev 1374
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1375
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -3113,7 +2999,6 @@ iev 1391
 iev 1392
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1393
 iev 1394
 iev 1395
@@ -3811,7 +3696,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1731
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1732
 iev 1733
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -3939,23 +3823,6 @@ iev 1799
 iev 1800
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1801
 iev 1802
 iev 1803
@@ -4226,18 +4093,9 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1932
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1933
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1934
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -4272,6 +4130,7 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1951
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+strange hit pattern. [1 0 1 0]
 iev 1952
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).

@@ -16,12 +16,12 @@ run()
    [ $ijob -ne $set_ijob ] && return
    output_dir=$TOP_DIR/output/run${irun}
    config=$output_dir/config.txt
+   [ ! -e $config ] && echo "No config.txt" && return
    iev1=$3
    iev2=$4
    mkpdf=$5
    mktxt=$6
    [ ! -e $output_dir ] && mkdir $output_dir
-   cp $config $output_dir
    echo "===============" >> $output_dir/log-$mkpdf.txt
    echo "Start at `date`" >> $output_dir/log-$mkpdf.txt
    echo "===============" >> $output_dir/log-$mkpdf.txt
