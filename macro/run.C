@@ -27,6 +27,7 @@ class Run
          t->SetAlias("dpz", "(pzfit-pzhit)");
          t->SetAlias("ptres", "(ptfit-pthit)/pthit");
          t->SetAlias("pzres", "(pzfit-pzhit)/pzhit");
+         t->SetAlias("redchi2", "chi2/(num-5)");
       };
 
       void read(char* txt)
