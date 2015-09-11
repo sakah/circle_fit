@@ -78,3 +78,4 @@ run 32 16 0 1999 no yes # multi -10%
 
 # debug pzres tail
 run 33 1 257 257 yes no
+run 34 1 128 128 yes no
