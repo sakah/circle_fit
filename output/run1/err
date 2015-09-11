@@ -155,3 +155,240 @@ Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory l
 Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
 Info in <TCanvas::Print>: pdf file output/run1//pdf/00010.pdf has been created
+
+ *** Break *** segmentation violation
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+#0  0x00002af0c1a4fdd5 in waitpid () from /lib64/libc.so.6
+#1  0x00002af0c19f24a1 in do_system () from /lib64/libc.so.6
+#2  0x00002af0bc8d9902 in TUnixSystem::StackTrace() ()
+   from /home/had/hideyuki/private/sw/root/lib/libCore.so
+#3  0x00002af0bc8d630a in TUnixSystem::DispatchSignals(ESignals) ()
+   from /home/had/hideyuki/private/sw/root/lib/libCore.so
+#4  <signal handler called>
+#5  0x00002af0c1a2e6f0 in strcmp () from /lib64/libc.so.6
+#6  0x000000000042457a in Config::parse_option(int, char**) ()
+#7  0x00000000004200fa in main ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+If they do not help you then please submit a bug report at
+http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#5  0x00002af0c1a2e6f0 in strcmp () from /lib64/libc.so.6
+#6  0x000000000042457a in Config::parse_option(int, char**) ()
+#7  0x00000000004200fa in main ()
+===========================================================
+
+
+Usage ./main <config.txt> <output_dir> <iev1> <iev2> <make_pdf:yes|no> <make_txt:yes|no>
+Usage ./main <config.txt> <output_dir> <iev1> <iev2> <make_pdf:yes|no> <make_txt:yes|no>
+Usage ./main <config.txt> <output_dir> <iev1> <iev2> <make_pdf:yes|no> <make_txt:yes|no>
+===============
+Start at Fri Sep 11 10:47:51 JST 2015
+===============
+Usage ./main <config.txt> <output_dir> <iev1> <iev2> <make_pdf:yes|no> <make_txt:yes|no>
+===============
+Start at Fri Sep 11 10:48:22 JST 2015
+===============
+InputROOT start
+InputROOT start 2
+InputROOT start 3
+InputROOT start 4
+InputROOT start 5
+Error in <TTree::SetBranchAddress>: unknown branch -> num_noise
+Error in <TTree::SetBranchAddress>: unknown branch -> num_pileup
+InputROOT end
+iev 0
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00000.pdf has been created
+iev 1
+iev 2
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00002.pdf has been created
+iev 3
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00003.pdf has been created
+iev 4
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00004.pdf has been created
+iev 5
+iev 6
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00006.pdf has been created
+iev 7
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00007.pdf has been created
+iev 8
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00008.pdf has been created
+iev 9
+iev 10
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Info in <TCanvas::Print>: pdf file output/run1//pdf/00010.pdf has been created
+
+ *** Break *** segmentation violation
+
+
+
+===========================================================
+There was a crash.
+This is the entire stack trace of all threads:
+===========================================================
+#0  0x00002b3fd0661dd5 in waitpid () from /lib64/libc.so.6
+#1  0x00002b3fd06044a1 in do_system () from /lib64/libc.so.6
+#2  0x00002b3fcb4eb902 in TUnixSystem::StackTrace() ()
+   from /home/had/hideyuki/private/sw/root/lib/libCore.so
+#3  0x00002b3fcb4e830a in TUnixSystem::DispatchSignals(ESignals) ()
+   from /home/had/hideyuki/private/sw/root/lib/libCore.so
+#4  <signal handler called>
+#5  0x00002b3fd0627c17 in fclose
+
+GLIBC_2.2.5 () from /lib64/libc.so.6
+#6  0x00000000004220ab in main ()
+===========================================================
+
+
+The lines below might hint at the cause of the crash.
+If they do not help you then please submit a bug report at
+http://root.cern.ch/bugs. Please post the ENTIRE stack trace
+from above as an attachment in addition to anything else
+that might help us fixing this issue.
+===========================================================
+#5  0x00002b3fd0627c17 in fclose
+
+GLIBC_2.2.5 () from /lib64/libc.so.6
+#6  0x00000000004220ab in main ()
+===========================================================
+
+

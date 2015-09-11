@@ -1273,14 +1273,15 @@ struct Config
    int iev1;
    int iev2;
    bool make_pdf;
+   bool make_txt;
    void parse_option(int argc, char** argv)
    {
-      if (argc!=6) {
-         fprintf(stderr,"Usage %s <config.txt> <output_dir> <iev1> <iev2> <make_pdf|yes or no>\n", argv[0]);
-         exit(1);
-      }
       for (int i=0; i<argc; i++) {
          printf("i %d %s\n", i, argv[i]);
+      }
+      if (argc!=7) {
+         fprintf(stderr,"Usage %s <config.txt> <output_dir> <iev1> <iev2> <make_pdf:yes|no> <make_txt:yes|no>\n", argv[0]);
+         exit(1);
       }
       parse_config(argv[1]);
       strcpy(output_dir,argv[2]);
@@ -1290,6 +1291,11 @@ struct Config
          make_pdf = true;
       } else {
          make_pdf = false;
+      }
+      if (strcmp(argv[6],"yes")==0) {
+         make_txt = true;
+      } else {
+         make_txt = false;
       }
 
       // make output directory
@@ -1411,10 +1417,13 @@ int main(int argc, char** argv)
    helix[0].set_line_color(kMagenta); // positive ini_pz
    helix[1].set_line_color(kMagenta); // negative ini_pz
 
-   FILE* fpout = fopen(Form("%s/output.txt",config.output_dir),"w");
-   if (fpout==NULL) {
-      fprintf(stderr,"ERROR: cannot open for write '%s/output.txt'\n", config.output_dir);
-      exit(1);
+   FILE* fpout=NULL;
+   if (config.make_txt) {
+      fpout = fopen(Form("%s/output.txt",config.output_dir),"w");
+      if (fpout==NULL) {
+         fprintf(stderr,"ERROR: cannot open for write '%s/output.txt'\n", config.output_dir);
+         exit(1);
+      }
    }
 
    bool single_turn=false;
