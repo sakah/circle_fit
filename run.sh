@@ -1,69 +1,77 @@
 #!/bin/sh
 
+TOP_DIR='/home/had/hideyuki/private/genfit2/KEKCC/circle_fit/'
+
+set_ijob=$1
+set_irun=$2
+echo "set_ijob => $set_ijob"
+echo "set_irun => $set_irun"
+
 run()
 {
-   config=$1
-   output_dir=$2
+   ijob=$1
+   irun=$2
+   echo "ijob ${ijob}"
+   echo "irun ${irun}"
+   [ $ijob -ne $set_ijob ] && return
+   output_dir=$TOP_DIR/output/run${irun}
+   config=$output_dir/config.txt
    iev1=$3
    iev2=$4
    mkpdf=$5
    mktxt=$6
    [ ! -e $output_dir ] && mkdir $output_dir
    cp $config $output_dir
-   echo "===============" >> $output_dir/log.txt
-   echo "Start at `date`" >> $output_dir/log.txt
-   echo "===============" >> $output_dir/log.txt
-   echo "===============" >> $output_dir/err
-   echo "Start at `date`" >> $output_dir/err
-   echo "===============" >> $output_dir/err
-   echo "./main $config $output_dir $iev1 $iev2 $mkpdf $mktxt >> $output_dir/log.txt 2>> $output_dir/err &"
-   ./main $config $output_dir $iev1 $iev2 $mkpdf $mktxt >> $output_dir/log.txt 2>> $output_dir/err &
+   echo "===============" >> $output_dir/log-$mkpdf.txt
+   echo "Start at `date`" >> $output_dir/log-$mkpdf.txt
+   echo "===============" >> $output_dir/log-$mkpdf.txt
+   echo "===============" >> $output_dir/err-$mkpdf
+   echo "Start at `date`" >> $output_dir/err-$mkpdf
+   echo "===============" >> $output_dir/err-$mkpdf
+   echo "$TOP_DIR/main $config $output_dir $iev1 $iev2 $mkpdf $mktxt > $output_dir/log-mktxt-$mktxt.txt 2> $output_dir/err-mktxt-$mktxt &"
+   $TOP_DIR/main $config $output_dir $iev1 $iev2 $mkpdf $mktxt > $output_dir/log-mktxt-$mktxt.txt 2> $output_dir/err-mktxt-$mktxt &
 }
 
 # thre=0.02
-#run config1.txt output/run1/ 10 10 yes no # single-0%-0.02-threshold
-#run config2.txt output/run2/ 10 10 yes no # multi -0%-0.02-threshold
-#run config3.txt output/run3/ 10 10 yes no # single-10%-0.02-threshold
-#run config4.txt output/run4/ 10 10 yes no # multi -10%-0.02-threshold
-
-#run config1.txt output/run1/ 0 1999 no yes # single-0%-0.02-threshold
-#run config2.txt output/run2/ 0 1999 no yes # multi -0%-0.02-threshold
-#run config3.txt output/run3/ 0 1999 no yes # single-10%-0.02-threshold
-#run config4.txt output/run4/ 0 1999 no yes # multi -10%-0.02-threshold
+run 1 1 10 10 yes no # single-0%
+run 2 2 10 10 yes no # multi -0%
+run 3 3 10 10 yes no # single-10%
+run 4 4 10 10 yes no # multi -10%
+      
+run 5 1 0 1999 no yes # single-0%
+run 6 2 0 1999 no yes # multi -0%
+run 7 3 0 1999 no yes # single-10%
+run 8 4 0 1999 no yes # multi -10%
 
 # thre=0.01
-#run config1.txt output/run5/ 10 10 yes no # single-0%-0.01-threshold
-#run config2.txt output/run6/ 10 10 yes no # multi -0%-0.01-threshold
-#run config3.txt output/run7/ 10 10 yes no # single-10%-0.01-threshold
-#run config4.txt output/run8/ 10 10 yes no # multi -10%-0.01-threshold
+run  9 5 10 10 yes no # single-0%
+run 10 6 10 10 yes no # multi -0%
+run 11 7 10 10 yes no # single-10%
+run 12 8 10 10 yes no # multi -10%
 
-#run config1.txt output/run5/ 0 1999 no yes # single-0%-0.01-threshold
-#run config2.txt output/run6/ 0 1999 no yes # multi -0%-0.01-threshold
-#run config3.txt output/run7/ 0 1999 no yes # single-10%-0.01-threshold
-#run config4.txt output/run8/ 0 1999 no yes # multi -10%-0.01-threshold
+run 13 5 0 1999 no yes # single-0%
+run 14 6 0 1999 no yes # multi -0%
+run 15 7 0 1999 no yes # single-10%
+run 16 8 0 1999 no yes # multi -10%
 
 # thre=0.005
-#run config1.txt output/run9/  10 10 yes no # single-0%-0.005-threshold
-#run config2.txt output/run10/ 10 10 yes no # multi -0%-0.005-threshold
-#run config3.txt output/run11/ 10 10 yes no # single-10%-0.005-threshold
-#run config4.txt output/run12/ 10 10 yes no # multi -10%-0.005-threshold
+run 17  9 10 10 yes no # single-0%
+run 18 10 10 10 yes no # multi -0%
+run 19 11 10 10 yes no # single-10%
+run 20 12 10 10 yes no # multi -10%
 
-#run config1.txt output/run9/  0 1999 no yes # single-0%-0.005-threshold
-#run config2.txt output/run10/ 0 1999 no yes # multi -0%-0.005-threshold
-#run config3.txt output/run11/ 0 1999 no yes # single-10%-0.005-threshold
-#run config4.txt output/run12/ 0 1999 no yes # multi -10%-0.005-threshold
-
-# thre=0.001
-#run config1.txt output/run13/ 10 10 yes no # single-0%-0.001-threshold
-#run config2.txt output/run14/ 10 10 yes no # multi -0%-0.001-threshold
-#run config3.txt output/run15/ 10 10 yes no # single-10%-0.001-threshold
-#run config4.txt output/run16/ 10 10 yes no # multi -10%-0.001-threshold
+run 21  9 0 1999 no yes # single-0%
+run 22 10 0 1999 no yes # multi -0%
+run 23 11 0 1999 no yes # single-10%
+run 24 12 0 1999 no yes # multi -10%
 
 # thre=0.001
-run config1.txt output/run13/ 0 1999 no yes # single-0%-0.001-threshold
-run config2.txt output/run14/ 0 1999 no yes # multi -0%-0.001-threshold
-run config3.txt output/run15/ 0 1999 no yes # single-10%-0.001-threshold
-run config4.txt output/run16/ 0 1999 no yes # multi -10%-0.001-threshold
+run 25 13 10 10 yes no # single-0%
+run 26 14 10 10 yes no # multi -0%
+run 27 15 10 10 yes no # single-10%
+run 28 16 10 10 yes no # multi -10%
 
-# check pz peaks in negative pzres
-#run output/run1/config1.txt output/run1/ 0 10 yes no
+run 29 13 0 1999 no yes # single-0%
+run 30 14 0 1999 no yes # multi -0%
+run 31 15 0 1999 no yes # single-10%
+run 32 16 0 1999 no yes # multi -10%
