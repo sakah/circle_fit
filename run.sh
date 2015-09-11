@@ -26,7 +26,7 @@ run()
 #run config3.txt output/run3/ 10 10 yes no # single-10%-0.02-threshold
 #run config4.txt output/run4/ 10 10 yes no # multi -10%-0.02-threshold
 
-run config1.txt output/run1/ 0 1999 no yes # single-0%-0.02-threshold
+#run config1.txt output/run1/ 0 1999 no yes # single-0%-0.02-threshold
 #run config2.txt output/run2/ 0 1999 no yes # multi -0%-0.02-threshold
 #run config3.txt output/run3/ 0 1999 no yes # single-10%-0.02-threshold
 #run config4.txt output/run4/ 0 1999 no yes # multi -10%-0.02-threshold
@@ -60,10 +60,10 @@ run config1.txt output/run1/ 0 1999 no yes # single-0%-0.02-threshold
 #run config4.txt output/run16/ 10 10 yes no # multi -10%-0.001-threshold
 
 # thre=0.001
-#run config1.txt output/run13/ 0 1999 no yes # single-0%-0.001-threshold
-#run config2.txt output/run14/ 0 1999 no yes # multi -0%-0.001-threshold
-#run config3.txt output/run15/ 0 1999 no yes # single-10%-0.001-threshold
-#run config4.txt output/run16/ 0 1999 no yes # multi -10%-0.001-threshold
+run config1.txt output/run13/ 0 1999 no yes # single-0%-0.001-threshold
+run config2.txt output/run14/ 0 1999 no yes # multi -0%-0.001-threshold
+run config3.txt output/run15/ 0 1999 no yes # single-10%-0.001-threshold
+run config4.txt output/run16/ 0 1999 no yes # multi -10%-0.001-threshold
 
 # check pz peaks in negative pzres
 #run output/run1/config1.txt output/run1/ 0 10 yes no

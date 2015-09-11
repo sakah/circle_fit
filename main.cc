@@ -1615,8 +1615,9 @@ int main(int argc, char** argv)
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
       if (fpout!=NULL) {
-         fprintf(fpout, "%5d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
+         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
                iev, 
+               inROOT.getMaxLayerIdx(),
                hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
                hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
                hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
