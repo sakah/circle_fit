@@ -146,8 +146,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   bool debug = false;
-   //bool debug = true;
+   //bool debug = false;
+   bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -220,11 +220,11 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
 
    // Add offset_ang
    double rad0_rotate = rad0;
-   if (rad0>=ang0   && rad0<ang90)  rad0_rotate += ang360;
-   if (rad0>=ang90  && rad0<ang180) rad0_rotate += ang360;
-   if (rad0>=ang180 && rad0<ang270) rad0_rotate += ang360;
-   if (rad0>=ang270 && rad0<ang360) rad0_rotate += ang360;
-   if (debug) printf("add_offset_ang rad0_rotate %f\n", rad2deg(rad0_rotate));
+   //if (rad0>=ang0   && rad0<ang90)  rad0_rotate += ang360;
+   //if (rad0>=ang90  && rad0<ang180) rad0_rotate += ang360;
+   //if (rad0>=ang180 && rad0<ang270) rad0_rotate += ang360;
+   //if (rad0>=ang270 && rad0<ang360) rad0_rotate += ang360;
+   //if (debug) printf("add_offset_ang rad0_rotate %f\n", rad2deg(rad0_rotate));
 
    for (int ihit=0; ihit<g_nhits; ihit++) {
 
@@ -1589,12 +1589,12 @@ int main(int argc, char** argv)
       double pa_guess = 104.0;
 
       // pz_guess should be tested both positive and negative case
-      for (int isign=0; isign<2; isign++) {
+      for (int isign=0; isign<1; isign++) {
          int sign=1;
          if (isign==1) sign = -1;
          double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
          if (pz_guess==0) pz_guess = sign*0.1; // set anyway
-         //pz_guess=sign*8.0;
+         pz_guess=sign*45.0;
          double B = 1.0; // T
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_rad1_fit() - z1_fit/L_guess;
