@@ -1,62 +1,6 @@
 #include "TStyle.h"
-#include "TFile.h"
-#include "TTree.h"
 #include "TH1F.h"
 #include "TCanvas.h"
-class Run
-{
-   public:
-      Run(int irun, char* setup)
-      {
-         read_setup(irun, setup);
-
-         char* data = Form("../output/run%d/output.txt", irun);
-         read(data);
-      };
-
-      TTree *t;
-      double max_chi2;
-      char title[32];
-      char turn_type[32];
-      char noise_occupancy[32];
-      double diff_threshold;
-
-   private:
-      void read(char* txt)
-      {
-         t = new TTree("t","t");
-         t->SetMarkerStyle(20);
-         t->ReadFile(txt,"iev/I:sig1:sig1in:sig1out:in1:in1sig:in1noise:sig2:sig2in:sig2out:in2:in2sig:in2noise:num:dr/D:deg:zhit:zfit:pthit:ptfit:pzhit:pzfit:chi2");
-      };
-
-      void read_setup(int irun, char* txt)
-      {
-         FILE* fp = fopen(txt,"r");
-         if (fp==NULL) {
-            fprintf(stderr,"ERROR: faield to open setup file %s\n", txt);
-            return;
-         }
-         char line[128];
-         int run_num;
-         char type[32];
-         char noise[32];
-         double threshold;
-         double maxchi2;
-
-         while(fgets(line,sizeof(line),fp)) {
-            sscanf(line, "%d %s %s %lf %lf",&run_num,type,noise,&threshold,&maxchi2);
-            if (irun==run_num) {
-               strcpy(turn_type,type);
-               strcpy(noise_occupancy,noise);
-               diff_threshold = threshold;
-               max_chi2 = maxchi2;
-
-               sprintf(title, "Run%d/%s/%s/%5.4f", run_num,type,noise,threshold);
-            }
-         }
-         fclose(fp);
-      };
-};
 struct Plot
 {
    public:
@@ -153,43 +97,3 @@ struct Plot
          return h1;
       };
 };
-
-void thre1()
-{
-   Run run1(1, "setup.txt");
-   Run run2(2, "setup.txt");
-   Run run3(3, "setup.txt");
-   Run run4(4, "setup.txt");
-   Plot plot; plot.plot(1,run1,run2,run3,run4);
-}
-void thre2()
-{
-   Run run1(5, "setup.txt");
-   Run run2(6, "setup.txt");
-   Run run3(7, "setup.txt");
-   Run run4(8, "setup.txt");
-   Plot plot; plot.plot(2,run1,run2,run3,run4);
-}
-void thre3()
-{
-   Run run1(9,  "setup.txt");
-   Run run2(10, "setup.txt");
-   Run run3(11, "setup.txt");
-   Run run4(12, "setup.txt");
-   Plot plot; plot.plot(3,run1,run2,run3,run4);
-}
-void thre4()
-{
-   Run run1(13, "setup.txt");
-   Run run2(14, "setup.txt");
-   Run run3(15, "setup.txt");
-   Run run4(16, "setup.txt");
-   Plot plot; plot.plot(4,run1,run2,run3,run4);
-}
-void all()
-{
-   thre1();
-   thre2();
-   thre3();
-   thre4();
-}
