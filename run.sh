@@ -80,3 +80,7 @@ run 33 1 257 257 yes no
 run 34 1 128 128 yes no
 run 35 1 38 38 yes no
 run 36 1 124 124 yes no
+
+# check difference pz>0 and pz<0
+run 37 17 0 10 yes no # pz>0
+run 38 18 0 10 yes no # pz<0
