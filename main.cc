@@ -1842,15 +1842,16 @@ int main(int argc, char** argv)
             if (debug) printf("$$$$$ ilayer %d ihit %d icellM %d iturn %d", ilayer, ihit, icellM, iturn);
             int icellL2 = icellL+1; if (icellL2>=g_num_cells[ilayer]) icellL2 -= g_num_cells[ilayer];
             int icellR2 = icellR-1; if (icellL2<0) icellR = 0;
-            if (icellL2 != icellM && icellM != icellR2) {
-               if (debug) printf("--> excluded\n");
-            } else {
+//            if (icellL2 != icellM && icellM != icellR2) {
+//               if (debug) printf("--> excluded\n");
+//            } else {
                if (debug) printf("--> included\n");
                if (ilayer%2==1) circ1Clus.add_hit(ilayer, icellM, iturn, x, y);
                if (ilayer%2==0) circ2Clus.add_hit(ilayer, icellM, iturn, x, y);
-            }
+//            }
          }
       }
+
 
       /* Conformal/Hough transformation */
 
@@ -1922,6 +1923,7 @@ int main(int argc, char** argv)
          helix[isign].merge_hits(circ1, circ2);
          helix[isign].set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
          helix[isign].fit_helix();
+         printf("==fit==\n");
       }
       helix[0].print_fit_result(Form("Helix(0): iev %d", iev));
       helix[1].print_fit_result(Form("Helix(1): iev %d", iev));

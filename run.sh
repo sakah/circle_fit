@@ -81,3 +81,4 @@ run 33 1 257 257 yes no
 run 34 1 128 128 yes no
 
 run 35 1 18 18 yes no
+run 36 1 16 16 yes no
