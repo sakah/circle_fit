@@ -79,3 +79,4 @@ run 32 16 0 1999 no yes # multi -10%
 run 33 1 257 257 yes no
 run 34 1 128 128 yes no
 run 35 1 38 38 yes no
+run 36 1 124 124 yes no
