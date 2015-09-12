@@ -1076,7 +1076,7 @@ struct Helix
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag);
-      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, -1.0*TMath::Pi(), 1.0*TMath::Pi(), ierflag);
+      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, -2.0*TMath::Pi(), 2.0*TMath::Pi(), ierflag);
       minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
 
       // uset chi2
@@ -1897,14 +1897,11 @@ int main(int argc, char** argv)
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_radA_fit() - z1_fit/L_guess;
          //printf("1) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
-         //while (rad0_guess<0) {
-         //   rad0_guess += 2.0*TMath::Pi();
-         //}
-         if (rad0_guess>TMath::Pi()) {
-            rad0_guess -= 2.0*TMath::Pi();
-         }
-         if (rad0_guess<-TMath::Pi()) {
+         while (rad0_guess<-TMath::Pi()) {
             rad0_guess += 2.0*TMath::Pi();
+         }
+         while (rad0_guess>TMath::Pi()) {
+            rad0_guess -= 2.0*TMath::Pi();
          }
          //printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
          //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
