@@ -225,8 +225,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   bool debug = false;
-   //bool debug = true;
+   //bool debug = false;
+   bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];

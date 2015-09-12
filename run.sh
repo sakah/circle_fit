@@ -2,17 +2,16 @@
 
 TOP_DIR='/home/had/hideyuki/private/genfit2/KEKCC/circle_fit/'
 
+[ $# -ne 1 ] && echo "Usage $0 <job#>" && exit
+
 set_ijob=$1
-set_irun=$2
 echo "set_ijob => $set_ijob"
-echo "set_irun => $set_irun"
 
 run()
 {
    ijob=$1
    irun=$2
    #echo "ijob ${ijob}"
-   #echo "irun ${irun}"
    [ $ijob -ne $set_ijob ] && return
    output_dir=$TOP_DIR/output/run${irun}
    config=$output_dir/config.txt
@@ -79,3 +78,4 @@ run 32 16 0 1999 no yes # multi -10%
 # debug pzres tail
 run 33 1 257 257 yes no
 run 34 1 128 128 yes no
+run 35 1 38 38 yes no
