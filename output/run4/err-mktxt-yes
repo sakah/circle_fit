@@ -840,7 +840,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 405
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 406
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -1665,7 +1664,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 797
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 798
 iev 799
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
@@ -3316,7 +3314,6 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 iev 1597
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
 iev 1598
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
@@ -3824,106 +3821,6 @@ iev 1849
 iev 1850
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
-strange hit pattern. [1 0 1 0]
 iev 1851
 iev 1852
 iev 1853

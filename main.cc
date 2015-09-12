@@ -270,12 +270,20 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       double dx = (xexp-w_x)/g_xsig;
       double dy = (yexp-w_y)/g_ysig;
       chi2 += dx*dx + dy*dy;
-      if (debug) printf("ihit %d ilayer %d icell %d w_z %f w_x %f w_y %f xexp %f yexp %f dx %f dy %f rad0 %f chi2 %f\n", ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad0, chi2);
+      if (debug) printf("ihit %2d ilayer %2d icell %3d w_z %5.1f w_x %5.1f w_y %5.1f xexp %5.1f yexp %5.1f dx %5.1f dy %5.1f rad0 %5.1f (deg) rad %5.1f (deg) chi2 %5.1f\n", 
+            ihit,ilayer, icell, w_z, w_x,w_y,xexp,yexp,dx,dy, rad2deg(rad0), rad2deg(rad0+w_z/L), chi2);
 
       // update hit position for next fit
       g_xhits[ihit] = w_x;
       g_yhits[ihit] = w_y;
       g_zhits[ihit] = w_z;
+      if (ihit==0 && ilayer%2==1) {
+          g_xA_circ1 = w_x;
+          g_yA_circ1 = w_y;
+      } else if (ihit==0 && ilayer%2==0) {
+          g_xA_circ2 = w_x;
+          g_yA_circ2 = w_y;
+      }
    }
    //printf("chi2 %f\n", chi2);
    f = chi2;
@@ -528,6 +536,108 @@ struct Circle
       }
    };
 
+   int ihit_now;
+   void start_cell_taking()
+   {
+      ihit_now = 0;
+   };
+   int take_hits_until_next_layer(int ilayer, double* myxhits, double* myyhits, int* myilayer, int* myicell, int* myiturn)
+   {
+      //bool debug = true;
+      bool debug = false;
+
+      if (debug) printf("take_hits_until_next_layer: ihit_now %d\n", ihit_now);
+      int ihit2 = 0;
+      for (int ihit=ihit_now; ihit<nhits; ihit++) {
+         if (hits_ilayer[ihit]!=ilayer) {
+            ihit_now = ihit;
+            break;
+         }
+         if (debug) printf("take_hits_until_next_layer: ihit %d ilayer %d icell %d\n", ihit, hits_ilayer[ihit], hits_icell[ihit]);
+         myxhits[ihit2] = xhits[ihit];
+         myyhits[ihit2] = yhits[ihit];
+         myilayer[ihit2] = hits_ilayer[ihit];
+         myicell[ihit2] = hits_icell[ihit];
+         myiturn[ihit2] = hits_iturn[ihit];
+         ihit2++;
+      }
+      if (debug) printf("take_hits_until_next_layer: ihit2 %d\n", ihit2);
+      return ihit2;
+   };
+   int take_hits_by_half(int ilayer, double* myxhits, double* myyhits, int* myilayer, int* myicell, int* myiturn)
+   {
+      //bool debug = true;
+      bool debug = false;
+
+      int num_this_layer=0;
+      for (int ihit=ihit_now; ihit<nhits; ihit++) {
+         if (ilayer!=hits_ilayer[ihit]) {
+            break;
+         }
+         num_this_layer++;
+      }
+      int ihit_first = ihit_now;
+      int ihit_middle = ihit_now + num_this_layer/2;
+      int ihit_last = ihit_now + num_this_layer -1;
+      int ihit_forward = -1;
+      int ihit_backward = -1;
+
+      // Find spacing from ihit_mipple forward and backward
+      // forward
+      for (int ihit=ihit_middle; ihit<=ihit_last-1; ihit++) {
+         if (hits_icell[ihit] != hits_icell[ihit+1]-1) {
+            ihit_forward = ihit;
+         }
+      }
+      // backward
+      for (int ihit=ihit_middle; ihit>ihit_first; ihit--) {
+         if (hits_icell[ihit] != hits_icell[ihit-1]+1) {
+            ihit_backward = ihit-1;
+         }
+      }
+
+      //   backward   forward   ihit_copy        ihit_now
+      // -------------------------------------------------
+      //    no         no       ihit_middle      ihit_middle+1
+      //    no         yes      ihit_forward     ihit_forward+1
+      //    yes        no       ihit_backward    ihit_backward+1
+      //    yes        yes      ihit_backward    ihit_backward+1
+
+      int ihit_copy;
+      if      (ihit_backward==-1 && ihit_forward==-1) ihit_copy = ihit_middle;
+      else if (ihit_backward==-1 && ihit_forward!=-1) ihit_copy = ihit_forward;
+      else if (ihit_backward!=-1 && ihit_forward==-1) ihit_copy = ihit_backward;
+      else if (ihit_backward!=-1 && ihit_forward!=-1) ihit_copy = ihit_backward;
+
+      if (debug) {
+         printf("-------\n");
+         for (int ihit=ihit_first; ihit<=ihit_last; ihit++) {
+            printf("take_hits_by_half: ihit %d ilayer %d icell %d ", ihit, hits_ilayer[ihit], hits_icell[ihit]);
+            if (ihit==ihit_middle) printf(" <-- ihit_middle");
+            else if (ihit==ihit_forward)  printf(" <-- ihit_forward");
+            else if (ihit==ihit_backward) printf(" <-- ihit_backward");
+
+            if (ihit==ihit_copy) printf(" <= ihit_copy\n");
+            else printf("\n");
+         }
+         printf("-------\n");
+      }
+
+      int ihit2 = 0;
+      for (int ihit=ihit_now; ihit<=ihit_copy; ihit++) {
+         if (debug) printf("take_hits_by_half: ihit %d ilayer %d icell %d\n", ihit, hits_ilayer[ihit], hits_icell[ihit]);
+         myxhits[ihit2] = xhits[ihit];
+         myyhits[ihit2] = yhits[ihit];
+         myilayer[ihit2] = hits_ilayer[ihit];
+         myicell[ihit2] = hits_icell[ihit];
+         myiturn[ihit2] = hits_iturn[ihit];
+         ihit2++;
+      }
+
+      ihit_now = ihit_copy+1;
+      return ihit2;
+   };
+
    double x0_fit;
    double y0_fit;
    double R_fit;
@@ -591,19 +701,34 @@ struct Circle
       Double_t bnd1, bnd2;
       Int_t ivarbl;
 
+      // suppress output
+      arglist[0] = -1;
+      minuit->mnexcm("SET PRINT", arglist, 1, ierflag);
+
+      // suppress warning message
+      minuit->mnexcm("SET NOWarnings", arglist, 0, ierflag);
+
+      // set initial values with limits
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag); // cm
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag); // cm
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag); // cm
-      arglist[0] = 1; // use chi2
+
+      // use chi2
+      arglist[0] = 1;
       minuit->mnexcm("SET ERR", arglist, 1, ierflag);
+
+      // do minimize
       arglist[0] = 1000; // do at least 1000 function calls
       arglist[1] = 0.1;  // tolerance = 0.1
       minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
+
+      // copy fit results
       for (int i=0; i<3; i++) {
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
-         printf("i %d %f +/- %f\n", i, var[i], verr[i]);
+         //printf("i %d %f +/- %f\n", i, var[i], verr[i]);
       }
-      // Result
+
+      // chi2
       Double_t amin,edm,errdef;
       Int_t nvpar,nparx,icstat;
       minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
@@ -613,12 +738,12 @@ struct Circle
       y0_fit = var[1]; //cm
       R_fit  = var[2]; // cm
 
-      printf("R_fit %f\n", R_fit);
-      printf("pt_fit %f\n", get_pt_fit());
+      //printf("R_fit %f\n", R_fit);
+      //printf("pt_fit %f\n", get_pt_fit());
    };
    void print_fit_result(char* prefix)
    {
-      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), get_degA_fit(), get_degB_fit(), chi2);
+      printf("Fit: %s x0 %f y0 %f R %f pt %f (MeV/c) deg1 %f deg2 %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), get_degA_fit(), get_degB_fit(), chi2);
    };
    // Draw
    void draw_xy_canvas()
@@ -730,12 +855,12 @@ void remove_raw_hits(int ilayer, int icell)
 struct Helix
 {
    char name[128];
+   double radius[20];
 
    int nhits;
    double xhits[1000];
    double yhits[1000];
    double zhits[1000];
-   double radius[20];
    int hits_ilayer[1000];
    int hits_icell[1000];
    int hits_iturn[1000];
@@ -860,105 +985,35 @@ struct Helix
       int n2 = c2.nhits;
       if (debug) printf("n1 %d n2 %d\n", n1, n2);
 
-      int which_layer = 1; // 1: odd, 2: even
+      Circle* circ[2]; // 0: even, 1: odd
+      circ[0] = &c2;
+      circ[1] = &c1;
+      circ[0]->start_cell_taking();
+      circ[1]->start_cell_taking();
 
-      for (int ihit1=0, ihit2=0;;) {
-         if (debug) printf("which_layer %d ihit1 %d ihit2 %d\n", which_layer, ihit1, ihit2);
-         if (ihit1==n1-1 && ihit2==n2-1) break;
-
-         if (which_layer==1) {
-            int nhits_this_layer=0;
-            for (int ihit=ihit1; ;ihit++) {
-               if (debug) printf("c1: ihit %d n1 %d\n", ihit, n1);
-               if (ihit==n1-1) {
-                  which_layer=2;
-                  ihit1 = ihit;
-                  if (debug) printf("c1: found ihit==n1-1\n");
-                  break;
-               }
-               if (debug) printf("ihit %d c1.ilayer %d c1.icell %d\n", ihit, c1.hits_ilayer[ihit], c1.hits_icell[ihit]);
-
-               xhits[nhits] = c1.xhits[ihit];
-               yhits[nhits] = c1.yhits[ihit];
-               zhits[nhits] = 0.0; // zhits will be set afer fitting
-               hits_ilayer[nhits] = c1.hits_ilayer[ihit];
-               hits_icell[nhits]  = c1.hits_icell[ihit];
-               hits_iturn[nhits]  = c1.hits_iturn[ihit];
-               nhits++;
-
-               // Special care at outmost odd layer
-               if (c1.hits_ilayer[ihit] == g_maxLayerIdx-1) {
-                  int ilayer = c1.hits_ilayer[ihit];
-                  if (debug) printf("Special care at outmost odd layer: ihit %d num_raw_hits/2.0 %d\n", ihit, g_num_raw_hits[ilayer]/2);
-                  if (nhits_this_layer==g_num_raw_hits[ilayer]/2) {
-                     which_layer=2;
-                     ihit1 = ihit+1;
-                     if (debug) printf("----> c1: found middle point ihit %d ihit1 %d\n", ihit, ihit1);
-                     break;
-                  }
-               }
-
-               if (c1.hits_ilayer[ihit+1] != c1.hits_ilayer[ihit]) {
-                  if (debug) printf("c1: found diffrenet ilayer\n");
-                  which_layer=2;
-                  ihit1 = ihit+1;
-                  break;
-               }
-               nhits_this_layer++;
-            }
-         } else {
-            int nhits_this_layer = 0;
-            for (int ihit=ihit2; ;ihit++) {
-               if (debug) printf("c2: ihit %d n2 %d\n", ihit, n2);
-               if (ihit==n2-1) {
-                  if (debug) printf("c2: found ihit==n1-1\n");
-                  which_layer=1;
-                  ihit2 = ihit;
-                  if (debug) printf("c2: found ihit==n2-1\n");
-                  break;
-               }
-               if (debug) printf("ihit %d c2.ilayer %d c2.icell %d\n", ihit, c2.hits_ilayer[ihit], c2.hits_icell[ihit]);
-
-
-               if (debug) printf("ihit %d c2.ilayer %d c2.icell %d\n", ihit, c2.hits_ilayer[ihit], c2.hits_icell[ihit]);
-               xhits[nhits] = c2.xhits[ihit];
-               yhits[nhits] = c2.yhits[ihit];
-               zhits[nhits] = 0.0; // zhits will be set afer fitting
-               hits_ilayer[nhits] = c2.hits_ilayer[ihit];
-               hits_icell[nhits]  = c2.hits_icell[ihit];
-               hits_iturn[nhits]  = c2.hits_iturn[ihit];
-               nhits++;
-
-               // Special care at outmost even layer
-               if (c2.hits_ilayer[ihit] == g_maxLayerIdx-1) {
-                  int ilayer = c2.hits_ilayer[ihit];
-                  if (debug) printf("Special care at outmost odd layer: ihit %d num_raw_hits/2.0 %d\n", ihit, g_num_raw_hits[ilayer]/2);
-                  if (nhits_this_layer==g_num_raw_hits[ilayer]/2) {
-                     which_layer=1;
-                     ihit2 = ihit+1;
-                     if (debug) printf("----> c2: found middle point ihit %d ihit2 %d\n", ihit, ihit2);
-                     break;
-                  }
-               }
-
-               if (c2.hits_ilayer[ihit+1] != c2.hits_ilayer[ihit]) {
-                  if (debug) printf("c2: found diffrenet ilayer\n");
-                  which_layer=1;
-                  ihit2 = ihit+1;
-                  break;
-               }
-            }
-            nhits_this_layer++;
-         }
+      // start from ilayer=1 (ilayer=0 might have noise hits)
+      // first, outgoing cells
+      for (int ilayer=1; ilayer<=g_maxLayerIdx-2; ilayer++) {
+         nhits += circ[ilayer%2]->take_hits_until_next_layer(ilayer, &xhits[nhits], &yhits[nhits], &hits_ilayer[nhits], &hits_icell[nhits], &hits_iturn[nhits]);
+         if (debug) printf("take_hits: ilayer %d nhits %d\n", ilayer, nhits);
       }
+      // second, top-1 cells
+      nhits += circ[(g_maxLayerIdx-1)%2]->take_hits_by_half(g_maxLayerIdx-1, &xhits[nhits], &yhits[nhits], &hits_ilayer[nhits], &hits_icell[nhits], &hits_iturn[nhits]);
+      if (debug) printf("take_hits: ilayer %d nhits %d (maxLayer - 1)\n", g_maxLayerIdx-1, nhits);
+      // finally, top and ingoing cells
+      for (int ilayer=g_maxLayerIdx; ilayer>=1; ilayer--) {
+         nhits += circ[ilayer%2]->take_hits_until_next_layer(ilayer, &xhits[nhits], &yhits[nhits], &hits_ilayer[nhits], &hits_icell[nhits], &hits_iturn[nhits]);
+         if (debug) printf("take_hits: ilayer %d nhits %d\n", ilayer, nhits);
+      }
+
       if (debug) {
          for (int ihit=0; ihit<nhits; ihit++) {
-            double x = xhits[ihit];
-            double y = yhits[ihit];
             int ilayer = hits_ilayer[ihit];
             int icell = hits_icell[ihit];
             int iturn = hits_iturn[ihit];
-            printf("Helix::add_hits: ihit %d x %f y %f ilayer %d icell %d iturn %d\n", ihit, x, y, ilayer, icell, iturn);
+            double x = xhits[ihit];
+            double y = yhits[ihit];
+            printf("Helix::add_hits: ihit %d ilayer %d icell %d iturn %d x %f y %f\n", ihit, ilayer, icell, iturn, x, y);
          }
       }
    };
@@ -1010,20 +1065,33 @@ struct Helix
       Double_t bnd1, bnd2;
       Int_t ivarbl;
 
+      // suppress output
+      arglist[0] = -1; 
+      minuit->mnexcm("SET PRINT", arglist, 1, ierflag);
+
+      // suppress warning message
+      minuit->mnexcm("SET NOWarnings", arglist, 0, ierflag);
+
+      // set initial values with limits
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag);
-      //minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 2.0*TMath::Pi(), ierflag);
       minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 0, ierflag);
       minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
-      arglist[0] = 1; // use chi2
+
+      // uset chi2
+      arglist[0] = 1;
       minuit->mnexcm("SET ERR", arglist, 1, ierflag);
+
+      // do minimize
       arglist[0] = 1000; // do at least 1000 function calls
       arglist[1] = 0.1;  // tolerance = 0.1
       minuit->mnexcm("MIGRAD", arglist, 2, ierflag);
+
+      // copy fit results
       for (int i=0; i<5; i++) {
          minuit->mnpout(i, Tag[i], var[i], verr[i], bnd1, bnd2, ivarbl);
-         printf("i %d %f +/- %f\n", i, var[i], verr[i]);
+         //printf("i %d %f +/- %f\n", i, var[i], verr[i]);
       }
       x0_fit = var[0]; //cm
       y0_fit = var[1]; //cm
@@ -1031,7 +1099,7 @@ struct Helix
       rad0_fit  = var[3]; // rad
       L_fit  = var[4]; // cm
 
-      // Result
+      // chi2
       Double_t amin,edm,errdef;
       Int_t nvpar,nparx,icstat;
       minuit->mnstat(amin,edm,errdef,nvpar,nparx,icstat);
@@ -1042,12 +1110,12 @@ struct Helix
          yhits[ihit] = g_yhits[ihit];
          zhits[ihit] = g_zhits[ihit];
       }
-      printf("R_fit %f pt_fit %f\n", R_fit, get_pt_fit());
-      printf("L_fit %f pz_fit %f\n", L_fit, get_pz_fit());
+
+      //printf("fit_result: x0 %5.1f y0 %5.1f R %5.1f rad %5.1f L %5.1f pt %5.1f pz %5.1f\n", x0_fit, y0_fit, R_fit, rad_fit, L_fit, get_pt_fit(), get_pz_fitt());
    };
    void print_fit_result(char* prefix)
    {
-      printf("%s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f L %f pz %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad0_fit, L_fit, get_pz_fit(), chi2);
+      printf("Fit: %s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f (deg) L %f pz %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad2deg(rad0_fit), L_fit, get_pz_fit(), chi2);
    };
 
    // Draw
@@ -1459,37 +1527,37 @@ struct Hough
 
 // Stats information will be written in text file.
 /*
-struct Stats
-{
+   struct Stats
+   {
    int num_signal_inside;
    int num_signal_outside;
    TH1F* h1_ratio_signal_inside;
    TH1F* h1_ratio_signal_outside;
    Stats()
    {
-      num_signal_inside = 0;
-      num_signal_outside = 0;
-      h1_ratio_signal_inside = new TH1F("h1_ratio_signal_inside","", 100, 0, 1);
-      h1_ratio_signal_outside = new TH1F("h1_ratio_signal_outside","", 100, 0, 1);
+   num_signal_inside = 0;
+   num_signal_outside = 0;
+   h1_ratio_signal_inside = new TH1F("h1_ratio_signal_inside","", 100, 0, 1);
+   h1_ratio_signal_outside = new TH1F("h1_ratio_signal_outside","", 100, 0, 1);
    };
    void set_num_signal_inside(int num) { num_signal_inside = num; };
    void set_num_signal_outside(int num) { num_signal_outside = num; };
    void fill()
    {
-      int num_signal = num_signal_inside + num_signal_outside;
-      h1_ratio_signal_inside -> Fill((double)num_signal_inside/num_signal);
-      h1_ratio_signal_outside -> Fill((double)num_signal_outside/num_signal);
+   int num_signal = num_signal_inside + num_signal_outside;
+   h1_ratio_signal_inside -> Fill((double)num_signal_inside/num_signal);
+   h1_ratio_signal_outside -> Fill((double)num_signal_outside/num_signal);
    };
    void draw_hist_ratio_signal_inside()
    {
-      h1_ratio_signal_inside->Draw();
+   h1_ratio_signal_inside->Draw();
    };
    void draw_hist_ratio_signal_outside()
    {
-      h1_ratio_signal_outside->Draw();
+   h1_ratio_signal_outside->Draw();
    };
-};
-*/
+   };
+ */
 
 struct Config
 {
@@ -1843,8 +1911,10 @@ int main(int argc, char** argv)
          helix[isign].merge_hits(circ1, circ2);
          helix[isign].set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
          helix[isign].fit_helix();
-         helix[isign].print_fit_result(Form("Helix(%2d): iev %d", isign, iev));
       }
+      helix[0].print_fit_result(Form("Helix(0): iev %d", iev));
+      helix[1].print_fit_result(Form("Helix(1): iev %d", iev));
+
       int imin = 0;
       if (helix[1].chi2 < helix[0].chi2) imin = 1;
 
