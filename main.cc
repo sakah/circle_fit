@@ -1260,8 +1260,8 @@ struct TwoCircle
    double dy;
    double dr;
    double deg;
-   double deg1;
-   double deg2;
+   double deg1; // angle between O and (x0,y0)@circ1
+   double deg2; // angle between O and (x0,y0)@circ2
    void calc(Circle& c1, Circle& c2)
    {
       dx = c2.x0_fit - c1.x0_fit;
@@ -1269,8 +1269,8 @@ struct TwoCircle
       dr = TMath::Sqrt(dx*dx+dy*dy);
       double theta = TMath::ATan2(dy, dx);
       deg = theta/TMath::Pi()*180.0;
-      deg1 = c1.get_degA_fit();
-      deg2 = c2.get_degA_fit();
+      deg1 = TMath::ATan2(c1.y0_fit, c1.x0_fit);
+      deg2 = TMath::ATan2(c2.y0_fit, c2.x0_fit);
    };
    void print()
    {
@@ -1910,8 +1910,8 @@ int main(int argc, char** argv)
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
-      //fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
-      //fflush(fpout);
+      fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
+      fflush(fpout);
 
       /* Sort cells */
       // Before going to 3d helical fitting, first cells should be sorted in correct way.
