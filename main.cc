@@ -225,8 +225,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   //bool debug = false;
-   bool debug = true;
+   bool debug = false;
+   //bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -258,6 +258,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
    for (int ihit=0; ihit<g_nhits; ihit++) {
       // By choosing correct rad0, there should not be gap along trajectory.
       double drad = rad_rotate[ihit] - rad0;
+      if (drad>2.0*TMath::Pi()) drad -= 2.0*TMath::Pi();
       double w_z = drad*L;
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
@@ -903,6 +904,16 @@ struct Helix
       double pz = 3.0*B*L_fit; // MeV/c
       return pz;
    };
+   double get_rad_fit(int ihit)
+   {
+      double dx = xhits[ihit] - x0_fit;
+      double dy = yhits[ihit] - y0_fit;
+      return TMath::ATan2(dy,dx);
+   };
+   double get_z1_fit()
+   {
+      return (get_rad_fit(0) - rad0_fit)*L_fit;
+   };
    Helix()
    {
       nhits = 0;
@@ -1076,7 +1087,7 @@ struct Helix
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag);
-      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, -2.0*TMath::Pi(), 2.0*TMath::Pi(), ierflag);
+      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 2.0*TMath::Pi(), ierflag);
       minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
 
       // uset chi2
@@ -1897,10 +1908,10 @@ int main(int argc, char** argv)
          double L_guess = pz_guess/(3.0*B);
          double rad0_guess = circ1.get_radA_fit() - z1_fit/L_guess;
          //printf("1) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
-         while (rad0_guess<-TMath::Pi()) {
+         while (rad0_guess<0) {
             rad0_guess += 2.0*TMath::Pi();
          }
-         while (rad0_guess>TMath::Pi()) {
+         while (rad0_guess>2.0*TMath::Pi()) {
             rad0_guess -= 2.0*TMath::Pi();
          }
          printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
@@ -1933,13 +1944,13 @@ int main(int argc, char** argv)
                hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
                hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
                hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
-               helix[imin].nhits, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].rad0_fit,helix[imin].chi2,
+               helix[imin].nhits, tc.dr, tc.deg, mc_z, helix[imin].get_z1_fit(), mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].rad0_fit,helix[imin].chi2,
                helix[imin].rad0_ini);
          fflush(fpout);
       }
 
-      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
-            iev, tc.dr, tc.deg, mc_z, z1_fit, mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2);
+      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f rad0_fit %f\n", 
+            iev, tc.dr, tc.deg, mc_z, helix[imin].get_z1_fit(), mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2, helix[imin].rad0_fit);
 
       if (config.make_pdf) {
          TCanvas* c1 = new TCanvas("c1","",3000,7000);
