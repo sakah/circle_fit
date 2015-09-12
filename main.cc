@@ -1910,7 +1910,7 @@ int main(int argc, char** argv)
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
-      fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
+      fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %10.5f %10.5f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
       fflush(fpout);
 
       /* Sort cells */
