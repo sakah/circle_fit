@@ -1900,9 +1900,12 @@ int main(int argc, char** argv)
          //while (rad0_guess<0) {
          //   rad0_guess += 2.0*TMath::Pi();
          //}
-         //if (rad0_guess>2.0*TMath::Pi()) {
-         //   rad0_guess -= 2.0*TMath::Pi();
-         //}
+         if (rad0_guess>TMath::Pi()) {
+            rad0_guess -= 2.0*TMath::Pi();
+         }
+         if (rad0_guess<-TMath::Pi()) {
+            rad0_guess += 2.0*TMath::Pi();
+         }
          //printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
          //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
