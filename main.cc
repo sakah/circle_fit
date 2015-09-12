@@ -264,7 +264,7 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
 
       double drad = rad_rotate[ihit] - rad_prev;
       rad_prev = rad_rotate[ihit];
-//      if (drad<0) chi2 += 10000;
+      if (drad<0) chi2 += 10000;
 
       int ilayer = g_hits_ilayer[ihit];
       int icell = g_hits_icell[ihit];
