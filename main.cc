@@ -223,10 +223,11 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
    return region_hit[0]==a && region_hit[1]==b && region_hit[2]==c && region_hit[3]==d;
 }
 
+int g_wrong_order;
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   //bool debug = false;
-   bool debug = true;
+   bool debug = false;
+   //bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -254,10 +255,17 @@ void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t ifla
       rad_rotate[ihit] = rad;
    }
 
+   g_wrong_order = 0;
+   double drad_prev = rad_rotate[0] - rad0;
    // Calc x,y position using current parameters
    for (int ihit=0; ihit<g_nhits; ihit++) {
       // By choosing correct rad0, there should not be gap along trajectory.
       double drad = rad_rotate[ihit] - rad0;
+      double ddrad = drad - drad_prev;
+      if (ddrad<0) {
+         g_wrong_order = 1;
+      }
+      drad_prev = drad;
       if (drad>2.0*TMath::Pi()) drad -= 2.0*TMath::Pi();
       double w_z = drad*L;
       int ilayer = g_hits_ilayer[ihit];
@@ -888,6 +896,8 @@ struct Helix
    double rad0_step;
    double L_step;
 
+   int wrong_order; // flag to check cell angle increment  (should be ascending order)
+
    double get_pt_fit()
    { 
       // p (GeV) = 0.3 * B (T) * R (m)
@@ -1121,6 +1131,7 @@ struct Helix
          yhits[ihit] = g_yhits[ihit];
          zhits[ihit] = g_zhits[ihit];
       }
+      wrong_order = g_wrong_order;
 
       //printf("fit_result: x0 %5.1f y0 %5.1f R %5.1f rad %5.1f L %5.1f pt %5.1f pz %5.1f\n", x0_fit, y0_fit, R_fit, rad_fit, L_fit, get_pt_fit(), get_pz_fitt());
    };
@@ -1939,7 +1950,7 @@ int main(int argc, char** argv)
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
       if (fpout!=NULL) {
-         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
+         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %d\n", 
                iev, 
                g_maxLayerIdx,
                hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
@@ -1947,7 +1958,7 @@ int main(int argc, char** argv)
                hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
                hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
                helix[imin].nhits, tc.dr, tc.deg, mc_z, helix[imin].get_z1_fit(), mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].rad0_fit,helix[imin].chi2,
-               helix[imin].rad0_ini);
+               helix[imin].rad0_ini, helix[imin].wrong_order);
          fflush(fpout);
       }
 
