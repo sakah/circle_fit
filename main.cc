@@ -1076,7 +1076,7 @@ struct Helix
       minuit->mnparm(0, "x0", x0_ini, x0_step, 0, 0, ierflag);
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag);
-      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 0, ierflag);
+      minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 2.0*TMath::Pi(), ierflag);
       minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
 
       // uset chi2
