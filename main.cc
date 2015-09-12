@@ -1910,8 +1910,8 @@ int main(int argc, char** argv)
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
-      fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
-      fflush(fpout);
+      //fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
+      //fflush(fpout);
 
       /* Sort cells */
       // Before going to 3d helical fitting, first cells should be sorted in correct way.
@@ -1924,9 +1924,7 @@ int main(int argc, char** argv)
       circ2.sort_cells();
 
 
-      // skip fitting
-      continue;
-
+#if 0
       double z1_fit = estimate_z1(tc.dr);
       double pa_guess = 104.0;
 
@@ -2003,6 +2001,7 @@ int main(int argc, char** argv)
 
       fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f\n", 
             iev, tc.dr, tc.deg, mc_z, min_helix.get_z1_fit(), mc_pt, min_helix.get_pt_fit(), mc_pz, min_helix.get_pz_fit(), min_helix.chi2);
+#endif
 
       if (config.make_pdf) {
          TCanvas* c1 = new TCanvas("c1","",3000,7000);
@@ -2026,9 +2025,9 @@ int main(int argc, char** argv)
          c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
          c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
          c1->cd(j++); circ3.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
-         c1->cd(j++); min_helix.draw_xy_canvas(); min_helix.draw_xy_hits_fits();
-         c1->cd(j++); min_helix.draw_xz_canvas(); min_helix.draw_xz_hits_fits();
-         c1->cd(j++); min_helix.draw_yz_canvas(); min_helix.draw_yz_hits_fits();
+//         c1->cd(j++); min_helix.draw_xy_canvas(); min_helix.draw_xy_hits_fits();
+//         c1->cd(j++); min_helix.draw_xz_canvas(); min_helix.draw_xz_hits_fits();
+//         c1->cd(j++); min_helix.draw_yz_canvas(); min_helix.draw_yz_hits_fits();
          c1->Print(Form("%s/pdf/%05d.pdf", config.output_dir, iev));
       }
    }

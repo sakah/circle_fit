@@ -10,6 +10,176 @@ InputROOT end
 iev 0
 Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00000.pdf has been created
+iev 1
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00001.pdf has been created
+iev 2
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00002.pdf has been created
+iev 3
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00003.pdf has been created
+iev 4
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00004.pdf has been created
+iev 5
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00005.pdf has been created
+iev 6
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00006.pdf has been created
+iev 7
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00007.pdf has been created
+iev 8
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00008.pdf has been created
+iev 9
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00009.pdf has been created
+iev 10
+Warning in <TFile::Append>: Replacing existing TH1: h2ab (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak).
+Warning in <TCanvas::Constructor>: Deleting canvas with same name: c1
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: hframe (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak).
+Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run17/pdf/00010.pdf has been created
 
  *** Break *** segmentation violation
 
@@ -19,16 +189,17 @@ Warning in <TFile::Append>: Replacing existing TH1: hdiff (Potential memory leak
 There was a crash.
 This is the entire stack trace of all threads:
 ===========================================================
-#0  0x00002b3e977b4dd5 in waitpid () from /lib64/libc.so.6
-#1  0x00002b3e977574a1 in do_system () from /lib64/libc.so.6
-#2  0x00002b3e9263e902 in TUnixSystem::StackTrace() ()
+#0  0x00002ba699faedd5 in waitpid () from /lib64/libc.so.6
+#1  0x00002ba699f514a1 in do_system () from /lib64/libc.so.6
+#2  0x00002ba694e38902 in TUnixSystem::StackTrace() ()
    from /home/had/hideyuki/private/sw/root/lib/libCore.so
-#3  0x00002b3e9263b30a in TUnixSystem::DispatchSignals(ESignals) ()
+#3  0x00002ba694e3530a in TUnixSystem::DispatchSignals(ESignals) ()
    from /home/had/hideyuki/private/sw/root/lib/libCore.so
 #4  <signal handler called>
-#5  0x00002b3e9775d899 in vfprintf () from /lib64/libc.so.6
-#6  0x00002b3e97767c68 in fprintf () from /lib64/libc.so.6
-#7  0x000000000042118b in main ()
+#5  0x00002ba699f74c17 in fclose
+
+GLIBC_2.2.5 () from /lib64/libc.so.6
+#6  0x0000000000421821 in main ()
 ===========================================================
 
 
@@ -38,9 +209,10 @@ http://root.cern.ch/bugs. Please post the ENTIRE stack trace
 from above as an attachment in addition to anything else
 that might help us fixing this issue.
 ===========================================================
-#5  0x00002b3e9775d899 in vfprintf () from /lib64/libc.so.6
-#6  0x00002b3e97767c68 in fprintf () from /lib64/libc.so.6
-#7  0x000000000042118b in main ()
+#5  0x00002ba699f74c17 in fclose
+
+GLIBC_2.2.5 () from /lib64/libc.so.6
+#6  0x0000000000421821 in main ()
 ===========================================================
 
 
