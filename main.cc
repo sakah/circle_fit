@@ -225,8 +225,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   bool debug = false;
-   //bool debug = true;
+   //bool debug = false;
+   bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -1903,7 +1903,7 @@ int main(int argc, char** argv)
          while (rad0_guess>TMath::Pi()) {
             rad0_guess -= 2.0*TMath::Pi();
          }
-         //printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
+         printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
          //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
