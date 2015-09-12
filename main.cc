@@ -1256,19 +1256,25 @@ struct Helix
 
 struct TwoCircle
 {
+   double dx;
+   double dy;
    double dr;
    double deg;
+   double deg1;
+   double deg2;
    void calc(Circle& c1, Circle& c2)
    {
-      double dx = c2.x0_fit - c1.x0_fit;
-      double dy = c2.y0_fit - c1.y0_fit;
+      dx = c2.x0_fit - c1.x0_fit;
+      dy = c2.y0_fit - c1.y0_fit;
       dr = TMath::Sqrt(dx*dx+dy*dy);
       double theta = TMath::ATan2(dy, dx);
       deg = theta/TMath::Pi()*180.0;
+      deg1 = c1.get_degA_fit();
+      deg2 = c2.get_degA_fit();
    };
    void print()
    {
-      printf("dr %f deg %f\n", dr, deg);
+      printf("dx %f dy %f dr %f deg %f\n", dx, dy, dr, deg);
    };
 };
 
@@ -1897,6 +1903,16 @@ int main(int argc, char** argv)
       tc.calc(circ1, circ2);
       tc.print();
 
+      TVector3 mcPos;
+      TVector3 mcMom;
+      inROOT.getPosMom(0, mcPos, mcMom);
+      double mc_z  = mcPos.Z();
+      double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
+      double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
+
+      fprintf(fpout, "%5d %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f %7.1f\n", iev, mc_z, mc_pt, mc_pz, tc.dx, tc.dy, tc.dr, tc.deg1, tc.deg2);
+      fflush(fpout);
+
       /* Sort cells */
       // Before going to 3d helical fitting, first cells should be sorted in correct way.
       // Order of cell is very important in helical fitting because zpos are calculated assuming
@@ -1907,6 +1923,9 @@ int main(int argc, char** argv)
       circ1.sort_cells();
       circ2.sort_cells();
 
+
+      // skip fitting
+      continue;
 
       double z1_fit = estimate_z1(tc.dr);
       double pa_guess = 104.0;
@@ -1970,22 +1989,15 @@ int main(int argc, char** argv)
       }
       Helix& min_helix = helix[min_isign][min_icirc];
 
-      TVector3 mcPos;
-      TVector3 mcMom;
-      inROOT.getPosMom(0, mcPos, mcMom);
-      double mc_z  = mcPos.Z();
-      double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
-      double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
-
       if (fpout!=NULL) {
-         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
+         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f\n", 
                iev, 
                g_maxLayerIdx,
                hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
                hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
                hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
                hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
-               min_helix.nhits, tc.dr, tc.deg, mc_z, min_helix.get_z1_fit(), mc_pt, min_helix.get_pt_fit(), mc_pz, min_helix.get_pz_fit(), min_helix.rad0_fit,min_helix.chi2);
+               min_helix.nhits, mc_z, min_helix.get_z1_fit(), mc_pt, min_helix.get_pt_fit(), mc_pz, min_helix.get_pz_fit(), min_helix.rad0_fit,min_helix.chi2);
          fflush(fpout);
       }
 
