@@ -1703,6 +1703,7 @@ int main(int argc, char** argv)
    //int total = inROOT.getEntries();
    //int total = 100;
 
+
    double w_x1;
    double w_y1;
    double w_z1;
@@ -1965,8 +1966,8 @@ int main(int argc, char** argv)
             iev, tc.dr, tc.deg, mc_z, helix[imin].get_z1_fit(), mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2, helix[imin].rad0_fit);
 
       if (config.make_pdf) {
-         TCanvas* c1 = new TCanvas("c1","",3000,7000);
-         c1->Divide(3,7);
+         TCanvas* c1 = new TCanvas("c1","",3000,8000);
+         c1->Divide(3,8);
          int j=1;
          c1->cd(j++); circ1Raw.draw_xy_canvas(); circ1Raw.draw_xy_hits_fits();
          c1->cd(j++); circ2Raw.draw_xy_canvas(); circ2Raw.draw_xy_hits_fits();
@@ -1986,9 +1987,12 @@ int main(int argc, char** argv)
          c1->cd(j++); circ1.draw_xy_canvas(); circ1.draw_xy_hits_fits();
          c1->cd(j++); circ2.draw_xy_canvas(); circ2.draw_xy_hits_fits();
          c1->cd(j++); circ3.draw_xy_canvas(); circ1.draw_xy_hits_fits(); circ2.draw_xy_hits_fits();
-         c1->cd(j++); helix[imin].draw_xy_canvas(); helix[imin].draw_xy_hits_fits();
-         c1->cd(j++); helix[imin].draw_xz_canvas(); helix[imin].draw_xz_hits_fits();
-         c1->cd(j++); helix[imin].draw_yz_canvas(); helix[imin].draw_yz_hits_fits();
+         c1->cd(j++); helix[0].draw_xy_canvas(); helix[0].draw_xy_hits_fits();
+         c1->cd(j++); helix[0].draw_xz_canvas(); helix[0].draw_xz_hits_fits();
+         c1->cd(j++); helix[0].draw_yz_canvas(); helix[0].draw_yz_hits_fits();
+         c1->cd(j++); helix[1].draw_xy_canvas(); helix[1].draw_xy_hits_fits();
+         c1->cd(j++); helix[1].draw_xz_canvas(); helix[1].draw_xz_hits_fits();
+         c1->cd(j++); helix[1].draw_yz_canvas(); helix[1].draw_yz_hits_fits();
          c1->Print(Form("%s/pdf/%05d.pdf", config.output_dir, iev));
       }
    }
