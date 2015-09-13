@@ -226,8 +226,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 int g_wrong_order;
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   //bool debug = false;
-   bool debug = true;
+   bool debug = false;
+   //bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -1926,7 +1926,7 @@ int main(int argc, char** argv)
          while (rad0_guess>2.0*TMath::Pi()) {
             rad0_guess -= 2.0*TMath::Pi();
          }
-         printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
+         if (debug) printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
          //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
@@ -1934,7 +1934,7 @@ int main(int argc, char** argv)
          helix[isign].merge_hits(circ1, circ2);
          helix[isign].set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
          helix[isign].fit_helix();
-         printf("==fit==\n");
+         if (debug) printf("==fit==\n");
       }
       helix[0].print_fit_result(Form("Helix(0): iev %d", iev));
       helix[1].print_fit_result(Form("Helix(1): iev %d", iev));
