@@ -226,8 +226,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 int g_wrong_order;
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   bool debug = false;
-   //bool debug = true;
+   //bool debug = false;
+   bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -1853,16 +1853,15 @@ int main(int argc, char** argv)
             if (debug) printf("$$$$$ ilayer %d ihit %d icellM %d iturn %d", ilayer, ihit, icellM, iturn);
             int icellL2 = icellL+1; if (icellL2>=g_num_cells[ilayer]) icellL2 -= g_num_cells[ilayer];
             int icellR2 = icellR-1; if (icellL2<0) icellR = 0;
-//            if (icellL2 != icellM && icellM != icellR2) {
-//               if (debug) printf("--> excluded\n");
-//            } else {
+            if (icellL2 != icellM && icellM != icellR2) {
+               if (debug) printf("--> excluded\n");
+            } else {
                if (debug) printf("--> included\n");
                if (ilayer%2==1) circ1Clus.add_hit(ilayer, icellM, iturn, x, y);
                if (ilayer%2==0) circ2Clus.add_hit(ilayer, icellM, iturn, x, y);
-//            }
+            }
          }
       }
-
 
       /* Conformal/Hough transformation */
 
