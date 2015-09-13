@@ -1057,7 +1057,7 @@ struct Helix
       R_ini = R;
       rad0_ini = rad0;
       L_ini = L;
-      printf("set_fit_inipar: x0 %f y0 %f R %f rad0 %f (deg) L %f\n",x0,y0,R,rad2deg(rad0),L );
+      printf("set_fit_inipar:          x0 %7.3f y0 %7.3f R %7.3f rad0 %7.3f (deg) L %7.3f\n",x0,y0,R,rad2deg(rad0),L );
 
       x0_step = 1;
       y0_step = 1;
@@ -1137,7 +1137,8 @@ struct Helix
    };
    void print_fit_result(char* prefix)
    {
-      printf("Fit: %s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f (deg) L %f z1 %f pz %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad2deg(rad0_fit), L_fit, get_z1_fit(), get_pz_fit(), chi2);
+      printf("Fit: %s x0 %7.3f y0 %7.3f R %7.3f rad0 %7.3f (deg) L %7.3f z1 %7.3f (cm) pt %7.3f (MeV/c) pz %7.3f (MeV/c) chi2 %7.3f\n", 
+            prefix, x0_fit, y0_fit, R_fit, rad2deg(rad0_fit), L_fit, get_z1_fit(), get_pt_fit(), get_pz_fit(), chi2);
    };
 
    // Draw
@@ -1906,38 +1907,40 @@ int main(int argc, char** argv)
 //      circ2.sort_cells();
 
 
-      double z1_fit = estimate_z1(tc.dr);
-      double pa_guess = 104.0;
+      double B = 1.0; // T
+      double x0_ini = circ1.x0_fit;
+      double y0_ini = circ1.y0_fit;
+      double  R_ini = circ1.R_fit;
+      double z1_ini = estimate_z1(tc.dr);
+      double rad0_ini;
+      double L_ini;
+      double pa_ini = 104.0;
+      double pt_ini = 3.0*B*R_ini;
+      double pz_ini;
 
       // pz_guess should be tested both positive and negative case
       for (int isign=0; isign<2; isign++) {
          int sign=1;
          if (isign==1) sign = -1;
-         double pz_guess = sign*sqrt2minus(pa_guess, circ1.get_pt_fit()); // assume positive
-         if (pz_guess==0) pz_guess = sign*0.1; // set anyway
-         //pz_guess=sign*45.0;
-         double B = 1.0; // T
-         double L_guess = pz_guess/(3.0*B);
-         double rad0_guess = circ1.get_radA_fit() - z1_fit/L_guess;
-         //printf("1) L_guess %f rad0_guess %f\n", L_guess, rad0_guess);
-         while (rad0_guess<0) {
-            rad0_guess += 2.0*TMath::Pi();
+         pz_ini = sign*sqrt2minus(pa_ini, circ1.get_pt_fit()); // assume positive
+         if (pz_ini==0) pz_ini = sign*0.1; // set anyway
+         //pz_ini=sign*45.0;
+         L_ini = pz_ini/(3.0*B);
+         rad0_ini = circ1.get_radA_fit() - z1_ini/L_ini;
+         while (rad0_ini<0) {
+            rad0_ini += 2.0*TMath::Pi();
          }
-         while (rad0_guess>2.0*TMath::Pi()) {
-            rad0_guess -= 2.0*TMath::Pi();
+         while (rad0_ini>2.0*TMath::Pi()) {
+            rad0_ini -= 2.0*TMath::Pi();
          }
-         if (debug) printf("2) L_guess %f rad0_guess %f (deg)\n", L_guess, rad2deg(rad0_guess));
-         //printf("sign %d z1_fit %f pz_guess %f L_guess %f rad0_guess %f (deg)\n", sign, z1_fit, pz_guess, L_guess, rad0_guess/TMath::Pi()*180.0);
 
          helix[isign].clear();
          helix[isign].set_xypos_AB(circ1, circ2);
          helix[isign].merge_hits(circ1, circ2);
-         helix[isign].set_fit_inipar(circ1.x0_fit, circ1.y0_fit, circ1.R_fit, rad0_guess, L_guess);
+         helix[isign].set_fit_inipar(x0_ini, y0_ini, R_ini, rad0_ini, L_ini);
          helix[isign].fit_helix();
          if (debug) printf("==fit==\n");
       }
-      helix[0].print_fit_result(Form("Helix(0): iev %d", iev));
-      helix[1].print_fit_result(Form("Helix(1): iev %d", iev));
 
       int imin = 0;
       if (helix[1].chi2 < helix[0].chi2) imin = 1;
@@ -1945,25 +1948,40 @@ int main(int argc, char** argv)
       TVector3 mcPos;
       TVector3 mcMom;
       inROOT.getPosMom(0, mcPos, mcMom);
-      double mc_z  = mcPos.Z();
+      double mc_z1 = mcPos.Z();
       double mc_pt = sqrt2(mcMom.X(), mcMom.Y())*1e3; // GeV -> MeV
       double mc_pz = mcMom.Z()*1e3; // GeV -> MeV
 
       if (fpout!=NULL) {
-         fprintf(fpout, "%5d %2d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %7.2f %d\n", 
+         fprintf(fpout,"%5d %2d %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %7.3f %7.3f %7.3f %7.3f %d %d %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f %7.3f\n",
                iev, 
                g_maxLayerIdx,
+               // Circ1,2
+               circ1.x0_fit, circ1.y0_fit, circ1.R_fit,
+               circ2.x0_fit, circ2.y0_fit, circ2.R_fit,
+               // Hough
                hough1.num_signal, hough1.num_signal_inside, hough1.num_signal_outside,
                hough1.num_inside, hough1.num_inside_signal, hough1.num_inside_noise,
                hough2.num_signal, hough2.num_signal_inside, hough2.num_signal_outside, 
                hough2.num_inside, hough2.num_inside_signal, hough2.num_inside_noise,
-               helix[imin].nhits, tc.dr, tc.deg, mc_z, helix[imin].get_z1_fit(), mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].rad0_fit,helix[imin].chi2,
-               helix[imin].rad0_ini, helix[imin].wrong_order);
+               // TwoCircle
+               tc.dr,
+               // MC
+               mc_z1, mc_pt, mc_pz,
+               // Helix
+               imin,
+               helix[0].nhits, helix[0].x0_ini, helix[0].y0_ini, helix[0].R_ini, 
+               helix[0].rad0_ini, helix[0].L_ini,
+               helix[1].rad0_ini, helix[1].L_ini,
+               helix[0].chi2, helix[0].x0_fit, helix[0].y0_fit, helix[0].R_fit, helix[0].rad0_fit, helix[0].L_fit, helix[0].get_z1_fit(), helix[0].get_pt_fit(), helix[0].get_pz_fit(),
+               helix[1].chi2, helix[1].x0_fit, helix[1].y0_fit, helix[1].R_fit, helix[1].rad0_fit, helix[1].L_fit, helix[1].get_z1_fit(), helix[1].get_pt_fit(), helix[1].get_pz_fit());
+
          fflush(fpout);
       }
 
-      fprintf(stdout, "## iev %5d tc.dr %f tc.deg %f mc_z %f z1_fit %f mc_pt %f helix.pt_fit %f mc_pz %f helix.pz_fit %f helix.chi2 %f rad0_fit %f\n", 
-            iev, tc.dr, tc.deg, mc_z, helix[imin].get_z1_fit(), mc_pt, helix[imin].get_pt_fit(), mc_pz, helix[imin].get_pz_fit(), helix[imin].chi2, helix[imin].rad0_fit);
+      printf("MC:                                                                                   z1 %7.3f (cm) pt %7.3f (MeV/c) pz %7.3f (MeV/c)\n", mc_z1, mc_pt, mc_pz);
+      helix[0].print_fit_result(Form("Helix(pz>0): iev %d", iev));
+      helix[1].print_fit_result(Form("Helix(pz<0): iev %d", iev));
 
       if (config.make_pdf) {
          TCanvas* c1 = new TCanvas("c1","",3000,9000);

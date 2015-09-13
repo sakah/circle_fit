@@ -34,7 +34,7 @@ class Run
       {
          t = new TTree("t","t");
          t->SetMarkerStyle(20);
-         t->ReadFile(txt,"iev/I:maxLayer:sig1:sig1in:sig1out:in1:in1sig:in1noise:sig2:sig2in:sig2out:in2:in2sig:in2noise:num:dr/D:deg:zhit:zfit:pthit:ptfit:pzhit:pzfit:rad0:chi2:rad0_ini:order/I");
+         t->ReadFile(txt,"iev/I:maxLayer:x01/D:y01:R1:x02/D:y02:R2:nsig_odd/I:nsigin_odd:nsigout_odd:nin_odd:ninsig_odd:ninnoise_odd:nsig_even/I:nsigin_even:nsigout_even:nin_even:nin_even:ninnoise_even:dr/D:mcz1:mcpt:mcpz:imin/I:nhits:x0ini/D:y0ini:Rini:rad0iniodd:Liniodd:rad0inieven:Linieven:chi2odd:x0odd:y0off:Roff:rad0odd:Lodd:z1odd:ptodd:pzoff:chi2even:x0even:y0even:Reven:rad0even:Leven:z1even:pteven:pzeven");
       };
 
       void read_setup(int irun, char* txt)

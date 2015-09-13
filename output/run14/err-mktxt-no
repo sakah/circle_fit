@@ -27,37 +27,3 @@ Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory l
 Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run14/pdf/00010.pdf has been created
 
  *** Break *** segmentation violation
-
-
-
-===========================================================
-There was a crash.
-This is the entire stack trace of all threads:
-===========================================================
-#0  0x00002b62b4b65dd5 in waitpid () from /lib64/libc.so.6
-#1  0x00002b62b4b084a1 in do_system () from /lib64/libc.so.6
-#2  0x00002b62afa04902 in TUnixSystem::StackTrace() ()
-   from /home/had/hideyuki/private/sw/root/lib/libCore.so
-#3  0x00002b62afa0130a in TUnixSystem::DispatchSignals(ESignals) ()
-   from /home/had/hideyuki/private/sw/root/lib/libCore.so
-#4  <signal handler called>
-#5  0x00002b62b4b2bc17 in fclose
-
-GLIBC_2.2.5 () from /lib64/libc.so.6
-#6  0x0000000000422888 in main ()
-===========================================================
-
-
-The lines below might hint at the cause of the crash.
-If they do not help you then please submit a bug report at
-http://root.cern.ch/bugs. Please post the ENTIRE stack trace
-from above as an attachment in addition to anything else
-that might help us fixing this issue.
-===========================================================
-#5  0x00002b62b4b2bc17 in fclose
-
-GLIBC_2.2.5 () from /lib64/libc.so.6
-#6  0x0000000000422888 in main ()
-===========================================================
-
-
