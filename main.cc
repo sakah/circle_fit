@@ -226,8 +226,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 int g_wrong_order;
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   bool debug = false;
-   //bool debug = true;
+   //bool debug = false;
+   bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -1137,7 +1137,7 @@ struct Helix
    };
    void print_fit_result(char* prefix)
    {
-      printf("Fit: %s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f (deg) L %f pz %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad2deg(rad0_fit), L_fit, get_pz_fit(), chi2);
+      printf("Fit: %s x0 %f y0 %f R %f pt %f (MeV/c) rad0 %f (deg) L %f z1 %f pz %f chi2 %f\n", prefix, x0_fit, y0_fit, R_fit, get_pt_fit(), rad2deg(rad0_fit), L_fit, get_z1_fit(), get_pz_fit(), chi2);
    };
 
    // Draw
