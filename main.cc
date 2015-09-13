@@ -226,8 +226,8 @@ bool chk_hitpattern(int* region_hit, int a, int b, int c, int d)
 int g_wrong_order;
 void func_helix(Int_t &npar, Double_t *gin, Double_t &f, Double_t *x, Int_t iflag)
 {
-   //bool debug = false;
-   bool debug = true;
+   bool debug = false;
+   //bool debug = true;
 
    double x0 = x[0];
    double y0 = x[1];
@@ -922,7 +922,7 @@ struct Helix
    };
    double get_z1_fit()
    {
-      return (get_rad_fit(0) - rad0_fit)*L_fit;
+      return zhits[0];
    };
    Helix()
    {
@@ -1900,9 +1900,9 @@ int main(int argc, char** argv)
       // cells are aligned sequentially (anti-clock wise in this MC)
 
       // sort data stored in new circle
-      printf("!!!! Sorting cells !!!!\n");
-      circ1.sort_cells();
-      circ2.sort_cells();
+//      printf("!!!! Sorting cells !!!!\n");
+//      circ1.sort_cells();
+//      circ2.sort_cells();
 
 
       double z1_fit = estimate_z1(tc.dr);
