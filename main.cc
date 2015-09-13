@@ -1065,8 +1065,20 @@ struct Helix
       rad0_step = 1;
       L_step = 1;
    };
-   void fit_helix()
+   void fit_helix(int sign)
    {
+      // sing: +1: Pz>0
+      //       -1: Pz<0
+
+      double L_min;
+      double L_max;
+      if (sign>0) {
+         L_min = 0;
+         L_max = 200;
+      } else {
+         L_min = -200;
+         L_max = 0;
+      }
       // copy to global values
       g_nhits = nhits;
       for (int ihit=0; ihit<nhits; ihit++) {
@@ -1098,7 +1110,7 @@ struct Helix
       minuit->mnparm(1, "y0", y0_ini, y0_step, 0, 0, ierflag);
       minuit->mnparm(2 ,"R",  R_ini,  R_step,  20, 70, ierflag);
       minuit->mnparm(3 ,"rad0",  rad0_ini,  rad0_step, 0, 2.0*TMath::Pi(), ierflag);
-      minuit->mnparm(4 ,"L",     L_ini,  L_step,  0, 0, ierflag);
+      minuit->mnparm(4 ,"L",     L_ini,  L_step,  L_min, L_max, ierflag);
 
       // uset chi2
       arglist[0] = 1;
@@ -1938,7 +1950,7 @@ int main(int argc, char** argv)
          helix[isign].set_xypos_AB(circ1, circ2);
          helix[isign].merge_hits(circ1, circ2);
          helix[isign].set_fit_inipar(x0_ini, y0_ini, R_ini, rad0_ini, L_ini);
-         helix[isign].fit_helix();
+         helix[isign].fit_helix(sign);
          if (debug) printf("==fit==\n");
       }
 
