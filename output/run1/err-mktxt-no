@@ -21,6 +21,9 @@ Warning in <TFile::Append>: Replacing existing TH1: fname (Potential memory leak
 Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
 Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xy (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-xz (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: fname-yz (Potential memory leak).
 Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circle_fit//output/run1/pdf/00016.pdf has been created
 
  *** Break *** segmentation violation
@@ -31,17 +34,17 @@ Info in <TCanvas::Print>: pdf file /home/had/hideyuki/private/genfit2/KEKCC/circ
 There was a crash.
 This is the entire stack trace of all threads:
 ===========================================================
-#0  0x00002b86715c3dd5 in waitpid () from /lib64/libc.so.6
-#1  0x00002b86715664a1 in do_system () from /lib64/libc.so.6
-#2  0x00002b866c44d902 in TUnixSystem::StackTrace() ()
+#0  0x00002aacf942cdd5 in waitpid () from /lib64/libc.so.6
+#1  0x00002aacf93cf4a1 in do_system () from /lib64/libc.so.6
+#2  0x00002aacf42b6902 in TUnixSystem::StackTrace() ()
    from /home/had/hideyuki/private/sw/root/lib/libCore.so
-#3  0x00002b866c44a30a in TUnixSystem::DispatchSignals(ESignals) ()
+#3  0x00002aacf42b330a in TUnixSystem::DispatchSignals(ESignals) ()
    from /home/had/hideyuki/private/sw/root/lib/libCore.so
 #4  <signal handler called>
-#5  0x00002b8671589c17 in fclose
+#5  0x00002aacf93f2c17 in fclose
 
 GLIBC_2.2.5 () from /lib64/libc.so.6
-#6  0x000000000042279e in main ()
+#6  0x0000000000422876 in main ()
 ===========================================================
 
 
@@ -51,10 +54,10 @@ http://root.cern.ch/bugs. Please post the ENTIRE stack trace
 from above as an attachment in addition to anything else
 that might help us fixing this issue.
 ===========================================================
-#5  0x00002b8671589c17 in fclose
+#5  0x00002aacf93f2c17 in fclose
 
 GLIBC_2.2.5 () from /lib64/libc.so.6
-#6  0x000000000042279e in main ()
+#6  0x0000000000422876 in main ()
 ===========================================================
 
 
